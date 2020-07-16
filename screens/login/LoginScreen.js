@@ -21,7 +21,7 @@ export default class LoginScreen extends React.Component {
       <View style={[styles.scene, { backgroundColor: '#673ab7' }]} />
     );
 
-    return(<LoginTabView firstRoute={this.getEmailPasswordForm} secondRoute={SecondRoute}/>)
+    return(<LoginTabView firstRoute={this.getEmailPasswordForm} secondRoute={this.getAddressFrom}/>)
   }
 
   getEmailPasswordForm(){
@@ -52,19 +52,42 @@ export default class LoginScreen extends React.Component {
         </View>
     </View>);
   }
+
+  getAddressFrom(){
+    return(
+      <View style={{alignItems: 'center'}}>
+        <View style={{width: '80%', backgroundColor: '#EFEFEF', borderRadius: 20, marginTop: 10}}>
+          <TouchableOpacity
+              onPress={() => {}}>
+            <Text style={{margin: 3, marginLeft: 15, color: 'gray'}}>Область</Text>
+            <Text style={{fontSize: 18, marginLeft: 15, marginBottom: 3}}>Київська</Text>
+            <View style={{width: '90%', borderBottomColor: 'gray', borderBottomWidth: 1, alignSelf: 'center', marginBottom: 10}}/>
+          </TouchableOpacity>
+        </View>
+        <View style={{width: '80%', backgroundColor: '#EFEFEF', borderRadius: 20, marginTop: 10}}>
+          <TouchableOpacity
+              onPress={() => {}}>
+            <Text style={{margin: 3, marginLeft: 15, color: 'gray'}}>Місто</Text>
+            <Text style={{fontSize: 18, marginLeft: 15, marginBottom: 3}}>Чернігів</Text>
+            <View style={{width: '90%', borderBottomColor: 'gray', borderBottomWidth: 1, alignSelf: 'center', marginBottom: 10}}/>
+          </TouchableOpacity>
+        </View>
+      </View>
+    )
+  }
 }
 
 function LoginTabView(props) {
   const initialLayout = { width: Dimensions.get('window').width };
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
-    { key: 'first', title: 'За email'},
-    { key: 'second', title: 'За адресою' },
+    { key: 'first', title: 'За адресою'},
+    { key: 'second', title: 'За email' },
   ]);
  
   const renderScene = SceneMap({
-    first: props.firstRoute,
-    second: props.secondRoute,
+    first: props.secondRoute,
+    second: props.firstRoute,
   });
  
   return (
