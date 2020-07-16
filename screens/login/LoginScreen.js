@@ -71,8 +71,7 @@ export default class LoginScreen extends React.Component {
       { id: 8, name: 'Сумська',},
     ];
     return(
-      <KeyboardAvoidingView>
-      <Dialog.Container visible={true}>
+      <Dialog.Container visible={false}>
         <Dialog.Title>
            Оберіть область
         </Dialog.Title>
@@ -115,8 +114,7 @@ export default class LoginScreen extends React.Component {
             
           }}
         />
-      </Dialog.Container>
-      </KeyboardAvoidingView>);
+      </Dialog.Container>);
   }
 
   getCityDialog(){
