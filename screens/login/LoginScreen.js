@@ -1,8 +1,16 @@
-import React from 'react';
+import React, {PureComponent} from 'react';
 import { StyleSheet, Text, View, Image, TextInput, TouchableOpacity, Dimensions, ScrollView, TouchableWithoutFeedback, KeyboardAvoidingView, Keyboard } from 'react-native';
 import { TabView, TabBar, SceneMap } from 'react-native-tab-view';
 import SearchableDropdown from 'react-native-searchable-dropdown';
 import Dialog from 'react-native-dialog';
+import ViewPager from '@react-native-community/viewpager';
+
+const REGION_DIALOG_ID = 1;
+const CITY_DIALOG_ID = 2;
+const STREET_DIALOG_ID = 3;
+const HOUSE_DIALOG_ID = 4;
+const FLAT_DIALOG_ID = 5;
+const ACCOUNT_NUMBER_DIALOG_ID = 6;
 
 export default class LoginScreen extends React.Component {
   
@@ -12,9 +20,7 @@ export default class LoginScreen extends React.Component {
         <View style={{height: '40%', width: '100%', backgroundColor: '#002B2B', alignItems: 'center', justifyContent: 'center'}}>
           <Image resizeMode='contain' style={{width: '50%', height: '50%'}} source={require('../../content/images/sapoAppLogo.png')}/>
         </View>
-        <View style={{height: '60%', width: '100%', backgroundColor: 'white'}}>
-          {this.getTabView()}
-        </View>
+        {this.getPageView()}
         {this.getRegionDialog()}
         {this.getCityDialog()}
         {this.getStreetDialog()}
@@ -25,8 +31,20 @@ export default class LoginScreen extends React.Component {
     );
   }
 
-  getTabView(){
-    return(<LoginTabView firstRoute={this.getEmailPasswordForm} secondRoute={this.getAddressForm}/>)
+  getPageView(){
+    return(
+    <View style={{height: '60%', width: '100%', backgroundColor: 'white'}}>
+      <KeyboardAvoidingView behavior={Platform.OS == "ios" ? "padding" : "height"}>
+        <ViewPager style={{width: '100%', height:' 100%'}} initialPage={0}>
+            <View key="1">
+              {this.getEmailPasswordForm()}
+            </View>
+            <View key="2">
+              {this.getAddressForm()}
+            </View>
+          </ViewPager>  
+        </KeyboardAvoidingView>
+    </View>)
   }
 
   getEmailPasswordForm(){
@@ -37,13 +55,15 @@ export default class LoginScreen extends React.Component {
         </View>
         <View style={{width: '70%', backgroundColor: '#EFEFEF', borderRadius: 12, paddingTop: 6, paddingBottom: 0, paddingHorizontal: 15, marginHorizontal: 5, }}>
           <TextInput
+            value={this.props.email}
             keyboardType={Platform.OS === 'android' ? 'email-address' : 'ascii-capable'} 
-            onChangeText={(text) => {}}
+            onChangeText={(text) => {this.props.setEmail(text)}}
             style={{borderColor: '#002B2B', textAlign: 'center', borderBottomWidth: 1, fontSize: 16, marginBottom: 7, paddingBottom: 2}}  placeholder="Email" />
         </View>
         <View style={{width: '70%', backgroundColor: '#EFEFEF', marginTop: 10, marginBottom: 5, borderRadius: 12, paddingTop: 6, paddingBottom: 0, paddingHorizontal: 15, marginHorizontal: 5, }}>
           <TextInput
-            onChangeText={(text) => {}}
+            value={this.props.password}
+            onChangeText={(text) => {this.props.setPassword(text)}}
             secureTextEntry={true}
             autoCapitalize = 'none' 
             style={{borderColor: '#002B2B', textAlign: 'center', borderBottomWidth: 1, fontSize: 16, marginBottom: 7, paddingBottom: 2}} placeholder="Пароль" /> 
@@ -59,6 +79,103 @@ export default class LoginScreen extends React.Component {
     </View>);
   }
 
+  getAddressForm(){
+    return(
+      <View style={{alignItems: 'center'}}>
+        <View style={{alignItems: 'center', margin: 10 }}>
+            <Text>Авторизуйтеся за адресою</Text>
+        </View>
+        
+        <TouchableOpacity
+          onPress={() => {
+            this.props.setShownDialogId(REGION_DIALOG_ID)
+            this.props.setSelectedRegion(null)
+          }}
+          style={{width: '80%', backgroundColor: '#EFEFEF', borderRadius: 12, paddingTop: 6, paddingBottom: 0, paddingHorizontal: 15, marginHorizontal: 5, }}>
+          <View style={{borderColor: '#002B2B',  borderBottomWidth: 1, marginBottom: 6, paddingBottom: 2, paddingHorizontal: 2}}>
+            <Text style={this.props.selectedRegion == null ? {fontSize: 15, color: 'gray'} : {fontSize: 15}}>
+            {this.props.selectedRegion == null ? 'Оберіть область' : this.props.selectedRegion}
+            </Text>
+          </View>
+        </TouchableOpacity>
+
+        <TouchableOpacity 
+          onPress={() => {
+            this.props.setShownDialogId(CITY_DIALOG_ID)
+            this.props.setSelectedCity(null)
+          }}
+          style={{width: '80%', backgroundColor: '#EFEFEF', marginTop: 10, borderRadius: 12, paddingTop: 6, paddingBottom: 0, paddingHorizontal: 15, marginHorizontal: 5, }}>
+          <View style={{borderColor: '#002B2B',  borderBottomWidth: 1, marginBottom: 6, paddingBottom: 2, paddingHorizontal: 2}}>
+            <Text style={this.props.selectedCity == null ? {fontSize: 15, color: 'gray'} : {fontSize: 15}}>
+            {this.props.selectedCity == null ? 'Оберіть місто' : this.props.selectedCity}
+            </Text>
+          </View> 
+        </TouchableOpacity>
+
+        <TouchableOpacity 
+          onPress={() => {
+            this.props.setShownDialogId(STREET_DIALOG_ID)
+            this.props.setSelectedStreet(null)
+          }}
+          style={{width: '80%', backgroundColor: '#EFEFEF', marginTop: 10, borderRadius: 12, paddingTop: 6, paddingBottom: 0, paddingHorizontal: 15, marginHorizontal: 5, }}>
+          <View style={{borderColor: '#002B2B',  borderBottomWidth: 1, marginBottom: 6, paddingBottom: 2, paddingHorizontal: 2}}>
+            <Text style={this.props.selectedStreet == null ? {fontSize: 15, color: 'gray'} : {fontSize: 15}}>
+            {this.props.selectedStreet == null ? 'Оберіть вулицю' : this.props.selectedStreet}
+            </Text>
+          </View> 
+        </TouchableOpacity>
+        
+        <TouchableOpacity 
+          onPress={() => {
+            this.props.setShownDialogId(HOUSE_DIALOG_ID)
+            this.props.setSelectedHouse(null)
+          }}
+          style={{width: '80%', backgroundColor: '#EFEFEF', marginTop: 10, borderRadius: 12, paddingTop: 6, paddingBottom: 0, paddingHorizontal: 15, marginHorizontal: 5, }}>
+          <View style={{borderColor: '#002B2B',  borderBottomWidth: 1, marginBottom: 6, paddingBottom: 2, paddingHorizontal: 2}}>
+            <Text style={this.props.selectedHouse == null ? {fontSize: 15, color: 'gray'} : {fontSize: 15}}>
+            {this.props.selectedHouse == null ? 'Оберіть будинок' : this.props.selectedHouse}
+            </Text>
+          </View> 
+        </TouchableOpacity>
+
+        <TouchableOpacity 
+          onPress={() => {
+            this.props.setShownDialogId(FLAT_DIALOG_ID)
+            this.props.setSelectedFlat(null)
+          }}
+          style={{width: '80%', backgroundColor: '#EFEFEF', marginTop: 10, borderRadius: 12, paddingTop: 6, paddingBottom: 0, paddingHorizontal: 15, marginHorizontal: 5, }}>
+          <View style={{borderColor: '#002B2B',  borderBottomWidth: 1, marginBottom: 6, paddingBottom: 2, paddingHorizontal: 2}}>
+            <Text style={this.props.selectedFlat == null ? {fontSize: 15, color: 'gray'} : {fontSize: 15}}>
+            {this.props.selectedFlat == null ? 'Оберіть квартиру' : this.props.selectedFlat}
+            </Text>
+          </View> 
+        </TouchableOpacity>
+
+        <TouchableOpacity 
+          onPress={() => {
+            this.props.setShownDialogId(ACCOUNT_NUMBER_DIALOG_ID)
+            this.props.setSelectedAccountNumber(null)
+          }}
+          style={{width: '80%', backgroundColor: '#EFEFEF', marginTop: 10, borderRadius: 12, paddingTop: 6, paddingBottom: 0, paddingHorizontal: 15, marginHorizontal: 5, }}>
+          <View style={{borderColor: '#002B2B',  borderBottomWidth: 1, marginBottom: 6, paddingBottom: 2, paddingHorizontal: 2}}>
+            <Text style={this.props.selectedAccountNumber == null ? {fontSize: 15, color: 'gray'} : {fontSize: 15}}>
+            {this.props.selectedAccountNumber == null ? 'Номер рахунку' : this.props.selectedAccountNumber}
+            </Text>
+          </View> 
+        </TouchableOpacity>
+
+        <View style={{margin: 5, width: '80%', marginTop: 15, marginBottom: 20}}>
+          <TouchableOpacity
+            onPress={() => {}}
+            style={{backgroundColor: "#002B2B", alignItems: 'center', justifyContent: 'center', height: 35, borderRadius: 12}}>
+              <Text style={{color: 'white', fontSize: 15}}>Увійти</Text>
+          </TouchableOpacity>
+        </View>
+
+      </View>
+    )
+  }  
+
   getRegionDialog(){
     var items = [
       { id: 1, name: 'Київська',},
@@ -71,13 +188,13 @@ export default class LoginScreen extends React.Component {
       { id: 8, name: 'Сумська',},
     ];
     return(
-      <Dialog.Container visible={false}>
+      <Dialog.Container visible={this.props.shownDialogId == REGION_DIALOG_ID ? true : false}>
         <Dialog.Title>
            Оберіть область
         </Dialog.Title>
         <SearchableDropdown
             onItemSelect={(item) => {
-              
+              this.props.setSelectedRegion(item.name)
             }}
             containerStyle={{ paddingHorizontal: 10, paddingVertical: 5 }}
             itemStyle={{
@@ -99,7 +216,7 @@ export default class LoginScreen extends React.Component {
                   paddingBottom: 1,
                   marginBottom: 1
                 },
-                onTextChange: text => {}
+                onTextChange: text => {this.props.setSelectedRegion(text)}
               }
             }
             listProps={
@@ -111,7 +228,7 @@ export default class LoginScreen extends React.Component {
         <Dialog.Button
           label="Підтвердити"
           onPress={() => {
-            
+            this.props.setShownDialogId(null)
           }}
         />
       </Dialog.Container>);
@@ -129,13 +246,13 @@ export default class LoginScreen extends React.Component {
       { id: 8, name: 'Умань',},
     ];
     return(
-    <Dialog.Container visible={false}>
+    <Dialog.Container visible={this.props.shownDialogId == CITY_DIALOG_ID ? true : false}>
       <Dialog.Title>
          Оберіть місто
       </Dialog.Title>
       <SearchableDropdown
           onItemSelect={(item) => {
-            
+            this.props.setSelectedCity(item.name)
           }}
           containerStyle={{ paddingHorizontal: 10, paddingVertical: 5 }}
           itemStyle={{
@@ -157,7 +274,7 @@ export default class LoginScreen extends React.Component {
                 paddingBottom: 1,
                 marginBottom: 1
               },
-              onTextChange: text => {}
+              onTextChange: text => {this.props.setSelectedCity(text)}
             }
           }
           listProps={
@@ -169,7 +286,7 @@ export default class LoginScreen extends React.Component {
       <Dialog.Button
         label="Підтвердити"
         onPress={() => {
-          
+          this.props.setShownDialogId(null)
         }}
       />
     </Dialog.Container>);
@@ -184,13 +301,13 @@ export default class LoginScreen extends React.Component {
       { id: 5, name: 'Університет',},
     ];
     return(
-      <Dialog.Container visible={false}>
+      <Dialog.Container visible={this.props.shownDialogId == STREET_DIALOG_ID ? true : false}>
         <Dialog.Title>
           Оберіть вулицю
         </Dialog.Title>
         <SearchableDropdown
             onItemSelect={(item) => {
-              
+              this.props.setSelectedStreet(item.name)
             }}
             containerStyle={{ paddingHorizontal: 10, paddingVertical: 5 }}
             itemStyle={{
@@ -212,7 +329,7 @@ export default class LoginScreen extends React.Component {
                   paddingBottom: 1,
                   marginBottom: 1
                 },
-                onTextChange: text => {}
+                onTextChange: text => {this.props.setSelectedStreet(text)}
               }
             }
             listProps={
@@ -224,7 +341,7 @@ export default class LoginScreen extends React.Component {
         <Dialog.Button
           label="Підтвердити"
           onPress={() => {
-            
+            this.props.setShownDialogId(null)
           }}
         />
       </Dialog.Container>);
@@ -239,13 +356,13 @@ export default class LoginScreen extends React.Component {
       { id: 5, name: '4',},
     ];
     return(
-      <Dialog.Container visible={false}>
+      <Dialog.Container visible={this.props.shownDialogId == HOUSE_DIALOG_ID ? true : false}>
         <Dialog.Title>
           Оберіть будинок
         </Dialog.Title>
         <SearchableDropdown
             onItemSelect={(item) => {
-              
+              this.props.setSelectedHouse(item.name)
             }}
             containerStyle={{ paddingHorizontal: 10, paddingVertical: 5 }}
             itemStyle={{
@@ -267,7 +384,7 @@ export default class LoginScreen extends React.Component {
                   paddingBottom: 1,
                   marginBottom: 1
                 },
-                onTextChange: text => {}
+                onTextChange: text => {this.props.setSelectedHouse(text)}
               }
             }
             listProps={
@@ -279,7 +396,7 @@ export default class LoginScreen extends React.Component {
         <Dialog.Button
           label="Підтвердити"
           onPress={() => {
-            
+            this.props.setShownDialogId(null)
           }}
         />
       </Dialog.Container>);
@@ -294,13 +411,13 @@ export default class LoginScreen extends React.Component {
       { id: 5, name: '8',},
     ];
     return(
-      <Dialog.Container visible={false}>
+      <Dialog.Container visible={this.props.shownDialogId == FLAT_DIALOG_ID ? true : false}>
         <Dialog.Title>
           Оберіть квартиру
         </Dialog.Title>
         <SearchableDropdown
             onItemSelect={(item) => {
-              
+              this.props.setSelectedFlat(item.name)
             }}
             containerStyle={{ paddingHorizontal: 10, paddingVertical: 5 }}
             itemStyle={{
@@ -322,7 +439,7 @@ export default class LoginScreen extends React.Component {
                   paddingBottom: 1,
                   marginBottom: 1
                 },
-                onTextChange: text => {}
+                onTextChange: text => {this.props.setSelectedFlat(text)}
               }
             }
             listProps={
@@ -334,7 +451,7 @@ export default class LoginScreen extends React.Component {
         <Dialog.Button
           label="Підтвердити"
           onPress={() => {
-            
+            this.props.setShownDialogId(null)
           }}
         />
       </Dialog.Container>);
@@ -342,124 +459,25 @@ export default class LoginScreen extends React.Component {
 
   getAccountNumberDialog(){
     return(
-      <Dialog.Container visible={false}>
+      <Dialog.Container visible={this.props.shownDialogId == ACCOUNT_NUMBER_DIALOG_ID ? true : false}>
         <Dialog.Title>
           Введіть номер рахунку
         </Dialog.Title>
         <View style={{width: '90%', alignSelf: 'center', marginVertical: 5, marginBottom: 5, paddingTop: 6, paddingBottom: 0, paddingHorizontal: 15, marginHorizontal: 5, }}>
           <TextInput
-            onChangeText={(text) => {}}
+            onChangeText={(text) => {this.props.setSelectedAccountNumber(text)}}
             style={{borderColor: '#002B2B',  borderBottomWidth: 1, fontSize: 15, marginBottom: 7, paddingBottom: 2, paddingHorizontal: 2}} placeholder="Номер рахунку" /> 
         </View>
         <Dialog.Button
           label="Підтвердити"
           onPress={() => {
-            
+            this.props.setShownDialogId(null)
           }}
         />
       </Dialog.Container>);
   }
 
-  getAddressForm(){
-    return(
-      <View style={{alignItems: 'center'}}>
-        <View style={{alignItems: 'center', margin: 10 }}>
-            <Text>Авторизуйтеся за адресою</Text>
-        </View>
-        
-        <TouchableOpacity style={{width: '80%', backgroundColor: '#EFEFEF', borderRadius: 12, paddingTop: 6, paddingBottom: 0, paddingHorizontal: 15, marginHorizontal: 5, }}>
-          <View style={{borderColor: '#002B2B',  borderBottomWidth: 1, marginBottom: 6, paddingBottom: 2, paddingHorizontal: 2}}>
-            <Text style={{fontSize: 15, color: 'gray'}}>
-              Оберіть область
-            </Text>
-          </View> 
-        </TouchableOpacity>
-
-        <TouchableOpacity style={{width: '80%', backgroundColor: '#EFEFEF', marginTop: 10, borderRadius: 12, paddingTop: 6, paddingBottom: 0, paddingHorizontal: 15, marginHorizontal: 5, }}>
-          <View style={{borderColor: '#002B2B',  borderBottomWidth: 1, marginBottom: 6, paddingBottom: 2, paddingHorizontal: 2}}>
-            <Text style={{fontSize: 15, color: 'gray'}}>
-              Оберіть місто
-            </Text>
-          </View> 
-        </TouchableOpacity>
-
-        <TouchableOpacity style={{width: '80%', backgroundColor: '#EFEFEF', marginTop: 10, borderRadius: 12, paddingTop: 6, paddingBottom: 0, paddingHorizontal: 15, marginHorizontal: 5, }}>
-          <View style={{borderColor: '#002B2B',  borderBottomWidth: 1, marginBottom: 6, paddingBottom: 2, paddingHorizontal: 2}}>
-            <Text style={{fontSize: 15, color: 'gray'}}>
-              Оберіть вулицю
-            </Text>
-          </View> 
-        </TouchableOpacity>
-        
-        <TouchableOpacity style={{width: '80%', backgroundColor: '#EFEFEF', marginTop: 10, borderRadius: 12, paddingTop: 6, paddingBottom: 0, paddingHorizontal: 15, marginHorizontal: 5, }}>
-          <View style={{borderColor: '#002B2B',  borderBottomWidth: 1, marginBottom: 6, paddingBottom: 2, paddingHorizontal: 2}}>
-            <Text style={{fontSize: 15, color: 'gray'}}>
-              Оберіть будинок
-            </Text>
-          </View> 
-        </TouchableOpacity>
-
-        <TouchableOpacity style={{width: '80%', backgroundColor: '#EFEFEF', marginTop: 10, borderRadius: 12, paddingTop: 6, paddingBottom: 0, paddingHorizontal: 15, marginHorizontal: 5, }}>
-          <View style={{borderColor: '#002B2B',  borderBottomWidth: 1, marginBottom: 6, paddingBottom: 2, paddingHorizontal: 2}}>
-            <Text style={{fontSize: 15, color: 'gray'}}>
-              Оберіть квартиру
-            </Text>
-          </View> 
-        </TouchableOpacity>
-
-        <TouchableOpacity style={{width: '80%', backgroundColor: '#EFEFEF', marginTop: 10, borderRadius: 12, paddingTop: 6, paddingBottom: 0, paddingHorizontal: 15, marginHorizontal: 5, }}>
-          <View style={{borderColor: '#002B2B',  borderBottomWidth: 1, marginBottom: 6, paddingBottom: 2, paddingHorizontal: 2}}>
-            <Text style={{fontSize: 15, color: 'gray'}}>
-              Номер рахунку
-            </Text>
-          </View> 
-        </TouchableOpacity>
-
-        <View style={{margin: 5, width: '80%', marginTop: 15, marginBottom: 20}}>
-          <TouchableOpacity
-            onPress={() => {}}
-            style={{backgroundColor: "#002B2B", alignItems: 'center', justifyContent: 'center', height: 35, borderRadius: 12}}>
-              <Text style={{color: 'white', fontSize: 15}}>Увійти</Text>
-          </TouchableOpacity>
-        </View>
-
-      </View>
-    )
-  }  
-}
-
-function LoginTabView(props) {
-  const initialLayout = { width: Dimensions.get('window').width };
-  const [index, setIndex] = React.useState(0);
-  const [routes] = React.useState([
-    { key: 'first', title: 'За адресою'},
-    { key: 'second', title: 'За email' },
-  ]);
- 
-  const renderScene = SceneMap({
-    first: props.secondRoute,
-    second: props.firstRoute,
-  });
- 
-  return (
-    <TabView
-      navigationState={{ index, routes }}
-      renderScene={renderScene}
-      onIndexChange={setIndex}
-      initialLayout={initialLayout}
-      renderTabBar={(props) => {
-        return (
-          <TabBar
-            {...props}
-            activeColor="#002B2B"
-            inactiveColor="#c2c3c8"
-            indicatorStyle={{ backgroundColor: '#002B2B' }}
-            style={{ backgroundColor: '#fff' }}
-          />
-        )
-      }}
-    />
-  );
+  
 }
 
 const styles = StyleSheet.create({
