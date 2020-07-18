@@ -16,6 +16,7 @@ class LoginContainer extends React.Component{
     render(){
         return(
             <LoginScreen
+                navigation={this.props.navigation}
                 currentTab={this.props.currentTab}
                 email={this.props.email}
                 password={this.props.password}
