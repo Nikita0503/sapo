@@ -1,4 +1,5 @@
-import {CHANGE_EMAIL,
+import {CHANGE_CURRENT_TAB,
+     CHANGE_EMAIL,
      CHANGE_PASSWORD, 
      CHANGE_SHOWN_DIALOG_ID,
      CHANGE_SELECTED_REGION,
@@ -9,6 +10,7 @@ import {CHANGE_EMAIL,
      CHANGE_SELECTED_ACCOUNT_NUMBER,} from './actions';
 
 const defaultState = {
+    currentTab: 0,
     email: null,
     password: null,
     shownDialogId: null,
@@ -22,6 +24,11 @@ const defaultState = {
 
 export const loginReducer = (state = defaultState, action) => {
     switch (action.type){
+        case CHANGE_CURRENT_TAB:
+            return {
+                ...state,
+                currentTab: action.payload
+            }
         case CHANGE_EMAIL:
             console.log("CHANGE_EMAIL", action.payload)
             return {

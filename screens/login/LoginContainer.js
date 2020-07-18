@@ -1,6 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {setEmail,
+import {setCurrentTab,
+     setEmail,
      setPassword, 
      setShownDialogId, 
      setSelectedRegion, 
@@ -15,6 +16,7 @@ class LoginContainer extends React.Component{
     render(){
         return(
             <LoginScreen
+                currentTab={this.props.currentTab}
                 email={this.props.email}
                 password={this.props.password}
                 shownDialogId={this.props.shownDialogId}
@@ -24,6 +26,7 @@ class LoginContainer extends React.Component{
                 selectedHouse={this.props.selectedHouse}
                 selectedFlat={this.props.selectedFlat}
                 selectedAccountNumber={this.props.selectedAccountNumber}
+                setCurrentTab={this.props.setCurrentTab}
                 setEmail={this.props.setEmail}
                 setPassword={this.props.setPassword}
                 setShownDialogId={this.props.setShownDialogId}
@@ -42,6 +45,7 @@ class LoginContainer extends React.Component{
 
 const mapStateToProps = state => {
     return {
+        currentTab: state.login.currentTab,
         email: state.login.email,
         password: state.login.password,
         shownDialogId: state.login.shownDialogId,
@@ -55,6 +59,7 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = {
+    setCurrentTab,
     setEmail,
     setPassword,
     setShownDialogId,
