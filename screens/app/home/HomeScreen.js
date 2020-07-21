@@ -114,7 +114,7 @@ export default class HomeScreen extends React.Component {
           number={1}
         />
         <TouchableOpacity
-          onPress={() => {}}>
+          onPress={() => {this.props.navigation.navigate("Payment")}}>
           <DataClickableComponent
             name="Нараховано"
             number={1}
@@ -143,6 +143,9 @@ export default class HomeScreen extends React.Component {
     );
   }
 }
+
+
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,

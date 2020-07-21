@@ -10,15 +10,17 @@ import HomeContainer from './screens/app/home/HomeContainer';
 import ActOfReconciliationContainer from './screens/app/actOfReconciliation/ActOfReconciliationContainer';
 import WorksAndBalanceContainer from './screens/app/worksAndBalance/WorksAndBalanceContainer';
 import RequestsContainer from './screens/app/requests/RequestsContainer';
+import PaymentContainer from './screens/app/home/payment/PaymentContainer';
 
 const Stack = createStackNavigator();
+const StackHome = createStackNavigator()
 const Tab = createBottomTabNavigator();
 
 function Menu() {
   return (
     <Tab.Navigator>
       <Tab.Screen name="Home" component={HomeContainer} />
-      <Tab.Screen name="Act z" component={ActOfReconciliationContainer} />
+      <Tab.Screen name="Act" component={ActOfReconciliationContainer} />
       <Tab.Screen name="Works and balance" component={WorksAndBalanceContainer} />
       <Tab.Screen name="Requests" component={RequestsContainer} />
     </Tab.Navigator>
@@ -33,6 +35,7 @@ function App() {
           <Stack.Navigator>
             <Stack.Screen name="Login" component={LoginContainer} options={{ headerShown: false }}/>
             <Stack.Screen name="Menu" component={Menu} options={{ headerShown: false }}/>
+            <Stack.Screen name="Payment" component={PaymentContainer} options={{ headerShown: false }}/>
           </Stack.Navigator>
         </NavigationContainer>
       </PersistGate>
