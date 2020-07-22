@@ -66,7 +66,7 @@ export const setToken = token => ({
     payload: token
 })
 
-export const fetchToken = (email, password) => {
+export const fetchTokenByEmailPassword = (email, password) => {
     return async dispatch => {
         try{
             const tokenPromise = await fetch('https://app.sapo365.com/login', {
@@ -82,13 +82,40 @@ export const fetchToken = (email, password) => {
               });
 
               const token = await tokenPromise.json();
-              console.log(token)
+              console.log("fetchTokenByEmailPassword", token.token);
               if(token.token == undefined) {
                 Alert.alert('Невірний логін або пароль', 'Користувач не знайдений');
               }
               dispatch(setToken(token.token))
         } catch (error) {
-            console.log("fetchToken", "error")
+            console.log("fetchTokenByEmailPassword", "error")
+        }
+    }
+}
+
+export const fetchTokenByAddress = () => {
+    return async dispatch => {
+        try{
+            const tokenPromise = await fetch('https://app.sapo365.com/auth', {
+                method: 'POST',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    regionId: 1,
+                    cityId: 1,
+                    street: 1,
+                    house: '3b',
+                    flat: '23',
+                    code: '208382-1'
+                }),
+                });
+                
+              const token = await tokenPromise.json();
+              console.log("fetchTokenByAddress", token)
+        } catch (error) {
+            console.log("fetchTokenByAddress", "error");
         }
     }
 }

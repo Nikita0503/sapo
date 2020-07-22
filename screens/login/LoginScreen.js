@@ -109,7 +109,7 @@ export default class LoginScreen extends React.Component {
           <TouchableOpacity
             onPress={() => {
               //this.props.navigation.navigate("Menu")
-              this.props.fetchToken(this.props.email, this.props.password)
+              this.props.fetchTokenByEmailPassword(this.props.email, this.props.password)
             }}
             style={{backgroundColor: "#002B2B", alignItems: 'center', justifyContent: 'center', height: 35, borderRadius: 12}}>
               <Text style={{color: 'white', fontSize: 15}}>Увійти</Text>
@@ -207,7 +207,10 @@ export default class LoginScreen extends React.Component {
 
           <View style={{margin: 5, width: '80%', marginTop: 15, marginBottom: 20}}>
             <TouchableOpacity
-              onPress={() => {this.props.navigation.navigate("Menu")}}
+              onPress={() => {
+                //this.props.navigation.navigate("Menu")
+                this.props.fetchTokenByAddress()
+              }}
               style={{backgroundColor: "#002B2B", alignItems: 'center', justifyContent: 'center', height: 35, borderRadius: 12}}>
                 <Text style={{color: 'white', fontSize: 15}}>Увійти</Text>
             </TouchableOpacity>

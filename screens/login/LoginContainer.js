@@ -10,7 +10,8 @@ import {setCurrentTab,
      setSelectedHouse, 
      setSelectedFlat, 
      setSelectedAccountNumber,
-     fetchToken} from '../../redux/login/actions';
+     fetchTokenByEmailPassword,
+     fetchTokenByAddress} from '../../redux/login/actions';
 import LoginScreen from './LoginScreen';
 
 class LoginContainer extends React.Component {
@@ -38,7 +39,8 @@ class LoginContainer extends React.Component {
                 setSelectedHouse={this.props.setSelectedHouse}
                 setSelectedFlat={this.props.setSelectedFlat}
                 setSelectedAccountNumber={this.props.setSelectedAccountNumber}
-                fetchToken={this.props.fetchToken}
+                fetchTokenByEmailPassword={this.props.fetchTokenByEmailPassword}
+                fetchTokenByAddress={this.props.fetchTokenByAddress}
             />
         )
     }
@@ -70,7 +72,8 @@ const mapDispatchToProps = {
     setSelectedHouse,
     setSelectedFlat,
     setSelectedAccountNumber,
-    fetchToken
+    fetchTokenByEmailPassword,
+    fetchTokenByAddress
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginContainer);
