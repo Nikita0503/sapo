@@ -15,6 +15,8 @@ const FLAT_DIALOG_ID = 5;
 const ACCOUNT_NUMBER_DIALOG_ID = 6;
 
 export default class LoginScreen extends React.Component {
+
+
   
   constructor(props) {
     super(props);
@@ -105,7 +107,10 @@ export default class LoginScreen extends React.Component {
         </View>
         <View style={{margin: 5, width: '70%', marginTop: 10}}>
           <TouchableOpacity
-            onPress={() => {this.props.navigation.navigate("Menu")}}
+            onPress={() => {
+              //this.props.navigation.navigate("Menu")
+              this.props.fetchToken(this.props.email, this.props.password)
+            }}
             style={{backgroundColor: "#002B2B", alignItems: 'center', justifyContent: 'center', height: 35, borderRadius: 12}}>
               <Text style={{color: 'white', fontSize: 15}}>Увійти</Text>
           </TouchableOpacity>

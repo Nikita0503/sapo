@@ -1,3 +1,4 @@
+import { Alert } from 'react-native';
 export const CHANGE_CURRENT_TAB = 'CHANGE_CURRENT_TAB';
 export const CHANGE_EMAIL = 'CHANGE_EMAIL';
 export const CHANGE_PASSWORD = 'CHANGE_PASSWORD';
@@ -8,6 +9,7 @@ export const CHANGE_SELECTED_STREET = 'CHANGE_SELECTED_STREET';
 export const CHANGE_SELECTED_HOUSE = 'CHANGE_SELECTED_HOUSE';
 export const CHANGE_SELECTED_FLAT = 'CHANGE_SELECTED_FLAT';
 export const CHANGE_SELECTED_ACCOUNT_NUMBER = 'CHANGE_SELECTED_ACCOUNT_NUMBER';
+export const CHANGE_TOKEN = 'CHANGE_TOKEN';
 
 export const setCurrentTab = currentTab => ({
     type: CHANGE_CURRENT_TAB,
@@ -58,3 +60,35 @@ export const setSelectedAccountNumber = selectedAccountNumber => ({
     type: CHANGE_SELECTED_ACCOUNT_NUMBER,
     payload: selectedAccountNumber
 });
+
+export const setToken = token => ({
+    type: CHANGE_TOKEN,
+    payload: token
+})
+
+export const fetchToken = (email, password) => {
+    return async dispatch => {
+        try{
+            const tokenPromise = await fetch('https://app.sapo365.com/login', {
+                method: 'POST',
+                headers: {
+                  Accept: 'application/json',
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                  login: email.toLowerCase().trim(),
+                  password: password
+                }),
+              });
+
+              const token = await tokenPromise.json();
+              console.log(token)
+              if(token.token == undefined) {
+                Alert.alert('Невірний логін або пароль', 'Користувач не знайдений');
+              }
+              dispatch(setToken(token.token))
+        } catch (error) {
+            console.log("fetchToken", "error")
+        }
+    }
+}

@@ -9,10 +9,11 @@ import {setCurrentTab,
      setSelectedStreet, 
      setSelectedHouse, 
      setSelectedFlat, 
-     setSelectedAccountNumber} from '../../redux/login/actions';
+     setSelectedAccountNumber,
+     fetchToken} from '../../redux/login/actions';
 import LoginScreen from './LoginScreen';
 
-class LoginContainer extends React.Component{
+class LoginContainer extends React.Component {
     render(){
         return(
             <LoginScreen
@@ -37,11 +38,10 @@ class LoginContainer extends React.Component{
                 setSelectedHouse={this.props.setSelectedHouse}
                 setSelectedFlat={this.props.setSelectedFlat}
                 setSelectedAccountNumber={this.props.setSelectedAccountNumber}
+                fetchToken={this.props.fetchToken}
             />
         )
     }
-
-    
 }
 
 const mapStateToProps = state => {
@@ -69,7 +69,8 @@ const mapDispatchToProps = {
     setSelectedStreet,
     setSelectedHouse,
     setSelectedFlat,
-    setSelectedAccountNumber
+    setSelectedAccountNumber,
+    fetchToken
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginContainer);
