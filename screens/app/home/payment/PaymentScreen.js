@@ -63,7 +63,7 @@ const payments = [
 ]
 
 
-export default class ScreenPayment extends React.Component {
+export default class PaymentScreen extends React.Component {
 
   constructor(props) {
     super(props);
@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
     width: '25%',
     fontSize: 13,
     fontWeight: 'bold',
-    color: '#364A5F',
+    color: '#002B2B',
     alignContent: 'center',
     textAlign: 'center'
   },
@@ -128,7 +128,7 @@ const styles = StyleSheet.create({
     width: '25%',
     fontSize: 13,
     padding: 5,
-    color: '#364A5F',
+    color: '#002B2B',
     alignContent: 'center',
     textAlign: 'center'
   },

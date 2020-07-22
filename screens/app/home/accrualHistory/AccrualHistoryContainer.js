@@ -1,14 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import {
+import AccrualHistoryScreen from './AccrualHistoryScreen';
 
-} from '../../../../redux/home/payment/actions';
-import PaymentScreen from './PaymentScreen';
-
-class PaymentContainer extends React.Component {
+class AccrualHistoryContainer extends React.Component {
   render() {
     return (
-      <PaymentScreen
+      <AccrualHistoryScreen
         navigation={this.props.navigation}
       />
     );
@@ -21,10 +18,9 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = {
-
 }
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(PaymentContainer);
+)(AccrualHistoryContainer);

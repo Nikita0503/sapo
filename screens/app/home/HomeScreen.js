@@ -114,7 +114,7 @@ export default class HomeScreen extends React.Component {
           number={1}
         />
         <TouchableOpacity
-          onPress={() => {this.props.navigation.navigate("Payment")}}>
+          onPress={() => {this.props.navigation.navigate("AccrualHistory")}}>
           <DataClickableComponent
             name="Нараховано"
             number={1}
@@ -129,7 +129,7 @@ export default class HomeScreen extends React.Component {
           number={1}
         />
         <TouchableOpacity
-          onPress={() => {}}>
+          onPress={() => {this.props.navigation.navigate("Payment")}}>
           <DataClickableComponent
             name="Оплати"
             number={1}

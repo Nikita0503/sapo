@@ -11,15 +11,26 @@ import ActOfReconciliationContainer from './screens/app/actOfReconciliation/ActO
 import WorksAndBalanceContainer from './screens/app/worksAndBalance/WorksAndBalanceContainer';
 import RequestsContainer from './screens/app/requests/RequestsContainer';
 import PaymentContainer from './screens/app/home/payment/PaymentContainer';
+import AccrualHistoryContainer from './screens/app/home/accrualHistory/AccrualHistoryContainer';
 
 const Stack = createStackNavigator();
 const StackHome = createStackNavigator()
 const Tab = createBottomTabNavigator();
 
+function HomeStackScreen() {
+  return (
+    <StackHome.Navigator>
+      <StackHome.Screen name="Home" component={HomeContainer} options={{ headerShown: false }} />
+      <StackHome.Screen name="Payment" component={PaymentContainer} options={{ headerShown: false }} />
+      <StackHome.Screen name="AccrualHistory" component={AccrualHistoryContainer} options={{ headerShown: false }}/>
+    </StackHome.Navigator>
+  );
+}
+
 function Menu() {
   return (
     <Tab.Navigator>
-      <Tab.Screen name="Home" component={HomeContainer} />
+      <Tab.Screen name="Home" component={HomeStackScreen} />
       <Tab.Screen name="Act" component={ActOfReconciliationContainer} />
       <Tab.Screen name="Works and balance" component={WorksAndBalanceContainer} />
       <Tab.Screen name="Requests" component={RequestsContainer} />
@@ -35,7 +46,7 @@ function App() {
           <Stack.Navigator>
             <Stack.Screen name="Login" component={LoginContainer} options={{ headerShown: false }}/>
             <Stack.Screen name="Menu" component={Menu} options={{ headerShown: false }}/>
-            <Stack.Screen name="Payment" component={PaymentContainer} options={{ headerShown: false }}/>
+            
           </Stack.Navigator>
         </NavigationContainer>
       </PersistGate>
