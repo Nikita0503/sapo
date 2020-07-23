@@ -4,6 +4,8 @@ import {persistReducer} from 'redux-persist';
 import AsyncStorage from '@react-native-community/async-storage';
 
 import {loginReducer} from './login/reducers';
+import {homeReducer} from './home/reducers';
+import {headerReducer} from './monthPicker/reducers'
 
 const persistConfig = {
     key: 'root',
@@ -12,7 +14,9 @@ const persistConfig = {
 }
 
 const rootReducer = combineReducers({
-    login: loginReducer
+    login: loginReducer,
+    home: homeReducer,
+    header: headerReducer
 });
 
 export default persistReducer(persistConfig, rootReducer);

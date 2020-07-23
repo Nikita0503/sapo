@@ -66,10 +66,10 @@ export const setToken = token => ({
     payload: token
 })
 
-export const fetchTokenByEmailPassword = (email, password) => {
+export const fetchTokenByEmailPassword = (email, password, navigation) => {
     return async dispatch => {
         try{
-            const tokenPromise = await fetch('https://app.sapo365.com/login', {
+            const tokenPromise = await fetch('https://app.osbb365.com/login', {
                 method: 'POST',
                 headers: {
                   Accept: 'application/json',
@@ -87,6 +87,7 @@ export const fetchTokenByEmailPassword = (email, password) => {
                 Alert.alert('Невірний логін або пароль', 'Користувач не знайдений');
               }
               dispatch(setToken(token.token))
+              navigation.navigate("Menu")
         } catch (error) {
             console.log("fetchTokenByEmailPassword", "error")
         }

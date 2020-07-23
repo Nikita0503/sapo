@@ -19,7 +19,7 @@ export default class MonthPicker extends React.Component {
             textAlign: 'center',
             fontSize: 16, 
             marginHorizontal: 5 }}>
-              Кв.№ 1
+              Кв.№{this.getAccountIdNumber()}
           </Text>
           {this.getButtonNextAccount()}
         </View>
@@ -31,7 +31,7 @@ export default class MonthPicker extends React.Component {
           textAlign: 'center',
           fontSize: 16, 
           marginHorizontal: 5 }}>
-          25 липня
+            {getCorrectName(this.props.currentWorkPeriod)}
         </Text>
         {this.getButtonNextPeriod()}
         </View>
@@ -46,7 +46,27 @@ export default class MonthPicker extends React.Component {
           title="<"
           color="#364A5F"
           onPress={() => {
-           
+            var index;
+            for(var i = 0; i < this.props.workPeriods.length; i++){
+              if(this.props.currentWorkPeriod == this.props.workPeriods[i]){
+                index = i;
+                break;
+              }
+            }
+            index--;
+            if(index < 0){
+              index = 0;
+            }
+            var currentWorkPeriod = this.props.workPeriods[index];
+            this.props.setCurrentWorkPeriod(currentWorkPeriod);
+            var costsData = null;
+            for(i = 0; i < this.props.allCostsData.length; i++){
+              if(this.props.allCostsData[i].workPeriod == currentWorkPeriod){
+                costsData = this.props.allCostsData[i];
+                break;
+              }
+            }
+            this.props.setCurrentCostsData(costsData);
           }}
         />
     )
@@ -59,7 +79,27 @@ export default class MonthPicker extends React.Component {
           title=">"
           color="#364A5F"
           onPress={() => {
-            
+            var index;
+          for(var i = 0; i < this.props.workPeriods.length; i++){
+            if(this.props.currentWorkPeriod == this.props.workPeriods[i]){
+              index = i;
+              break;
+            }
+          }
+          index++;
+          if(index > this.props.workPeriods.length - 1){
+            index = this.props.workPeriods.length - 1;
+          }
+          var currentWorkPeriod = this.props.workPeriods[index];
+          this.props.setCurrentWorkPeriod(currentWorkPeriod);
+          var costsData = null;
+          for(i = 0; i < this.props.allCostsData.length; i++){
+            if(this.props.allCostsData[i].workPeriod == currentWorkPeriod){
+              costsData = this.props.allCostsData[i];
+              break;
+            }
+          }
+          this.props.setCurrentCostsData(costsData);
           }}
         />
     )
@@ -72,7 +112,19 @@ export default class MonthPicker extends React.Component {
       title="<"
       color="#364A5F"
       onPress={() => {
-        
+        var index;
+        for(var i = 0; i < this.props.accountIds.length; i++){
+          if(this.props.accountId.id == this.props.accountIds[i].id){
+            index = i;
+            break;
+          }
+        }
+        index--;
+        if(index < 0){
+          index = 0;
+        }
+        var accountId = this.props.accountIds[index];
+        this.props.setAccountId(accountId);
       }}
     />);
   }
@@ -84,10 +136,29 @@ export default class MonthPicker extends React.Component {
       title=">"
       color="#364A5F"
       onPress={() => {
-        
+        var index;
+        for(var i = 0; i < this.props.accountIds.length; i++){
+          if(this.props.accountId.id == this.props.accountIds[i].id){
+            index = i;
+            break;
+          }
+        }
+        index++;
+        if(index > this.props.accountIds.length - 1){
+          index = this.props.accountIds.length - 1;
+        }
+        var accountId = this.props.accountIds[index];
+        this.props.setAccountId(accountId);
       }}
     />);
   }
+
+  getAccountIdNumber(){
+    if(this.props.accountId != null){
+      return this.props.accountId.number;
+    }
+  }
+
 }
 
 

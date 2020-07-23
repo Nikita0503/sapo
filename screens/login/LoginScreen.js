@@ -108,8 +108,8 @@ export default class LoginScreen extends React.Component {
         <View style={{margin: 5, width: '70%', marginTop: 10}}>
           <TouchableOpacity
             onPress={() => {
-              //this.props.navigation.navigate("Menu")
-              this.props.fetchTokenByEmailPassword(this.props.email, this.props.password)
+              this.props.fetchTokenByEmailPassword(this.props.email, this.props.password, this.props.navigation)
+              
             }}
             style={{backgroundColor: "#002B2B", alignItems: 'center', justifyContent: 'center', height: 35, borderRadius: 12}}>
               <Text style={{color: 'white', fontSize: 15}}>Увійти</Text>
