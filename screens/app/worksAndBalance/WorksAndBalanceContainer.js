@@ -7,9 +7,7 @@ class WorksAndBalanceContainer extends React.Component{
     render(){
         return(
         <WorksAndBalanceScreen
-            navigation={this.props.navigation}>
-
-        </WorksAndBalanceScreen>)
+            navigation={this.props.navigation}/>)
     }
 }
 

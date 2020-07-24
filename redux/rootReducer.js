@@ -8,6 +8,7 @@ import {homeReducer} from './home/reducers';
 import {headerReducer} from './monthPicker/reducers';
 import {paymentsReducer} from './home/payment/reducers';
 import {accrualHistoryReducer} from './home/accrualHistory/reducers';
+import {applicationsAndOffersReducer} from './requests/reducers'
 
 const persistConfig = {
     key: 'root',
@@ -20,7 +21,8 @@ const rootReducer = combineReducers({
     home: homeReducer,
     header: headerReducer,
     payments: paymentsReducer,
-    accrualHistory: accrualHistoryReducer
+    accrualHistory: accrualHistoryReducer,
+    applicationsAndOffers: applicationsAndOffersReducer
 });
 
 export default persistReducer(persistConfig, rootReducer);

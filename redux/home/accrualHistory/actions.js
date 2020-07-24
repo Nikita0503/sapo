@@ -1,14 +1,14 @@
 
-export const ACCRUALS_DATA = 'ACCRUALS_DATA';
-export const SELECTED_ACCRUALS_DATA = 'SELECTED_ACCRUALS_DATA';
+export const CHANGE_ACCRUALS_DATA = 'CHANGE_ACCRUALS_DATA';
+export const CHANGE_SELECTED_ACCRUALS_DATA = 'CHANGE_SELECTED_ACCRUALS_DATA';
 
 export const setCurrentAccrualsData = currentAccrualsData => ({
-  type: ACCRUALS_DATA,
+  type: CHANGE_ACCRUALS_DATA,
   payload: currentAccrualsData
 });
 
 export const setSelectedAccrualsData = selectedAccrualsData => ({
-  type: SELECTED_ACCRUALS_DATA,
+  type: CHANGE_SELECTED_ACCRUALS_DATA,
   payload: selectedAccrualsData
 });
 

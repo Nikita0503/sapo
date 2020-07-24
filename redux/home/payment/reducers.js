@@ -1,5 +1,5 @@
 import {
-    PAYMENTS_CHANGE_DATA
+    CHANGE_PAYMENTS_DATA
   } from './actions';
   
   const defaultState = {
@@ -9,7 +9,7 @@ import {
   export const paymentsReducer = (state = defaultState, action) => {
     
     switch (action.type) {
-      case PAYMENTS_CHANGE_DATA:
+      case CHANGE_PAYMENTS_DATA:
         return {
           ...state,
           currentPaymentsData: action.payload,

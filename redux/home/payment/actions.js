@@ -1,7 +1,7 @@
-export const PAYMENTS_CHANGE_DATA = 'PAYMENTS_CHANGE_DATA';
+export const CHANGE_PAYMENTS_DATA = 'CHANGE_PAYMENTS_DATA';
 
 export const setCurrentPaymentsData = currentPaymentsData => ({
-  type: PAYMENTS_CHANGE_DATA,
+  type: CHANGE_PAYMENTS_DATA,
   payload: currentPaymentsData
 });
 

@@ -7,9 +7,7 @@ class ActOfReconciliationContainer extends React.Component{
     render(){
         return(
         <ActOfReconciliationScreen
-            navigation={this.props.navigation}>
-
-        </ActOfReconciliationScreen>)
+            navigation={this.props.navigation}/>)
     }
 }
 
@@ -20,7 +18,7 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = {
-
+    
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ActOfReconciliationContainer);
