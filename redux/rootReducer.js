@@ -5,7 +5,9 @@ import AsyncStorage from '@react-native-community/async-storage';
 
 import {loginReducer} from './login/reducers';
 import {homeReducer} from './home/reducers';
-import {headerReducer} from './monthPicker/reducers'
+import {headerReducer} from './monthPicker/reducers';
+import {paymentsReducer} from './home/payment/reducers';
+import {accrualHistoryReducer} from './home/accrualHistory/reducers';
 
 const persistConfig = {
     key: 'root',
@@ -16,7 +18,9 @@ const persistConfig = {
 const rootReducer = combineReducers({
     login: loginReducer,
     home: homeReducer,
-    header: headerReducer
+    header: headerReducer,
+    payments: paymentsReducer,
+    accrualHistory: accrualHistoryReducer
 });
 
 export default persistReducer(persistConfig, rootReducer);

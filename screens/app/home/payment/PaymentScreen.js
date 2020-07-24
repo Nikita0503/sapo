@@ -2,71 +2,15 @@ import * as React from 'react';
 import { Text, View, StyleSheet, Image, FlatList } from 'react-native';
 import PageHeader from "../../../../components/ScreenHeader";
 
-function getDateString(data) {
-  if (data == null) return;
-  var date = new Date(data);
-  var month;
-  switch (date.getMonth()) {
-    case 0:
-      month = ' січ. ';
-      break;
-    case 1:
-      month = ' лют. ';
-      break;
-    case 2:
-      month = ' бер. ';
-      break;
-    case 3:
-      month = ' квіт. ';
-      break;
-    case 4:
-      month = ' трав. ';
-      break;
-    case 5:
-      month = ' черв. ';
-      break;
-    case 6:
-      month = ' лип. ';
-      break;
-    case 7:
-      month = ' серп. ';
-      break;
-    case 8:
-      month = ' вер. ';
-      break;
-    case 9:
-      month = ' жовт. ';
-      break;
-    case 10:
-      month = ' лист. ';
-      break;
-    case 11:
-      month = ' груд. ';
-      break;
-  }
-  return date.getDate() + month + date.getFullYear();
-}
-
-const payments = [
-  {
-    contribution: 'contribution',
-    sum: 100,
-    paymentDate: '20.20.2020',
-    bank: 'bankname'
-  },
-  {
-    contribution: 'contribution2',
-    sum: 200,
-    paymentDate: '10.10.2030',
-    bank: 'bankname2'
-  }
-]
-
-
 export default class PaymentScreen extends React.Component {
 
   constructor(props) {
     super(props);
+    this.props.setCurrentPaymentsData(new Array());
+  }
+
+  componentDidMount(){
+    this.props.fetchPayment(this.props.token, this.props.accountId, this.props.osbbId, this.props.currentWorkPeriod);
   }
 
   render() {
@@ -82,7 +26,7 @@ export default class PaymentScreen extends React.Component {
               <Text style={styles.dataColumnNameStyle}>Банк</Text>
             </View>
             <FlatList
-              data={payments}
+              data={this.props.currentPaymentsData}
               renderItem={({ item }) => <Item contribution={item.contribution} sum={item.sum} paymentDate={item.paymentDate} bank={item.bank}/>}
               keyExtractor={item => item.contribution}
             />

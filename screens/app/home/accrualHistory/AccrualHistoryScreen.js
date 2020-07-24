@@ -16,6 +16,12 @@ export default class AccrualHistoryScreen extends React.Component {
   
   constructor(props) {
     super(props);
+    this.props.setCurrentAccrualsData(new Array());
+    this.props.setSelectedAccrualsData(null);
+  }
+
+  componentDidMount(){
+    this.props.fetchAccrualHistory(this.props.token, this.props.accountId, this.props.osbbId, this.props.currentWorkPeriod);
   }
 
   render() {
@@ -28,7 +34,8 @@ export default class AccrualHistoryScreen extends React.Component {
         />
           <View style={styles.container}>
           {showAccrual(
-            this.props.accrualHistoryCurrentSelectedData
+            this.props.accrualHistoryCurrentSelectedData,
+            this.props.setSelectedAccrualsData
           )}
             <View style={{ flexDirection: 'row' }}>
               <Text style={styles.dataColumnNameStyle}>Внесок</Text>
@@ -39,6 +46,7 @@ export default class AccrualHistoryScreen extends React.Component {
               renderItem={({ item }) => (
                 <Item
                   scrollView={this.scrollView}
+                  onSelectedAccrualsDataChange={this.props.setSelectedAccrualsData}
                   accrualData={item}
                   contribution={item.caption}
                   balance={item.startBalance}
@@ -75,7 +83,7 @@ class Item extends React.Component {
   }
 }
 
-function showAccrual(selectedAccrualsData) {
+function showAccrual(selectedAccrualsData, onSelectedAccrualsDataChange) {
   if (selectedAccrualsData != null) {
     return (
       <View style={styles.containerForSelected}>
