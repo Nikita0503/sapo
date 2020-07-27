@@ -16,7 +16,110 @@ import ScreenHeader from '../../../components/ScreenHeader'
 import MonthPickerContainer from '../../../components/monthPicker/MonthPickerContainer';
 
 export default class ActOfReconciliationScreen extends React.Component {
+  constructor(props) {
+    super(props);
+    this.onFromMonthChange = this.onFromMonthChange.bind(this);
+    this.onFromYearChange = this.onFromYearChange.bind(this);
+    this.onToMonthChange = this.onToMonthChange.bind(this);
+    this.onToYearChange = this.onToYearChange.bind(this);
+    this.onSelectedDataChange = this.onSelectedDataChange.bind(this);
+    this.onShowLoadingChange = this.onShowLoadingChange.bind(this);
+    this.onFromMonthShowChange = this.onFromMonthShowChange.bind(this);
+    this.onFromYearShowChange = this.onFromYearShowChange.bind(this);
+    this.onToMonthShowChange = this.onToMonthShowChange.bind(this);
+    this.onToYearShowChange = this.onToYearShowChange.bind(this);
+  }
+
+  onFromMonthShowChange() {
+    this.props.setFromMonthShow();
+  }
+
+  onFromYearShowChange() {
+    this.props.setFromYearShow();
+  }
+
+  onToMonthShowChange() {
+    this.props.setToMonthShow();
+  }
+
+  onToYearShowChange() {
+    this.props.setToYearShow();
+  }
+
+  onFromMonthChange(fromMonth) {
+    this.props.setFromMonth(fromMonth);
+  }
+
+  onFromYearChange(fromYear) {
+    this.props.setFromYear(fromYear);
+  }
+
+  onToMonthChange(toMonth) {
+    this.props.setToMonth(toMonth);
+  }
+
+  onToYearChange(toYear) {
+    this.props.setToYear(toYear);
+  }
+
+  onSelectedDataChange(selectedData) {
+    this.props.setSelectedData(selectedData);
+  }
+
+  onShowLoadingChange(showLoading){
+    this.props.setShowLoading(showLoading);
+  }
+
+  setStartFromAndTo(){
+    if (this.props.workPeriods == null) {
+      return;
+    }
+    if(this.props.fromMonth == ''){
+      this.onFromYearChange(this.props.workPeriods[0].substring(2, 6));
+      this.onFromMonthChange(this.props.workPeriods[0]);
+      this.onToYearChange(this.props.workPeriods[this.props.workPeriods.length - 1].substring(2, 6));
+      this.onToMonthChange(this.props.workPeriods[this.props.workPeriods.length - 1]);
+    }
+    //console.log("start", this.props.workPeriods)
+  }
+
   render() {
+    function isDisabled(props) {
+      if (
+        props.fromMonth == '' ||
+        props.toMonth == '' ||
+        props.fromYear == '' ||
+        props.fromYear == 'Рік' ||
+        props.toYear == '' ||
+        props.toYear == 'Рік'
+      ) {
+        return true;
+      }
+
+      var d1 = new Date();
+        if(props.fromMonth != null && props.fromMonth.length == 6){
+          d1.setFullYear(parseInt(props.fromMonth.substring(2, 6)));
+          d1.setMonth(parseInt(props.fromMonth.substring(0, 2)) - 1);
+        }
+        d1.setDate(1);
+      
+      
+
+      var d2 = new Date();
+      if(props.toMonth != null && props.toMonth.length == 6){
+        d2.setFullYear(parseInt(props.toMonth.substring(2, 6)));
+        d2.setMonth(parseInt(props.toMonth.substring(0, 2)) - 1);
+      }
+        d2.setDate(1);
+      
+      
+
+      if (d1 >= d2) {
+        return true;
+      }
+      return false;
+    }
+
     return (
       <View>
         <ScrollView>
@@ -28,7 +131,7 @@ export default class ActOfReconciliationScreen extends React.Component {
               <Button
                 disabled={isDisabled(this.props)}
                 title="Відобразити"
-                color="#5682A3"
+                color="#002B2B"
                 onPress={() => {
                   this.onShowLoadingChange(true);
                   fetch(
@@ -88,22 +191,7 @@ export default class ActOfReconciliationScreen extends React.Component {
     );
   }
 
-  setStartFromAndTo(){
-    return
-    if (this.props.workPeriods == null) {
-      return;
-    }
-    if(this.props.fromMonth == ''){
-      this.onFromYearChange(this.props.workPeriods[0].substring(2, 6));
-      this.onFromMonthChange(this.props.workPeriods[0]);
-      this.onToYearChange(this.props.workPeriods[this.props.workPeriods.length - 1].substring(2, 6));
-      this.onToMonthChange(this.props.workPeriods[this.props.workPeriods.length - 1]);
-    }
-    //console.log("start", this.props.workPeriods)
-  }
-
   getPickers(){
-    return
     if(Platform.OS == 'android'){
       return(
       <View>
@@ -177,19 +265,19 @@ export default class ActOfReconciliationScreen extends React.Component {
             <Text style={{marginTop: 20, marginLeft: 10, width: '10%' }}>
               з
             </Text>
-            <View style={{width: '40%', marginTop: 15, marginLeft: 15, borderWidth: 1, padding: 5, borderColor: '#5682A3',  backgroundColor: '#F9F9F9', borderRadius: 3}}>
+            <View style={{width: '40%', marginTop: 15, marginLeft: 15, borderWidth: 1, padding: 5, borderColor: '#002B2B',  backgroundColor: '#F9F9F9', borderRadius: 3}}>
               <TouchableOpacity onPress={() => {this.onFromYearShowChange()}}>
                 <Text
-                  style={{ color: '#5682A3'}}>
+                  style={{ color: '#002B2B'}}>
                   {this.props.fromYear}
                 </Text>
               </TouchableOpacity>
             </View>
   
-            <View style={{width: '40%', marginTop: 15, marginLeft: 15, borderWidth: 1, padding: 5, borderColor: '#5682A3',  backgroundColor: '#F9F9F9', borderRadius: 3}}>
+            <View style={{width: '40%', marginTop: 15, marginLeft: 15, borderWidth: 1, padding: 5, borderColor: '#002B2B',  backgroundColor: '#F9F9F9', borderRadius: 3}}>
               <TouchableOpacity onPress={() => {this.onFromMonthShowChange()}}>
               <Text
-                style={{ color: '#5682A3'}}>
+                style={{ color: '#002B2B'}}>
                 {getMonthByPeriod(this.props.fromMonth)}
               </Text>
               </TouchableOpacity>
@@ -199,18 +287,18 @@ export default class ActOfReconciliationScreen extends React.Component {
             <Text style={{marginTop: 20, marginLeft: 10, width: '10%' }}>
               по
             </Text>
-            <View style={{width: '40%', marginTop: 15, marginLeft: 15, borderWidth: 1, padding: 5, borderColor: '#5682A3',  backgroundColor: '#F9F9F9', borderRadius: 3}}>
+            <View style={{width: '40%', marginTop: 15, marginLeft: 15, borderWidth: 1, padding: 5, borderColor: '#002B2B',  backgroundColor: '#F9F9F9', borderRadius: 3}}>
               <TouchableOpacity onPress={() => {this.onToYearShowChange()}}>
               <Text
-                style={{ color: '#5682A3'}}>
+                style={{ color: '#002B2B'}}>
                 {this.props.toYear}
               </Text>
               </TouchableOpacity>
             </View>
-            <View style={{width: '40%', marginTop: 15, marginLeft: 15, borderWidth: 1, padding: 5, borderColor: '#5682A3',  backgroundColor: '#F9F9F9', borderRadius: 3}}>
+            <View style={{width: '40%', marginTop: 15, marginLeft: 15, borderWidth: 1, padding: 5, borderColor: '#002B2B',  backgroundColor: '#F9F9F9', borderRadius: 3}}>
               <TouchableOpacity onPress={() => {this.onToMonthShowChange()}}>
               <Text
-                style={{ color: '#5682A3'}}>
+                style={{ color: '#002B2B'}}>
                 {getMonthByPeriod(this.props.toMonth)}
               </Text>
               </TouchableOpacity>
@@ -339,8 +427,8 @@ export default class ActOfReconciliationScreen extends React.Component {
     if(this.props.showLoading){
       return(
       <View style={styles.container}>
-        <ActivityIndicator size="large" style={styles.loader} color="#36678D" />
-        <Text style={{color: '#36678D', fontSize: 16, marginTop: 20, alignSelf: 'center'}}>
+        <ActivityIndicator size="large" style={styles.loader} color="#002B2B" />
+        <Text style={{color: '#002B2B', fontSize: 16, marginTop: 20, alignSelf: 'center'}}>
           Зачекайте, дані завантажуються
         </Text>
       </View>)
@@ -451,7 +539,6 @@ function getMonthsItems(year, workPeriods) {
 }
 
 function getMonthByPeriod(data) {
-  return
   var month;
   switch (data.substring(0, 2)) {
     case '01':
@@ -533,6 +620,7 @@ class Item extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
+    borderRadius: 15,
     padding: 5,
     marginLeft: 10,
     marginEnd: 10,

@@ -12,11 +12,12 @@ import {applicationsAndOffersReducer} from './requests/reducers';
 import {addOfferReducer} from './requests/addRequest/reducers';
 import {selectedOfferReducer} from './requests/selectedRequest/reducers';
 import {addCommentToOfferReducer} from './requests/selectedRequest/addComment/reducers';
+import {actOfReconciliationReducer} from './actOfReconciliation/reducers';
 
 const persistConfig = {
     key: 'root',
     storage: AsyncStorage,
-    whitelist: ['']
+    whitelist: ['login']
 }
 
 const rootReducer = combineReducers({
@@ -28,7 +29,8 @@ const rootReducer = combineReducers({
     applicationsAndOffers: applicationsAndOffersReducer,
     addOffer: addOfferReducer,
     selectedOffer: selectedOfferReducer,
-    addCommentToOffer: addCommentToOfferReducer
+    addCommentToOffer: addCommentToOfferReducer,
+    actOfReconciliation: actOfReconciliationReducer
 });
 
 export default persistReducer(persistConfig, rootReducer);
