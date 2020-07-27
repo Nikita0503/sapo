@@ -373,7 +373,6 @@ export default class RequestsScreen extends React.Component {
             </View>
             {this.getLoading()}
             {this.getActiveApplicationsAndOffers()}
-
             {this.getArchieved()}
           </View>
           <ActionButton
@@ -383,7 +382,7 @@ export default class RequestsScreen extends React.Component {
             offsetY={57}
             buttonColor="#002B2B"
             onPress={() => {
-              this.props.navigation.navigate('AddOffer');
+              this.props.navigation.navigate('AddRequest');
             }}
           />
         </ScrollView>
@@ -493,7 +492,7 @@ class Item extends React.Component {
         }}
         onPress={() => {
           this.props.onChangeSelectedOfferData(this.props.fullData);
-          this.props.navigation.navigate('Offer', { title: this.props.name });
+          this.props.navigation.navigate('SelectedRequest',);
         }}>
         <View style={{ flexDirection: 'row', paddingTop: 5 }}>
           <Text style={styles.itemStyle}>{this.props.name}</Text>
