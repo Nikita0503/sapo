@@ -16,11 +16,17 @@ import AddRequestsContainer from './screens/app/requests/addRequest/AddRequestCo
 import SelectedRequestContainer from './screens/app/requests/selectedRequest/SelectedRequestContainer';
 import AddCommentToSelectedRequestContainer from './screens/app/requests/selectedRequest/addComment/AddCommentToSelectedRequestContainer';
 import ProfileContainer from './screens/app/profile/ProfileContainer';
+import AdsContainer from './screens/app/ads/AdsContainer';
+import AddCommentToAdContainer from './screens/app/ads/addComment/AddCommentToAdContainer';
+import ChatsContainer from './screens/app/chats/ChatsContainer';
+import ChatContainer from './screens/app/chats/selectedChat/ChatContainer';
 
 const StackHome = createStackNavigator();
 const StackRequest = createStackNavigator();
 const StackRequests = createStackNavigator();
 const Tab = createBottomTabNavigator();
+const StackAds = createStackNavigator();
+const StackChats = createStackNavigator();
 const Stack = createStackNavigator();
 
 function HomeStackScreen() {
@@ -63,6 +69,24 @@ function Menu() {
   );
 }
 
+function Ads() {
+  return (
+    <StackAds.Navigator>
+      <StackAds.Screen name="Ads" component={AdsContainer} options={{ headerShown: false }}/>
+      <StackAds.Screen name="AddCommentToAd" component={AddCommentToAdContainer} options={{ headerShown: false }}/>
+    </StackAds.Navigator>
+  );
+}
+
+function Chats() {
+  return (
+      <StackChats.Navigator>
+        <StackChats.Screen name="Chats" component={ChatsContainer} options={{ headerShown: false }}/>
+        <StackChats.Screen name="Chat" component={ChatContainer} options={{ headerShown: false }}/>      
+      </StackChats.Navigator>
+  );
+}
+
 function App() {
   return (
     <Provider store={store}>
@@ -72,6 +96,8 @@ function App() {
             <Stack.Screen name="Login" component={LoginContainer} options={{ headerShown: false }}/>
             <Stack.Screen name="Menu" component={Menu} options={{ headerShown: false }}/>
             <Stack.Screen name="Profile" component={ProfileContainer} options={{ headerShown: false }}/>
+            <Stack.Screen name="Ads" component={Ads} options={{ headerShown: false }}/>
+            <Stack.Screen name="Chats" component={Chats} options={{ headerShown: false }} />
           </Stack.Navigator>
         </NavigationContainer>
       </PersistGate>

@@ -51,11 +51,11 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = {
-  setAddOfferTopic: setAddOfferTopic,
-  setAddOfferText: setAddOfferText,
-  setAddOfferSystem: setAddOfferSystem,
-  setAddOfferPublicity: setAddOfferPublicity,
-  setAddOfferButtonSendIsDisabled: setAddOfferButtonSendIsDisabled
+  setAddOfferTopic,
+  setAddOfferText,
+  setAddOfferSystem,
+  setAddOfferPublicity,
+  setAddOfferButtonSendIsDisabled
 };
 
 export default connect(

@@ -9,7 +9,7 @@ import {
   Button,
   ScrollView,
 } from 'react-native';
-import PageHeader from '../../../../components/ScreenHeader';
+import ScreenHeader from '../../../../components/ScreenHeader';
 import DataComponent from '../../../../components/dataComponents/DataComponent';
 
 export default class AccrualHistoryScreen extends React.Component {
@@ -28,7 +28,7 @@ export default class AccrualHistoryScreen extends React.Component {
     return (
       <View>
         <ScrollView ref={ref => {this.scrollView = ref}}>
-        <PageHeader
+        <ScreenHeader
           navigation={this.props.navigation}
           title="Історія нарахувань"
           userData={this.props.userData}

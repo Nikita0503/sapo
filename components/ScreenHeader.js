@@ -41,10 +41,10 @@ const ScreenHeader = props => {
         }}
         rightComponent={
           <View style={{flexDirection: 'row'}}>
-            <TouchableOpacity onPress={() => {}}>           
+            <TouchableOpacity onPress={() => {props.navigation.navigate('Ads');}}>           
                 <Image style={{width: 32, height: 32, marginTop: 5 }} source={require('../content/images/ic_advertisement.png')} />
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => {}}>         
+            <TouchableOpacity onPress={() => {props.navigation.navigate('Chats');}}>         
                 <Image style={styles.icon} source={require('../content/images/ic_chat.png')} />
             </TouchableOpacity>
           </View>
