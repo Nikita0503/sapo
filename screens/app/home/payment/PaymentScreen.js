@@ -16,7 +16,12 @@ export default class PaymentScreen extends React.Component {
   render() {
     return (
       <View style={{ width: '100%', height: '100%', backgroundColor: '#EEEEEE'}}>
-        <PageHeader navigation={this.props.navigation} title="Оплати" />
+        <PageHeader 
+            navigation={this.props.navigation} 
+            title="Оплати" 
+            userData={this.props.userData}
+            imageAvatar={this.props.imageAvatar}
+          />
         <View style={styles.container}>
           <View style={styles.container, {marginTop: 10}}>
             <View style={{flexDirection: 'row'}}>

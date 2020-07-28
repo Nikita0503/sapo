@@ -38,6 +38,7 @@ class HomeContainer extends React.Component {
                 debtData={this.props.debtData}
                 liqpayData={this.props.liqpayData}
                 isActivated={this.props.isActivated}
+                imageAvatar={this.props.imageAvatar}
                 setUserData={this.props.setUserData}
                 setOsbbId={this.props.setOsbbId}
                 setAccountId={this.props.setAccountId}
@@ -73,7 +74,8 @@ const mapStateToProps = state => {
         currentCostsData: state.home.currentCostsData,
         debtData: state.home.debtData,
         liqpayData: state.home.liqpayData,
-        isActivated: state.home.isActivated
+        isActivated: state.home.isActivated,
+        imageAvatar: state.profile.imageAvatar
     }
 }
 

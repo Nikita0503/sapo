@@ -16,6 +16,8 @@ class PaymentContainer extends React.Component {
         accountId={this.props.accountId}
         currentWorkPeriod={this.props.currentWorkPeriod}
         currentPaymentsData={this.props.currentPaymentsData}
+        userData={this.props.userData}
+        imageAvatar={this.props.imageAvatar}
         setCurrentPaymentsData={this.props.setCurrentPaymentsData}
         fetchPayment={this.props.fetchPayment}
       />
@@ -30,6 +32,8 @@ const mapStateToProps = state => {
     accountId: state.home.accountId,
     currentWorkPeriod: state.header.currentWorkPeriod,
     currentPaymentsData: state.payments.currentPaymentsData,
+    userData: state.home.userData,
+    imageAvatar: state.profile.imageAvatar
   };
 };
 

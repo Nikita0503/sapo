@@ -16,6 +16,8 @@ class SelectedRequestContainer extends React.Component {
         selectedOfferData={this.props.selectedOfferData}
         selectedOfferComments={this.props.selectedOfferComments}
         offerSelectedFile={this.props.offerSelectedFile}
+        userData={this.props.userData}
+        imageAvatar={this.props.imageAvatar}
         setSelectedOfferComments={this.props.setSelectedOfferComments}
         setSelectedFile={this.props.setSelectedFile}
       />
@@ -32,7 +34,9 @@ const mapStateToProps = state => {
     currentWorkPeriod: state.header.currentWorkPeriod,
     selectedOfferData: state.applicationsAndOffers.selectedOfferData,
     selectedOfferComments: state.selectedOffer.selectedOfferComments,
-    offerSelectedFile: state.selectedOffer.offerSelectedFile
+    offerSelectedFile: state.selectedOffer.offerSelectedFile,
+    userData: state.home.userData,
+    imageAvatar: state.profile.imageAvatar
   };
 };
 

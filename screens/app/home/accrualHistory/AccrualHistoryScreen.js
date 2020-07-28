@@ -31,6 +31,8 @@ export default class AccrualHistoryScreen extends React.Component {
         <PageHeader
           navigation={this.props.navigation}
           title="Історія нарахувань"
+          userData={this.props.userData}
+          imageAvatar={this.props.imageAvatar}
         />
           <View style={styles.container}>
           {showAccrual(

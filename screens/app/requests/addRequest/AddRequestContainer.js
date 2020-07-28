@@ -22,6 +22,8 @@ class AddRequestContainer extends React.Component {
         addOfferSystem={this.props.addOfferSystem}
         addOfferPublicity={this.props.addOfferPublicity}
         addOfferIsDisabled={this.props.addOfferIsDisabled}
+        userData={this.props.userData}
+        imageAvatar={this.props.imageAvatar}
         setAddOfferTopic={this.props.setAddOfferTopic}
         setAddOfferText={this.props.setAddOfferText}
         setAddOfferSystem={this.props.setAddOfferSystem}
@@ -42,7 +44,9 @@ const mapStateToProps = state => {
     addOfferText: state.addOffer.addOfferText,
     addOfferSystem: state.addOffer.addOfferSystem,
     addOfferPublicity: state.addOffer.addOfferPublicity,
-    addOfferIsDisabled: state.addOffer.addOfferIsDisabled
+    addOfferIsDisabled: state.addOffer.addOfferIsDisabled,
+    userData: state.home.userData,
+    imageAvatar: state.profile.imageAvatar
   };
 };
 

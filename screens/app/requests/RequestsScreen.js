@@ -293,10 +293,11 @@ export default class RequestsScreen extends React.Component {
     return (
       <View
         style={{ width: '100%', height: '100%', backgroundColor: '#EEEEEE' }}>
-        
         <ScreenHeader
           navigation={this.props.navigation}
           title="Заявки та пропозиції"
+          userData={this.props.userData}
+          imageAvatar={this.props.imageAvatar}
         />
         <ScrollView>
           <View style={styles.container}>
@@ -492,7 +493,7 @@ class Item extends React.Component {
         }}
         onPress={() => {
           this.props.onChangeSelectedOfferData(this.props.fullData);
-          this.props.navigation.navigate('SelectedRequest',);
+          this.props.navigation.navigate('SelectedRequest', { title: this.props.name });
         }}>
         <View style={{ flexDirection: 'row', paddingTop: 5 }}>
           <Text style={styles.itemStyle}>{this.props.name}</Text>

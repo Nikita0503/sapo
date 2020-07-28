@@ -15,6 +15,7 @@ import RequestsContainer from './screens/app/requests/RequestsContainer';
 import AddRequestsContainer from './screens/app/requests/addRequest/AddRequestContainer';
 import SelectedRequestContainer from './screens/app/requests/selectedRequest/SelectedRequestContainer';
 import AddCommentToSelectedRequestContainer from './screens/app/requests/selectedRequest/addComment/AddCommentToSelectedRequestContainer';
+import ProfileContainer from './screens/app/profile/ProfileContainer';
 
 const StackHome = createStackNavigator();
 const StackRequest = createStackNavigator();
@@ -70,6 +71,7 @@ function App() {
           <Stack.Navigator>
             <Stack.Screen name="Login" component={LoginContainer} options={{ headerShown: false }}/>
             <Stack.Screen name="Menu" component={Menu} options={{ headerShown: false }}/>
+            <Stack.Screen name="Profile" component={ProfileContainer} options={{ headerShown: false }}/>
           </Stack.Navigator>
         </NavigationContainer>
       </PersistGate>

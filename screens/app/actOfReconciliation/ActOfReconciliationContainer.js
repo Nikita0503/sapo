@@ -35,6 +35,8 @@ class ActOfReconciliationContainer extends React.Component{
                 fromYearShow={this.props.fromYearShow}
                 toMonthShow={this.props.toMonthShow}
                 toYearShow={this.props.toYearShow}
+                userData={this.props.userData}
+                imageAvatar={this.props.imageAvatar}
                 setFromMonth={this.props.setFromMonth}
                 setFromYear={this.props.setFromYear}
                 setToMonth={this.props.setToMonth}
@@ -69,7 +71,9 @@ const mapStateToProps = state => {
         fromMonthShow: state.actOfReconciliation.fromMonthShow,
         fromYearShow: state.actOfReconciliation.fromYearShow,
         toMonthShow: state.actOfReconciliation.toMonthShow,
-        toYearShow: state.actOfReconciliation.toYearShow
+        toYearShow: state.actOfReconciliation.toYearShow,
+        userData: state.home.userData,
+        imageAvatar: state.profile.imageAvatar
     }
 }
 

@@ -29,6 +29,7 @@ class RequestsContainer extends React.Component{
             loading={this.props.loading}
             firstlyOpened={this.props.firstlyOpened}
             displayArchived={this.props.displayArchived}
+            imageAvatar={this.props.imageAvatar}
             setApplicationsAndOffersData={this.props.setApplicationsAndOffersData}
             setApplicationsAndOffersDataClear={
             this.props.setApplicationsAndOffersDataClear
@@ -54,7 +55,8 @@ const mapStateToProps = state => {
         userData: state.home.userData,
         loading: state.applicationsAndOffers.loading,
         firstlyOpened: state.applicationsAndOffers.firstlyOpened,
-        displayArchived: state.applicationsAndOffers.displayArchived
+        displayArchived: state.applicationsAndOffers.displayArchived,
+        imageAvatar: state.profile.imageAvatar
     }
 }
 

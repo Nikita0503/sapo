@@ -6,8 +6,34 @@ const ScreenHeader = props => {
     return (
       <Header
         leftComponent={
-            <TouchableOpacity onPress={() => {}}>
-                <Image style={{width: 40, height: 40, backgroundColor: 'red', borderRadius: 20}} source={require('../content/images/sapoAppLogo.png')} />
+            <TouchableOpacity onPress={() => {
+              props.navigation.navigate('Profile');
+            }}>
+                <Image style={{width: 40, height: 40, borderRadius: 20}} source={
+                    props.imageAvatar == 'deleted' ?
+                    require('../content/images/ic_profile.png') 
+                    :
+                    props.imageAvatar != null ?
+                    {
+                      uri:
+                        'https://app.osbb365.com' +
+                        props.imageAvatar,
+                    }
+                    :
+                    props.userData == null 
+                    ? 
+                    require('../content/images/ic_profile.png') 
+                    :
+                    props.userData.photo == null
+                    ? 
+                    require('../content/images/ic_profile.png')
+                    : 
+                    {
+                        uri:
+                          'https://app.osbb365.com' +
+                          props.userData.photo,
+                    }
+                }/>
             </TouchableOpacity>}
         centerComponent={{
           text: props.title,

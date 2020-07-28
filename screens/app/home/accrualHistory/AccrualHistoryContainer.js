@@ -18,6 +18,8 @@ class AccrualHistoryContainer extends React.Component {
         currentWorkPeriod={this.props.currentWorkPeriod}
         accrualHistoryCurrentData={this.props.accrualHistoryCurrentData}
         accrualHistoryCurrentSelectedData={this.props.accrualHistoryCurrentSelectedData}
+        userData={this.props.userData}
+        imageAvatar={this.props.imageAvatar}
         fetchAccrualHistory={this.props.fetchAccrualHistory}
         setCurrentAccrualsData={this.props.setCurrentAccrualsData}
         setSelectedAccrualsData={this.props.setSelectedAccrualsData}
@@ -34,7 +36,9 @@ const mapStateToProps = state => {
     currentWorkPeriod: state.header.currentWorkPeriod,
     isSelected: state.accrualHistory.isSelected,
     accrualHistoryCurrentData: state.accrualHistory.accrualHistoryCurrentData,
-    accrualHistoryCurrentSelectedData: state.accrualHistory.accrualHistoryCurrentSelectedData
+    accrualHistoryCurrentSelectedData: state.accrualHistory.accrualHistoryCurrentSelectedData,
+    userData: state.home.userData,
+    imageAvatar: state.profile.imageAvatar
   };
 };
 

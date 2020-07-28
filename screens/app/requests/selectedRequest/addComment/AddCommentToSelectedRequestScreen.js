@@ -49,6 +49,8 @@ export default class AddCommentToSelectedRequestScreen extends React.Component {
         <ScreenHeader
           navigation={this.props.navigation}
           title="Додати коментар"
+          userData={this.props.userData}
+          imageAvatar={this.props.imageAvatar}
         />
         <View style={styles.container}>
           <ScrollView style={{width: '90%'}}>

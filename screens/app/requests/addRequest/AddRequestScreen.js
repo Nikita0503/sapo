@@ -75,7 +75,12 @@ export default class AddRequestScreen extends React.Component {
     return (
       <View
         style={{ width: '100%', height: '100%', backgroundColor: '#EEEEEE' }}>
-        <ScreenHeader navigation={this.props.navigation} title="Подати заявку" />
+        <ScreenHeader 
+          navigation={this.props.navigation} 
+          title="Подати заявку"
+          userData={this.props.userData}
+          imageAvatar={this.props.imageAvatar}
+        />
         <View style={styles.container}>
           <ScrollView style={{width: '90%'}}>
             <TextInput

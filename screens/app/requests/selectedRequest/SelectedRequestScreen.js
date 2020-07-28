@@ -344,8 +344,12 @@ export default class SelectedRequestScreen extends React.Component {
     return (
       <View
         style={{ width: '100%', height: '100%', backgroundColor: '#EEEEEE' }}>
-        <ScreenHeader navigation={this.props.navigation} title="Заявка" />
-        
+        <ScreenHeader 
+          navigation={this.props.navigation} 
+          title="Заявка" 
+          userData={this.props.userData}
+          imageAvatar={this.props.imageAvatar}
+        />
         <ScrollView>
           <View style={styles.container}>
             <View style={{ width: '100%', backgroundColor: '#F9F9F9', borderRadius: 15 }}>

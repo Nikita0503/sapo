@@ -14,6 +14,8 @@ class AddCommentToSelectedRequestContainer extends React.Component {
         osbbId={this.props.osbbId}
         accountId={this.props.accountId}
         workPeriods={this.props.workPeriods}
+        userData={this.props.userData}
+        imageAvatar={this.props.imageAvatar}
         addCommentToOfferComment={this.props.addCommentToOfferComment}
         isDisabledButtonSend={this.props.isDisabledButtonSend}
         setAddCommentToOffer={this.props.setAddCommentToOffer}
@@ -32,7 +34,9 @@ const mapStateToProps = state => {
     workPeriods: state.home.workPeriods,
     addCommentToOfferComment: state.addCommentToOffer.addCommentToOfferComment,
     selectedOfferData: state.applicationsAndOffers.selectedOfferData,
-    isDisabledButtonSend: state.addCommentToOffer.isDisabledButtonSend
+    isDisabledButtonSend: state.addCommentToOffer.isDisabledButtonSend,
+    userData: state.home.userData,
+    imageAvatar: state.profile.imageAvatar
   };
 };
 

@@ -13,6 +13,7 @@ import {addOfferReducer} from './requests/addRequest/reducers';
 import {selectedOfferReducer} from './requests/selectedRequest/reducers';
 import {addCommentToOfferReducer} from './requests/selectedRequest/addComment/reducers';
 import {actOfReconciliationReducer} from './actOfReconciliation/reducers';
+import {profileReducer} from './profile/reducers';
 
 const persistConfig = {
     key: 'root',
@@ -30,7 +31,8 @@ const rootReducer = combineReducers({
     addOffer: addOfferReducer,
     selectedOffer: selectedOfferReducer,
     addCommentToOffer: addCommentToOfferReducer,
-    actOfReconciliation: actOfReconciliationReducer
+    actOfReconciliation: actOfReconciliationReducer,
+    profile: profileReducer
 });
 
 export default persistReducer(persistConfig, rootReducer);

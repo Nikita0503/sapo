@@ -134,7 +134,12 @@ export default class HomeScreen extends React.Component {
     return (
       <ScrollView style={{backgroundColor: '#F9F9F9'}}>
         <View style={styles.container}>
-          <ScreenHeader title={"HomeScreen"}/>
+          <ScreenHeader
+            title={"HomeScreen"} 
+            navigation={this.props.navigation}
+            userData={this.props.userData}
+            imageAvatar={this.props.imageAvatar}
+          />
           <MonthPickerContainer/>
           {this.getPayment()}
           {this.getGeneralData()}

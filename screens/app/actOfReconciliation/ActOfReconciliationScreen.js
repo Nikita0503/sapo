@@ -123,7 +123,11 @@ export default class ActOfReconciliationScreen extends React.Component {
     return (
       <View>
         <ScrollView>
-          <ScreenHeader navigation={this.props.navigation} title="Акт звіряння" />
+          <ScreenHeader 
+            navigation={this.props.navigation} 
+            title="Акт звіряння" 
+            userData={this.props.userData}
+            imageAvatar={this.props.imageAvatar}/>
           <MonthPickerContainer />
           <View style={styles.container}>
             {this.getPickers()}
