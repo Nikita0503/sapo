@@ -31,6 +31,9 @@ export default class ChatScreen extends React.Component {
 
   constructor(props) {
     super(props);
+    this.update = this.props.navigation.addListener('focus', () => {
+      this.componentDidMount();
+    });
     this.onChatAllMessagesChange = this.onChatAllMessagesChange.bind(this);
     this.onChatNewMessageChange = this.onChatNewMessageChange.bind(this);
     this.onChatCurrentMessageChange = this.onChatCurrentMessageChange.bind(

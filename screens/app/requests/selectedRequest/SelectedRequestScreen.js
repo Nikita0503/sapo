@@ -138,6 +138,9 @@ function getDate(data) {
 export default class SelectedRequestScreen extends React.Component {
   constructor(props) {
     super(props);
+    this.update = this.props.navigation.addListener('focus', () => {
+      this.componentDidMount();
+    });
     this.onSelectedOfferCommentsChange = this.onSelectedOfferCommentsChange.bind(
       this
     );

@@ -4,20 +4,6 @@ import ScreenHeader from '../../../components/ScreenHeader'
 import MonthPickerContainer from '../../../components/monthPicker/MonthPickerContainer';
 export default class WorksAndBalanceScreen extends React.Component {
 
-  static navigationOptions = () => {
-    return {
-      tabBarOnPress({ navigation, defaultHandler }) {
-        if (navigation.isFocused()) {
-          console.log(123)
-          return;
-        }
-        console.log(234)
-        // tab was not previously focused
-        defaultHandler();
-      }
-    };
-  };
-
   render() {
     return (
       <View style={styles.container}>

@@ -20,6 +20,9 @@ import ImageZoom from 'react-native-image-pan-zoom';
 export default class AdsScreen extends React.Component {
   constructor(props) {
     super(props);
+    this.update = this.props.navigation.addListener('focus', () => {
+      this.componentDidMount();
+    });
     this.onAdvertisementDataChange = this.onAdvertisementDataChange.bind(this);
     this.onAdvertisementOsbbNameChange = this.onAdvertisementOsbbNameChange.bind(
       this

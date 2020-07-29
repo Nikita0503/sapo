@@ -18,9 +18,11 @@ import { NavigationEvents } from 'react-navigation';
 
 export default class PaymentSelectionScreen extends React.Component {
 
-  
   constructor(props) {
-    super(props);
+    super(props); 
+    this.update = this.props.navigation.addListener('focus', () => {
+      this.componentDidMount();
+    });
     this.onLiqpayDataChange = this.onLiqpayDataChange.bind(this);
     this.onChargesDataChange = this.onChargesDataChange.bind(this);
     this.onSelectedChargeChange = this.onSelectedChargeChange.bind(this);

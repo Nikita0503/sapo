@@ -53,6 +53,9 @@ const DATA_CHATS = [
 export default class ScreenChats extends React.Component {
   constructor(props) {
     super(props);
+    this.update = this.props.navigation.addListener('focus', () => {
+      this.componentDidMount();
+    });
     this.onChatsAllChatsChange = this.onChatsAllChatsChange.bind(this);
     this.onChatsAllChatsClear = this.onChatsAllChatsClear.bind(this);
     this.onChatsAllUsersChange = this.onChatsAllUsersChange.bind(this);

@@ -7,6 +7,9 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 export default class WebViewPaymentScreen extends React.Component {
   constructor(props) {
     super(props);
+    this.update = this.props.navigation.addListener('focus', () => {
+      this.componentDidMount();
+    });
     this.state = { isLoading: true };
   }
 

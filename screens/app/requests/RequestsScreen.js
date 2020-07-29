@@ -38,17 +38,11 @@ const DATA_OFFERS = [
 
 export default class RequestsScreen extends React.Component {
 
-  static navigationOptions = () => {
-    return {
-      tabBarOnPress({ navigation, defaultHandler }) {
-        alert(123)
-        defaultHandler();
-      }
-    };
-  };
-
   constructor(props) {
     super(props);
+    this.update = this.props.navigation.addListener('focus', () => {
+      this.componentDidMount();
+    });
     this.onChangeApplicationAndOffersData = this.onChangeApplicationAndOffersData.bind(
       this
     );
@@ -85,7 +79,10 @@ export default class RequestsScreen extends React.Component {
     this.props.setApplicationsAndOffersLoading(loading)
   }
 
+  
+
   componentDidMount() {
+    
     //this.onApplicationsAndOffersLoading(true);
     this.props.setApplicationsAndOffersLoading(true)
     this.onApplicationsAndOffersDataClear();
