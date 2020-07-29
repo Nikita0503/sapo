@@ -20,7 +20,10 @@ import AdsContainer from './screens/app/ads/AdsContainer';
 import AddCommentToAdContainer from './screens/app/ads/addComment/AddCommentToAdContainer';
 import ChatsContainer from './screens/app/chats/ChatsContainer';
 import ChatContainer from './screens/app/chats/selectedChat/ChatContainer';
+import PaymentSelectionContainer from './screens/app/home/liqpay/PaymentSelectionContainer';
+import WebViewPaymentContainer from './screens/app/home/liqpay/paymentWebView/WebViewPaymentContainer';
 
+const StackPayment = createStackNavigator();
 const StackHome = createStackNavigator();
 const StackRequest = createStackNavigator();
 const StackRequests = createStackNavigator();
@@ -29,12 +32,22 @@ const StackAds = createStackNavigator();
 const StackChats = createStackNavigator();
 const Stack = createStackNavigator();
 
+function PaymentStackScreen() {
+  return(
+    <StackPayment.Navigator>
+      <StackPayment.Screen name="PaymentSelection" component={PaymentSelectionContainer} options={{ headerShown: false }} /> 
+      <StackPayment.Screen name="WebViewPayment" component={WebViewPaymentContainer} options={{ headerShown: false }} /> 
+    </StackPayment.Navigator>
+  );
+}
+
 function HomeStackScreen() {
   return (
     <StackHome.Navigator>
       <StackHome.Screen name="Home" component={HomeContainer} options={{ headerShown: false }} />
       <StackHome.Screen name="Payment" component={PaymentContainer} options={{ headerShown: false }} />
       <StackHome.Screen name="AccrualHistory" component={AccrualHistoryContainer} options={{ headerShown: false }}/>
+      <StackHome.Screen name="PaymentSelection" component={PaymentStackScreen} options={{ headerShown: false }} />
     </StackHome.Navigator>
   );
 }
@@ -61,10 +74,10 @@ function RequestsStackScreen() {
 function Menu() {
   return (
     <Tab.Navigator>
-      <Tab.Screen name="Home" component={HomeStackScreen} />
-      <Tab.Screen name="Act" component={ActOfReconciliationContainer} />
-      <Tab.Screen name="Works and balance" component={WorksAndBalanceContainer} />
-      <Tab.Screen name="Requests" component={RequestsStackScreen} />
+      <Tab.Screen name="Головна" component={HomeStackScreen} />
+      <Tab.Screen name="Акт звіряння" component={ActOfReconciliationContainer} />
+      <Tab.Screen name="Роботи та сальдо" component={WorksAndBalanceContainer} />
+      <Tab.Screen name="Заявки" component={RequestsStackScreen} />
     </Tab.Navigator>
   );
 }

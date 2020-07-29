@@ -37,6 +37,16 @@ const DATA_OFFERS = [
 ];
 
 export default class RequestsScreen extends React.Component {
+
+  static navigationOptions = () => {
+    return {
+      tabBarOnPress({ navigation, defaultHandler }) {
+        alert(123)
+        defaultHandler();
+      }
+    };
+  };
+
   constructor(props) {
     super(props);
     this.onChangeApplicationAndOffersData = this.onChangeApplicationAndOffersData.bind(

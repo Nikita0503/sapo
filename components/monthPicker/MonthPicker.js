@@ -19,7 +19,7 @@ export default class MonthPicker extends React.Component {
             textAlign: 'center',
             fontSize: 16, 
             marginHorizontal: 5 }}>
-              Кв.№{this.getAccountIdNumber()}
+              Кв.№ {this.getAccountIdNumber()}
           </Text>
           {this.getButtonNextAccount()}
         </View>
@@ -44,7 +44,7 @@ export default class MonthPicker extends React.Component {
       <Button
           style={{width: '15%'}}
           title="<"
-          color="#364A5F"
+          color={Platform.OS == 'android' ? "#002B2B" : "white"}
           onPress={() => {
             var index;
             for(var i = 0; i < this.props.workPeriods.length; i++){
@@ -77,7 +77,7 @@ export default class MonthPicker extends React.Component {
       <Button
           style={{width: '15%'}}
           title=">"
-          color="#364A5F"
+          color={Platform.OS == 'android' ? "#002B2B" : "white"}
           onPress={() => {
             var index;
           for(var i = 0; i < this.props.workPeriods.length; i++){
@@ -110,7 +110,7 @@ export default class MonthPicker extends React.Component {
     <Button
       style={{width: '15%'}}
       title="<"
-      color="#364A5F"
+      color={Platform.OS == 'android' ? "#002B2B" : "white"}
       onPress={() => {
         var index;
         for(var i = 0; i < this.props.accountIds.length; i++){
@@ -134,7 +134,7 @@ export default class MonthPicker extends React.Component {
     <Button
       style={{width: '15%'}}
       title=">"
-      color="#364A5F"
+      color={Platform.OS == 'android' ? "#002B2B" : "white"}
       onPress={() => {
         var index;
         for(var i = 0; i < this.props.accountIds.length; i++){

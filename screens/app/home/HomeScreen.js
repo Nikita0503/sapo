@@ -135,7 +135,7 @@ export default class HomeScreen extends React.Component {
       <ScrollView style={{backgroundColor: '#F9F9F9'}}>
         <View style={styles.container}>
           <ScreenHeader
-            title={"HomeScreen"} 
+            title={"Головна"} 
             navigation={this.props.navigation}
             userData={this.props.userData}
             imageAvatar={this.props.imageAvatar}
@@ -208,7 +208,7 @@ export default class HomeScreen extends React.Component {
             )
           }else{
             if(this.props.liqpayData[0].liqPayPrivateKey != null){
-              //this.props.navigation.navigate('PaymentSelection');
+              this.props.navigation.navigate('PaymentSelection');
             }else{
               Alert.alert(
                 'Повідомлення',
