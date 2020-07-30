@@ -19,6 +19,8 @@ import {addCommentToAdvertisementReducer} from './ads/addComment/reducers';
 import {allChatsReducer} from './chats/reducers';
 import {selectedChatReducer} from './chats/selectedChat/reducers';
 import {paymentSelectionReducer} from './home/liqpay/reducers';
+import {houseReducer} from './worksAndBalance/reducers';
+import {houseExpensesReducer} from './worksAndBalance/expenses/reducers';
 
 const persistConfig = {
     key: 'root',
@@ -42,7 +44,9 @@ const rootReducer = combineReducers({
     addCommentToAdvertisement: addCommentToAdvertisementReducer,
     allChats: allChatsReducer,
     selectedChat: selectedChatReducer,
-    paymentSelection: paymentSelectionReducer
+    paymentSelection: paymentSelectionReducer,
+    house: houseReducer,
+    houseExpenses: houseExpensesReducer
 });
 
 export default persistReducer(persistConfig, rootReducer);

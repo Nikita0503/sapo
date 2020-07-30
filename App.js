@@ -9,6 +9,7 @@ import LoginContainer from './screens/login/LoginContainer';
 import HomeContainer from './screens/app/home/HomeContainer';
 import ActOfReconciliationContainer from './screens/app/actOfReconciliation/ActOfReconciliationContainer';
 import WorksAndBalanceContainer from './screens/app/worksAndBalance/WorksAndBalanceContainer';
+import ExpensesContainer from './screens/app/worksAndBalance/expenses/ExpensesContainer';
 import PaymentContainer from './screens/app/home/payment/PaymentContainer';
 import AccrualHistoryContainer from './screens/app/home/accrualHistory/AccrualHistoryContainer';
 import RequestsContainer from './screens/app/requests/RequestsContainer';
@@ -25,6 +26,7 @@ import WebViewPaymentContainer from './screens/app/home/liqpay/paymentWebView/We
 
 const StackPayment = createStackNavigator();
 const StackHome = createStackNavigator();
+const StackWorkAndBalance = createStackNavigator();
 const StackRequest = createStackNavigator();
 const StackRequests = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -52,6 +54,15 @@ function HomeStackScreen() {
   );
 }
 
+function StackWorkAndBalanceScreen() {
+  return (
+    <StackWorkAndBalance.Navigator>
+      <StackWorkAndBalance.Screen name="WorksAndBalance" component={WorksAndBalanceContainer} options={{ headerShown: false }}/>
+      <StackWorkAndBalance.Screen name="Expenses" component={ExpensesContainer} options={{ headerShown: false }}/>
+    </StackWorkAndBalance.Navigator>
+  )
+}
+
 function RequestStackScreen() {
   return (
     <StackRequest.Navigator>
@@ -76,7 +87,7 @@ function Menu() {
     <Tab.Navigator>
       <Tab.Screen name="Головна" component={HomeStackScreen} />
       <Tab.Screen name="Акт звіряння" component={ActOfReconciliationContainer} />
-      <Tab.Screen name="Роботи та сальдо" component={WorksAndBalanceContainer} />
+      <Tab.Screen name="Роботи та сальдо" component={StackWorkAndBalanceScreen} />
       <Tab.Screen name="Заявки" component={RequestsStackScreen} />
     </Tab.Navigator>
   );
