@@ -1,7 +1,9 @@
 import * as React from 'react';
+import {Image} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import {Provider} from 'react-redux';
 import {PersistGate} from 'redux-persist/integration/react';
 import {store, persistor} from './redux/store';
@@ -29,7 +31,7 @@ const StackHome = createStackNavigator();
 const StackWorkAndBalance = createStackNavigator();
 const StackRequest = createStackNavigator();
 const StackRequests = createStackNavigator();
-const Tab = createBottomTabNavigator();
+const Tab = createMaterialBottomTabNavigator();
 const StackAds = createStackNavigator();
 const StackChats = createStackNavigator();
 const Stack = createStackNavigator();
@@ -84,11 +86,51 @@ function RequestsStackScreen() {
 
 function Menu() {
   return (
-    <Tab.Navigator>
-      <Tab.Screen name="Головна" component={HomeStackScreen} />
-      <Tab.Screen name="Акт звіряння" component={ActOfReconciliationContainer} />
-      <Tab.Screen name="Роботи та сальдо" component={StackWorkAndBalanceScreen} />
-      <Tab.Screen name="Заявки" component={RequestsStackScreen} />
+    <Tab.Navigator
+        labeled={false}
+        activeColor="#f0edf6"
+        inactiveColor="#3e2465"
+        barStyle={{ backgroundColor: '#002B2B' }} >
+      <Tab.Screen 
+        name="Головна"
+        component={HomeStackScreen} 
+        options={{
+          tabBarIcon: ({ focused }) => <Image resizeMode='contain' style={{width: 40, height: 40}} 
+            source={focused ? 
+              require('./content/images/ic_home_white.png') 
+              :
+              require('./content/images/ic_home_gray.png') }/>
+        }} />
+      <Tab.Screen 
+        name="Акт звіряння" 
+        component={ActOfReconciliationContainer} 
+        options={{
+          tabBarIcon: ({ focused }) => <Image resizeMode='contain' style={{width: 40, height: 40}} 
+            source={focused ? 
+              require('./content/images/ic_text_box_check_white.png') 
+              :
+              require('./content/images/ic_text_box_check_gray.png') }/>
+        }} />
+      <Tab.Screen 
+        name="Роботи та сальдо"
+        component={StackWorkAndBalanceScreen}
+        options={{
+          tabBarIcon: ({ focused }) => <Image resizeMode='contain' style={{width: 40, height: 40}} 
+            source={focused ? 
+              require('./content/images/ic_wrench_white.png') 
+              :
+              require('./content/images/ic_wrench_gray.png') }/>
+        }}  />
+      <Tab.Screen 
+        name="Заявки"
+        component={RequestsStackScreen}
+        options={{
+          tabBarIcon: ({ focused }) => <Image resizeMode='contain' style={{width: 40, height: 40}} 
+            source={focused ? 
+              require('./content/images/ic_map_marker_white.png') 
+              :
+              require('./content/images/ic_map_marker_gray.png') }/>
+        }}  />
     </Tab.Navigator>
   );
 }
