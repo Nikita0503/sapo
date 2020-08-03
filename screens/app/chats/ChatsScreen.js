@@ -83,7 +83,7 @@ export default class ScreenChats extends React.Component {
   componentDidMount() {
     this.onChatsAllChatsClear();
     var ws = new WebSocket(
-      'wss://app.osbb365.com/socket.io/?auth_token=' +
+      'wss://app.sapo365.com/socket.io/?auth_token=' +
         this.props.token +
         '&EIO=3&transport=websocket'
     );
@@ -202,7 +202,7 @@ class Item extends React.Component {
               marginRight: 1,
             }}
             source={{
-              uri: 'https://app.osbb365.com' + this.props.allUsers[i].photo,
+              uri: 'https://app.sapo365.com' + this.props.allUsers[i].photo,
             }}
           />
         );

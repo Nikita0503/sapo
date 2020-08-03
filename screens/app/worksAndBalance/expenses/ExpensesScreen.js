@@ -81,7 +81,7 @@ export default class ExpensesScreen extends React.Component {
 
   componentDidMount() {
     fetch(
-      'https://app.osbb365.com/api/tenant/costs/' +
+      'https://app.sapo365.com/api/tenant/costs/' +
         this.props.expensesGeneralData.id +
         '/transcript?accountId=' +
         this.props.accountId.id +
@@ -189,7 +189,7 @@ export default class ExpensesScreen extends React.Component {
                        imageHeight={300}>
           <Image
             style={{width: 320, height: 300, resizeMode: 'contain'}}
-            source={{uri: 'https://app.osbb365.com' + path}}
+            source={{uri: 'https://app.sapo365.com' + path}}
           /></ImageZoom>)
         case 'png':
           return(
@@ -199,7 +199,7 @@ export default class ExpensesScreen extends React.Component {
                        imageHeight={300}>
           <Image
             style={{width: 320, height: 300, resizeMode: 'contain'}}
-            source={{uri: 'https://app.osbb365.com' + path}}
+            source={{uri: 'https://app.sapo365.com' + path}}
           /></ImageZoom>)
         case 'svg':
           return(<ImageZoom cropWidth={320}
@@ -208,14 +208,14 @@ export default class ExpensesScreen extends React.Component {
             imageHeight={300}>
           <Image
             style={{width: 320, height: 300, resizeMode: 'contain'}}
-            source={{uri: 'https://app.osbb365.com' + path}}
+            source={{uri: 'https://app.sapo365.com' + path}}
           /></ImageZoom>)
         case 'pdf':
           return(
           <PDFReader
             style={{width: 250, maxHeight: 400}}
             source={{
-              uri: 'https://app.osbb365.com' + path,
+              uri: 'https://app.sapo365.com' + path,
             }}
           />
           )

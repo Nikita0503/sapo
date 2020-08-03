@@ -41,7 +41,7 @@ export default class ScreenMyHouse extends React.Component {
 
   componentDidMount() {
     var ws = new WebSocket(
-      'wss://app.osbb365.com/socket.io/?auth_token=' +
+      'wss://app.sapo365.com/socket.io/?auth_token=' +
         this.props.token +
         '&EIO=3&transport=websocket'
     );
@@ -69,7 +69,7 @@ export default class ScreenMyHouse extends React.Component {
 
   fetchHouseCosts(workPeriodIndex) {
     fetch(
-      'https://app.osbb365.com/api/tenant/costs?accountId=' +
+      'https://app.sapo365.com/api/tenant/costs?accountId=' +
         this.props.accountId.id +
         '&osbbId=' +
         this.props.osbbId +

@@ -72,7 +72,7 @@ export default class AdsScreen extends React.Component {
     this.fetchOsbbName();
     console.log('I am triggered123');
     var ws = new WebSocket(
-      'wss://app.osbb365.com/socket.io/?auth_token=' +
+      'wss://app.sapo365.com/socket.io/?auth_token=' +
         this.props.token +
         '&EIO=3&transport=websocket'
     );
@@ -104,7 +104,7 @@ export default class AdsScreen extends React.Component {
 
   fetchCommentsByAdvertisementId(index) {
     var ws = new WebSocket(
-      'wss://app.osbb365.com/socket.io/?auth_token=' +
+      'wss://app.sapo365.com/socket.io/?auth_token=' +
         this.props.token +
         '&EIO=3&transport=websocket'
     );
@@ -141,13 +141,13 @@ export default class AdsScreen extends React.Component {
 
   fetchOsbbName() {
     fetch(
-      'https://app.osbb365.com/api/tenant/osbb?accountId=' +
+      'https://app.sapo365.com/api/tenant/osbb?accountId=' +
         this.props.accountId +
         '&osbbId=' +
         this.props.osbbId +
         '&workPeriod=' +
         this.props.workPeriods[this.props.workPeriods.length - 1],
-      /*'https://app.osbb365.com/api/tenant/osbb?'
+      /*'https://app.sapo365.com/api/tenant/osbb?'
     + 'accountId=' + this.props.accountId
     + '&osbbId=' + this.props.osbbId
     + 'workPeriod=' + this.props.workPeriods[this.props.workPeriods.length-1]*/ {
@@ -195,7 +195,7 @@ getFileShowDialog(){
                        imageHeight={300}>
         <Image
           style={{width: 320, height: 300, resizeMode: 'contain'}}
-          source={{uri: 'https://app.osbb365.com' + path}}
+          source={{uri: 'https://app.sapo365.com' + path}}
         /></ImageZoom>)
       case 'png':
         return(
@@ -205,7 +205,7 @@ getFileShowDialog(){
                        imageHeight={300}>
         <Image
           style={{width: 320, height: 300, resizeMode: 'contain'}}
-          source={{uri: 'https://app.osbb365.com' + path}}
+          source={{uri: 'https://app.sapo365.com' + path}}
         /></ImageZoom>)
       case 'svg':
         return(
@@ -215,19 +215,19 @@ getFileShowDialog(){
                        imageHeight={300}>
         <Image
           style={{width: 320, height: 300, resizeMode: 'contain'}}
-          source={{uri: 'https://app.osbb365.com' + path}}
+          source={{uri: 'https://app.sapo365.com' + path}}
         /></ImageZoom>)
       case 'pdf':
         return(
         <PDFReader
           style={{width: 250, maxHeight: 400}}
           source={{
-            uri: 'https://app.osbb365.com' + path,
+            uri: 'https://app.sapo365.com' + path,
           }}
         />
         ) 
       default: 
-        //download('https://app.osbb365.com' + path)
+        //download('https://app.sapo365.com' + path)
         return(<Text>У розробці...</Text>)
         
     }
@@ -422,7 +422,7 @@ class Item extends React.Component {
               //alert(variant.id);
 
               var ws = new WebSocket(
-                'wss://app.osbb365.com/socket.io/?auth_token=' +
+                'wss://app.sapo365.com/socket.io/?auth_token=' +
                   this.props.token +
                   '&EIO=3&transport=websocket'
               );
@@ -520,7 +520,7 @@ class Item extends React.Component {
 
   fetchSelectedPostComments() {
     var ws = new WebSocket(
-      'wss://app.osbb365.com/socket.io/?auth_token=' +
+      'wss://app.sapo365.com/socket.io/?auth_token=' +
         this.props.token +
         '&EIO=3&transport=websocket'
     );
@@ -750,7 +750,7 @@ class ItemComment extends React.Component {
     return (
       <Image
         source={{
-          uri: 'https://app.osbb365.com' + this.props.photo,
+          uri: 'https://app.sapo365.com' + this.props.photo,
         }}
         style={{
           width: 50,

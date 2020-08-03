@@ -16,7 +16,9 @@ const ACCOUNT_NUMBER_DIALOG_ID = 6;
 
 export default class LoginScreen extends React.Component {
 
-
+  componentDidMount(){
+    this.props.fetchRegionsInfo();
+  }
   
   constructor(props) {
     super(props);
@@ -108,13 +110,15 @@ export default class LoginScreen extends React.Component {
         <View style={{margin: 5, width: '70%', marginTop: 10}}>
           <TouchableOpacity
             onPress={() => {
+              if(this.props.email == null 
+                || this.props.password == null){
+                  return
+                }
               this.props.fetchTokenByEmailPassword(this.props.email, this.props.password, this.props.navigation)
-              
             }}
             style={{backgroundColor: "#002B2B", alignItems: 'center', justifyContent: 'center', height: 35, borderRadius: 12}}>
               <Text style={{color: 'white', fontSize: 15}}>Увійти</Text>
           </TouchableOpacity>
-          
         </View>
     </View>);
   }
@@ -128,27 +132,29 @@ export default class LoginScreen extends React.Component {
           </View>
           
           <TouchableOpacity
+            disabled
             onPress={() => {
               this.props.setShownDialogId(REGION_DIALOG_ID)
               this.props.setSelectedRegion(null)
             }}
             style={{width: '80%', backgroundColor: '#EFEFEF', borderRadius: 12, paddingTop: 6, paddingBottom: 0, paddingHorizontal: 15, marginHorizontal: 5, }}>
             <View style={{borderColor: '#002B2B',  borderBottomWidth: 1, marginBottom: 6, paddingBottom: 2, paddingHorizontal: 2}}>
-              <Text style={this.props.selectedRegion == null ? {fontSize: 15, color: 'gray'} : {fontSize: 15}}>
-              {this.props.selectedRegion == null ? 'Оберіть область' : this.props.selectedRegion}
+              <Text style={this.props.regionsInfo == null ? {fontSize: 15, color: 'gray'} : {fontSize: 15}}>
+                {this.props.regionsInfo == null ? 'Оберіть область' : this.props.regionsInfo.region.name}
               </Text>
             </View>
           </TouchableOpacity>
 
           <TouchableOpacity 
+            disabled
             onPress={() => {
               this.props.setShownDialogId(CITY_DIALOG_ID)
               this.props.setSelectedCity(null)
             }}
             style={{width: '80%', backgroundColor: '#EFEFEF', marginTop: 10, borderRadius: 12, paddingTop: 6, paddingBottom: 0, paddingHorizontal: 15, marginHorizontal: 5, }}>
             <View style={{borderColor: '#002B2B',  borderBottomWidth: 1, marginBottom: 6, paddingBottom: 2, paddingHorizontal: 2}}>
-              <Text style={this.props.selectedCity == null ? {fontSize: 15, color: 'gray'} : {fontSize: 15}}>
-              {this.props.selectedCity == null ? 'Оберіть місто' : this.props.selectedCity}
+              <Text style={this.props.regionsInfo == null ? {fontSize: 15, color: 'gray'} : {fontSize: 15}}>
+                {this.props.regionsInfo == null ? 'Оберіть місто' : this.props.regionsInfo.city.name}
               </Text>
             </View> 
           </TouchableOpacity>
@@ -156,12 +162,14 @@ export default class LoginScreen extends React.Component {
           <TouchableOpacity 
             onPress={() => {
               this.props.setShownDialogId(STREET_DIALOG_ID)
+              this.props.setSelectedFlat(null)
+              this.props.setSelectedHouse(null)
               this.props.setSelectedStreet(null)
             }}
             style={{width: '80%', backgroundColor: '#EFEFEF', marginTop: 10, borderRadius: 12, paddingTop: 6, paddingBottom: 0, paddingHorizontal: 15, marginHorizontal: 5, }}>
             <View style={{borderColor: '#002B2B',  borderBottomWidth: 1, marginBottom: 6, paddingBottom: 2, paddingHorizontal: 2}}>
               <Text style={this.props.selectedStreet == null ? {fontSize: 15, color: 'gray'} : {fontSize: 15}}>
-              {this.props.selectedStreet == null ? 'Оберіть вулицю' : this.props.selectedStreet}
+                {this.props.selectedStreet == null ? 'Оберіть вулицю' : this.props.selectedStreet.name}
               </Text>
             </View> 
           </TouchableOpacity>
@@ -169,12 +177,13 @@ export default class LoginScreen extends React.Component {
           <TouchableOpacity 
             onPress={() => {
               this.props.setShownDialogId(HOUSE_DIALOG_ID)
+              this.props.setSelectedFlat(null)
               this.props.setSelectedHouse(null)
             }}
             style={{width: '80%', backgroundColor: '#EFEFEF', marginTop: 10, borderRadius: 12, paddingTop: 6, paddingBottom: 0, paddingHorizontal: 15, marginHorizontal: 5, }}>
             <View style={{borderColor: '#002B2B',  borderBottomWidth: 1, marginBottom: 6, paddingBottom: 2, paddingHorizontal: 2}}>
               <Text style={this.props.selectedHouse == null ? {fontSize: 15, color: 'gray'} : {fontSize: 15}}>
-              {this.props.selectedHouse == null ? 'Оберіть будинок' : this.props.selectedHouse}
+                {this.props.selectedHouse == null ? 'Оберіть будинок' : this.props.selectedHouse}
               </Text>
             </View> 
           </TouchableOpacity>
@@ -187,7 +196,7 @@ export default class LoginScreen extends React.Component {
             style={{width: '80%', backgroundColor: '#EFEFEF', marginTop: 10, borderRadius: 12, paddingTop: 6, paddingBottom: 0, paddingHorizontal: 15, marginHorizontal: 5, }}>
             <View style={{borderColor: '#002B2B',  borderBottomWidth: 1, marginBottom: 6, paddingBottom: 2, paddingHorizontal: 2}}>
               <Text style={this.props.selectedFlat == null ? {fontSize: 15, color: 'gray'} : {fontSize: 15}}>
-              {this.props.selectedFlat == null ? 'Оберіть квартиру' : this.props.selectedFlat}
+                {this.props.selectedFlat == null ? 'Оберіть квартиру' : this.props.selectedFlat}
               </Text>
             </View> 
           </TouchableOpacity>
@@ -208,8 +217,19 @@ export default class LoginScreen extends React.Component {
           <View style={{margin: 5, width: '80%', marginTop: 15, marginBottom: 20}}>
             <TouchableOpacity
               onPress={() => {
-                //this.props.navigation.navigate("Menu")
-                this.props.fetchTokenByAddress()
+                if(this.props.regionsInfo == null
+                  || this.props.selectedStreet == null
+                  || this.props.selectedHouse == null
+                  || this.props.selectedFlat == null
+                  || this.props.selectedAccountNumber == null){
+                    return
+                  }
+                this.props.fetchTokenByAddress(this.props.regionsInfo, 
+                  this.props.selectedStreet.id, 
+                  this.props.selectedHouse,
+                  this.props.selectedFlat,
+                  this.props.selectedAccountNumber,
+                  this.props.navigation)
               }}
               style={{backgroundColor: "#002B2B", alignItems: 'center', justifyContent: 'center', height: 35, borderRadius: 12}}>
                 <Text style={{color: 'white', fontSize: 15}}>Увійти</Text>
@@ -222,15 +242,9 @@ export default class LoginScreen extends React.Component {
   }  
 
   getRegionDialog(){
-    var items = [
-      { id: 1, name: 'Київська',},
-      { id: 2, name: 'Дніпровська',},
-      { id: 3, name: 'Харківська',},
-      { id: 4, name: 'Запорізька',},
-      { id: 5, name: 'Вінницька',},
-      { id: 6, name: 'Волинська',},
-      { id: 7, name: 'Рівненська',},
-      { id: 8, name: 'Сумська',},
+    if(this.props.regionsInfo == null) return;
+    let regions = [
+      this.props.regionsInfo.region
     ];
     return(
       <Dialog.Container visible={this.props.shownDialogId == REGION_DIALOG_ID ? true : false}>
@@ -239,14 +253,14 @@ export default class LoginScreen extends React.Component {
         </Dialog.Title>
         <SearchableDropdown
             onItemSelect={(item) => {
-              this.props.setSelectedRegion(item.name)
+              this.props.setSelectedRegion(item)
             }}
             containerStyle={{ paddingHorizontal: 10, paddingVertical: 5 }}
             itemStyle={{
               padding: 10              
             }}
             itemsContainerStyle={{ maxHeight: 140, borderRadius: 12 }}
-            items={items}
+            items={regions}
             textInputProps={
               {
                 placeholder: "Область",
@@ -262,7 +276,7 @@ export default class LoginScreen extends React.Component {
                   paddingBottom: 1,
                   marginBottom: 1
                 },
-                onTextChange: text => {this.props.setSelectedRegion(text)}
+                onTextChange: text => {}
               }
             }
             listProps={
@@ -281,15 +295,9 @@ export default class LoginScreen extends React.Component {
   }
 
   getCityDialog(){
-    var items2 = [
-      { id: 1, name: 'Київ',},
-      { id: 2, name: 'Дніпро',},
-      { id: 3, name: 'Харків',},
-      { id: 4, name: 'Кривий Ріг',},
-      { id: 5, name: 'Вінниця',},
-      { id: 6, name: 'Львів',},
-      { id: 7, name: 'Чернівці',},
-      { id: 8, name: 'Умань',},
+    if(this.props.regionsInfo == null) return;
+    let cities = [
+      this.props.regionsInfo.city
     ];
     return(
     <Dialog.Container visible={this.props.shownDialogId == CITY_DIALOG_ID ? true : false}>
@@ -298,14 +306,14 @@ export default class LoginScreen extends React.Component {
       </Dialog.Title>
       <SearchableDropdown
           onItemSelect={(item) => {
-            this.props.setSelectedCity(item.name)
+            this.props.setSelectedCity(item)
           }}
           containerStyle={{ paddingHorizontal: 10, paddingVertical: 5 }}
           itemStyle={{
             padding: 10              
           }}
           itemsContainerStyle={{ maxHeight: 140, borderRadius: 12 }}
-          items={items2}
+          items={cities}
           textInputProps={
             {
               placeholder: "Місто",
@@ -321,7 +329,7 @@ export default class LoginScreen extends React.Component {
                 paddingBottom: 1,
                 marginBottom: 1
               },
-              onTextChange: text => {this.props.setSelectedCity(text)}
+              onTextChange: text => {}
             }
           }
           listProps={
@@ -340,13 +348,7 @@ export default class LoginScreen extends React.Component {
   }
 
   getStreetDialog(){
-    var items3 = [
-      { id: 1, name: 'Ватутіна',},
-      { id: 2, name: 'Кропівницького',},
-      { id: 3, name: 'Хрещатик',},
-      { id: 4, name: 'Криворіжсталі',},
-      { id: 5, name: 'Університет',},
-    ];
+    if(this.props.regionsInfo == null) return;
     return(
       <Dialog.Container visible={this.props.shownDialogId == STREET_DIALOG_ID ? true : false}>
         <Dialog.Title>
@@ -354,14 +356,14 @@ export default class LoginScreen extends React.Component {
         </Dialog.Title>
         <SearchableDropdown
             onItemSelect={(item) => {
-              this.props.setSelectedStreet(item.name)
+              this.props.setSelectedStreet(item)
             }}
             containerStyle={{ paddingHorizontal: 10, paddingVertical: 5 }}
             itemStyle={{
               padding: 10              
             }}
             itemsContainerStyle={{ maxHeight: 140, borderRadius: 12 }}
-            items={items3}
+            items={this.props.regionsInfo.streets}
             textInputProps={
               {
                 placeholder: "Вулиця",
@@ -377,7 +379,7 @@ export default class LoginScreen extends React.Component {
                   paddingBottom: 1,
                   marginBottom: 1
                 },
-                onTextChange: text => {this.props.setSelectedStreet(text)}
+                onTextChange: text => {}
               }
             }
             listProps={
@@ -396,13 +398,21 @@ export default class LoginScreen extends React.Component {
   }
 
   getHouseDialog(){
-    var items4 = [
-      { id: 1, name: '1А',},
-      { id: 2, name: '1Б',},
-      { id: 3, name: '2',},
-      { id: 4, name: '3',},
-      { id: 5, name: '4',},
-    ];
+    if(this.props.selectedStreet == null) return;
+    let houses;
+    for(let allHouses of this.props.regionsInfo.houses){
+      if(allHouses.streetId === this.props.selectedStreet.id){
+        houses = allHouses.array_agg
+        break
+      }
+    }
+    let result = new Array();
+    for(let key in houses){
+      result.push({
+        id: key,
+        name: houses[key]
+      })
+    }
     return(
       <Dialog.Container visible={this.props.shownDialogId == HOUSE_DIALOG_ID ? true : false}>
         <Dialog.Title>
@@ -417,7 +427,7 @@ export default class LoginScreen extends React.Component {
               padding: 10              
             }}
             itemsContainerStyle={{ maxHeight: 140, borderRadius: 12 }}
-            items={items4}
+            items={result}
             textInputProps={
               {
                 placeholder: "Будинок",
@@ -433,7 +443,7 @@ export default class LoginScreen extends React.Component {
                   paddingBottom: 1,
                   marginBottom: 1
                 },
-                onTextChange: text => {this.props.setSelectedHouse(text)}
+                onTextChange: text => {}
               }
             }
             listProps={
@@ -452,13 +462,22 @@ export default class LoginScreen extends React.Component {
   }
 
   getFlatDialog(){
-    var items5 = [
-      { id: 1, name: '1',},
-      { id: 2, name: '3',},
-      { id: 3, name: '5',},
-      { id: 4, name: '6',},
-      { id: 5, name: '8',},
-    ];
+    if(this.props.selectedHouse == null) return;
+    let flats;
+    for(let allFlats of this.props.regionsInfo.flats){
+      if(allFlats.streetId === this.props.selectedStreet.id
+        && allFlats.house === this.props.selectedHouse){
+          flats = allFlats.array_agg
+          break
+      }
+    }
+    let result = new Array();
+    for(let key in flats){
+      result.push({
+        id: key,
+        name: flats[key]
+      })
+    }
     return(
       <Dialog.Container visible={this.props.shownDialogId == FLAT_DIALOG_ID ? true : false}>
         <Dialog.Title>
@@ -473,7 +492,7 @@ export default class LoginScreen extends React.Component {
               padding: 10              
             }}
             itemsContainerStyle={{ maxHeight: 140, borderRadius: 12 }}
-            items={items5}
+            items={result}
             textInputProps={
               {
                 placeholder: "Квартира",
@@ -489,7 +508,7 @@ export default class LoginScreen extends React.Component {
                   paddingBottom: 1,
                   marginBottom: 1
                 },
-                onTextChange: text => {this.props.setSelectedFlat(text)}
+                onTextChange: text => {}
               }
             }
             listProps={
@@ -509,8 +528,7 @@ export default class LoginScreen extends React.Component {
 
   getAccountNumberDialog(){
     return(
-      <Dialog.Container 
-        
+      <Dialog.Container     
         visible={this.props.shownDialogId == ACCOUNT_NUMBER_DIALOG_ID ? true : false}>
         <Dialog.Title>
           Введіть номер рахунку
@@ -527,9 +545,7 @@ export default class LoginScreen extends React.Component {
           }}
         />
       </Dialog.Container>);
-  }
-
-  
+  } 
 }
 
 const styles = StyleSheet.create({

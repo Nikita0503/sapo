@@ -65,7 +65,7 @@ export default class PaymentSelectionScreen extends React.Component {
 
   fetchLiqpayData() {
     fetch(
-      'https://app.osbb365.com/api/tenant/checkLiqPay?accountId=' +
+      'https://app.sapo365.com/api/tenant/checkLiqPay?accountId=' +
         this.props.accountId.id +
         '&osbbId=' +
         this.props.osbbId +
@@ -92,7 +92,7 @@ export default class PaymentSelectionScreen extends React.Component {
   fetchChargesData() {
     //console.log('fetchChargesData', this.props);
     fetch(
-      'https://app.osbb365.com/api/tenant/charges/total?accountId=' +
+      'https://app.sapo365.com/api/tenant/charges/total?accountId=' +
         this.props.accountId.id +
         '&osbbId=' +
         this.props.osbbId +

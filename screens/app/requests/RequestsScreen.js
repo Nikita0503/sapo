@@ -87,7 +87,7 @@ export default class RequestsScreen extends React.Component {
     this.props.setApplicationsAndOffersLoading(true)
     this.onApplicationsAndOffersDataClear();
     var ws = new WebSocket(
-      'wss://app.osbb365.com/socket.io/?auth_token=' +
+      'wss://app.sapo365.com/socket.io/?auth_token=' +
         this.props.token +
         '&EIO=3&transport=websocket'
     );
@@ -452,7 +452,7 @@ class Item extends React.Component {
                   [
                     {text: 'Так', onPress: () => {
                       var ws = new WebSocket(
-                        'wss://app.osbb365.com/socket.io/?auth_token=' +
+                        'wss://app.sapo365.com/socket.io/?auth_token=' +
                           this.props.token +
                           '&EIO=3&transport=websocket'
                       );

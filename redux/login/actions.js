@@ -10,6 +10,7 @@ export const CHANGE_SELECTED_HOUSE = 'CHANGE_SELECTED_HOUSE';
 export const CHANGE_SELECTED_FLAT = 'CHANGE_SELECTED_FLAT';
 export const CHANGE_SELECTED_ACCOUNT_NUMBER = 'CHANGE_SELECTED_ACCOUNT_NUMBER';
 export const CHANGE_TOKEN = 'CHANGE_TOKEN';
+export const CHANGE_REGIONS_INFO = 'CHANGE_REGIONS_INFO';
 
 export const setCurrentTab = currentTab => ({
     type: CHANGE_CURRENT_TAB,
@@ -66,10 +67,15 @@ export const setToken = token => ({
     payload: token
 })
 
+export const setRegionsInfo = regionsInfo => ({
+    type: CHANGE_REGIONS_INFO,
+    payload: regionsInfo
+})
+
 export const fetchTokenByEmailPassword = (email, password, navigation) => {
     return async dispatch => {
         try{
-            const tokenPromise = await fetch('https://app.osbb365.com/login', {
+            const tokenPromise = await fetch('https://app.sapo365.com/login', {
                 method: 'POST',
                 headers: {
                   Accept: 'application/json',
@@ -80,21 +86,25 @@ export const fetchTokenByEmailPassword = (email, password, navigation) => {
                   password: password
                 }),
               });
-
               const token = await tokenPromise.json();
-              console.log("fetchTokenByEmailPassword", token.token);
               if(token.token == undefined) {
                 Alert.alert('Невірний логін або пароль', 'Користувач не знайдений');
               }
               dispatch(setToken(token.token))
               navigation.navigate("Menu")
+              console.log("fetchTokenByEmailPassword", token.token);
         } catch (error) {
             console.log("fetchTokenByEmailPassword", "error")
         }
     }
 }
 
-export const fetchTokenByAddress = () => {
+export const fetchTokenByAddress = (regionsInfo, 
+    selectedStreet, 
+    selectedHouse, 
+    selectedFlat, 
+    selectedAccountNumber,
+    navigation) => {
     return async dispatch => {
         try{
             const tokenPromise = await fetch('https://app.sapo365.com/auth', {
@@ -104,19 +114,39 @@ export const fetchTokenByAddress = () => {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    regionId: 1,
-                    cityId: 1,
-                    street: 1,
-                    house: '3b',
-                    flat: '23',
-                    code: '208382-1'
+                    regionId: regionsInfo.region.id,
+                    cityId: regionsInfo.city.id,
+                    street: {id: selectedStreet},
+                    house: selectedHouse,
+                    flat: selectedFlat,
+                    code: selectedAccountNumber
                 }),
-                });
-                
+                }); 
               const token = await tokenPromise.json();
-              console.log("fetchTokenByAddress", token)
+              dispatch(setToken(token.token))
+              navigation.navigate("Menu")
+              console.log("fetchTokenByAddress", token.token)
         } catch (error) {
             console.log("fetchTokenByAddress", "error");
+        }
+    }
+}
+
+export const fetchRegionsInfo = () => {
+    return async dispatch => {
+        try {
+            const regionsInfoPromise = await fetch('https://app.sapo365.com/auth/osbb/2', {
+                method: 'GET',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                }
+            });
+            const regionsInfo = await regionsInfoPromise.json();
+            console.log("fetchRegionsInfo", regionsInfo.region);
+            dispatch(setRegionsInfo(regionsInfo));
+        } catch (error) {
+            console.log("fetchRegionsInfo", "error");
         }
     }
 }

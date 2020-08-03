@@ -24,7 +24,7 @@ import ImageZoom from 'react-native-image-pan-zoom';
 
 export default class ChatScreen extends React.Component {
   ws = new WebSocket(
-    'wss://app.osbb365.com/socket.io/?auth_token=' +
+    'wss://app.sapo365.com/socket.io/?auth_token=' +
       this.props.token +
       '&EIO=3&transport=websocket'
   );
@@ -103,7 +103,7 @@ export default class ChatScreen extends React.Component {
       type: 'image/jpeg',
     });
 
-    fetch('https://app.osbb365.com/api/upload/photo?accountId=' + this.props.accountId + '&osbbId=' + this.props.osbbId +'&type=photo&workPeriod=' + this.props.workPeriods[this.props.workPeriods.length - 1], {
+    fetch('https://app.sapo365.com/api/upload/photo?accountId=' + this.props.accountId + '&osbbId=' + this.props.osbbId +'&type=photo&workPeriod=' + this.props.workPeriods[this.props.workPeriods.length - 1], {
       method: 'post',
       headers: {
         'Content-Type': 'multipart/form-data',
@@ -362,7 +362,7 @@ export default class ChatScreen extends React.Component {
                        imageHeight={300}>
           <Image
             style={{width: 320, height: 300, resizeMode: 'contain'}}
-            source={{uri: 'https://app.osbb365.com' + path}}
+            source={{uri: 'https://app.sapo365.com' + path}}
           /></ImageZoom>)
         case 'png':
           return(
@@ -372,7 +372,7 @@ export default class ChatScreen extends React.Component {
                        imageHeight={300}>
           <Image
             style={{width: 320, height: 300, resizeMode: 'contain'}}
-            source={{uri: 'https://app.osbb365.com' + path}}
+            source={{uri: 'https://app.sapo365.com' + path}}
           /></ImageZoom>)
         case 'svg':
           return(
@@ -382,14 +382,14 @@ export default class ChatScreen extends React.Component {
                        imageHeight={300}>
           <Image
             style={{width: 320, height: 300, resizeMode: 'contain'}}
-            source={{uri: 'https://app.osbb365.com' + path}}
+            source={{uri: 'https://app.sapo365.com' + path}}
           /></ImageZoom>)
         case 'pdf':
           return(
           <PDFReader
             style={{width: 250, maxHeight: 400}}
             source={{
-              uri: 'https://app.osbb365.com' + path,
+              uri: 'https://app.sapo365.com' + path,
             }}
           />
           )
@@ -512,7 +512,7 @@ function getImage(image, onChatSelectedFileChange) {
         <Image
           style={{ width: 150, height: 150 }}
           resizeMode="contain"
-          source={{ uri: 'https://app.osbb365.com' + image }}
+          source={{ uri: 'https://app.sapo365.com' + image }}
         />
         </TouchableOpacity>
       );
@@ -533,7 +533,7 @@ function getImage(image, onChatSelectedFileChange) {
         <Image
           style={{ width: 150, height: 150 }}
           resizeMode="contain"
-          source={{ uri: 'https://app.osbb365.com' + image }}
+          source={{ uri: 'https://app.sapo365.com' + image }}
         />
         </TouchableOpacity>
       );
@@ -554,7 +554,7 @@ function getImage(image, onChatSelectedFileChange) {
         <Image
           style={{ width: 150, height: 150 }}
           resizeMode="contain"
-          source={{ uri: 'https://app.osbb365.com' + image }}
+          source={{ uri: 'https://app.sapo365.com' + image }}
         />
         </TouchableOpacity>
       );

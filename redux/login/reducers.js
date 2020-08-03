@@ -8,7 +8,9 @@ import {CHANGE_CURRENT_TAB,
      CHANGE_SELECTED_HOUSE,
      CHANGE_SELECTED_FLAT,
      CHANGE_SELECTED_ACCOUNT_NUMBER,
-     CHANGE_TOKEN} from './actions';
+     CHANGE_TOKEN,
+     CHANGE_REGIONS_INFO,
+    } from './actions';
 
 const defaultState = {
     currentTab: 0,
@@ -21,7 +23,8 @@ const defaultState = {
     selectedHouse: null,
     selectedFlat: null,
     selectedAccountNumber: null,
-    token: null
+    token: null,
+    regionsInfo: null
 }
 
 export const loginReducer = (state = defaultState, action) => {
@@ -81,6 +84,11 @@ export const loginReducer = (state = defaultState, action) => {
                 ...state,
                 token: action.payload
             }
+        case CHANGE_REGIONS_INFO:
+            return {
+                ...state,
+                regionsInfo: action.payload
+            }    
     }
     return state;
 }

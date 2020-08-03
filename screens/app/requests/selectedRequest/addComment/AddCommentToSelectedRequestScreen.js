@@ -92,7 +92,7 @@ export default class AddCommentToSelectedRequestScreen extends React.Component {
               }
               this.onIsDisabledButtonSendChange(true);
               var ws = new WebSocket(
-                'wss://app.osbb365.com/socket.io/?auth_token=' +
+                'wss://app.sapo365.com/socket.io/?auth_token=' +
                   this.props.token +
                   '&EIO=3&transport=websocket'
               );

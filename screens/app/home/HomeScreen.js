@@ -96,7 +96,7 @@ export default class HomeScreen extends React.Component {
 
   componentDidMount() {
     this.onClearState()
-    fetch('https://app.osbb365.com/api/user/me', {
+    fetch('https://app.sapo365.com/api/user/me', {
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
@@ -477,7 +477,7 @@ function fetchDebt(token, accountIds, osbbId, lastWorkPeriod, onDebtDataChange) 
 
 function fetchDebtByAccountId(token, accountIds, index, osbbId, lastWorkPeriod, onDebtDataChange){
   fetch(
-    'https://app.osbb365.com/api/tenant/charges/total?accountId=' +
+    'https://app.sapo365.com/api/tenant/charges/total?accountId=' +
       accountIds[index].id +
       '&osbbId=' +
       osbbId +
@@ -529,7 +529,7 @@ function fetchApartmentData(
   onSetIsActivatedChange
 ) {
   var ws = new WebSocket(
-    'wss://app.osbb365.com/socket.io/?auth_token=' +
+    'wss://app.sapo365.com/socket.io/?auth_token=' +
       token +
       '&EIO=3&transport=websocket'
   );
@@ -601,7 +601,7 @@ function fetchApartmentData(
 
 function fetchLiqpayData(accountId, osbbId, workPeriod, token, onLiqpayDataChange){
   fetch(
-    'https://app.osbb365.com/api/tenant/checkLiqPay?accountId=' +
+    'https://app.sapo365.com/api/tenant/checkLiqPay?accountId=' +
       accountId +
       '&osbbId=' +
       osbbId +
@@ -653,7 +653,7 @@ function fetchGeneralDataApartment(
   userAccounts
 ) {
   var requestString =
-    'https://app.osbb365.com/api/tenant/charges/total?' +
+    'https://app.sapo365.com/api/tenant/charges/total?' +
     'accountId=' +
     accountId.id +
     '&osbbId=' +
@@ -750,7 +750,7 @@ function fetchCostsDataByPeriod(
   osbbId
 ) {
   fetch(
-    'https://app.osbb365.com/api/tenant/costs?accountId=' +
+    'https://app.sapo365.com/api/tenant/costs?accountId=' +
       accountId +
       '&osbbId=' +
       osbbId +

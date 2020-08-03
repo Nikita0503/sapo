@@ -72,7 +72,7 @@ export default class WebViewPaymentScreen extends React.Component {
   }
 
   _onNavigationStateChange(webViewState){
-    if(webViewState.url == 'https://osbb365.com/tenant#/home'){
+    if(webViewState.url == 'https://sapo365.com/tenant#/home'){
       //this.props.navigation.goBack(null)
       //this.props.navigation.navigate('PaymentSelection');
       this.backAction()
@@ -117,7 +117,7 @@ export default class WebViewPaymentScreen extends React.Component {
         <View style={{width: '90%', height: '80%', justifyContent: 'center', alignSelf: 'center', borderBottomWidth: 1, borderStartWidth: 1, borderRightWidth: 1, borderTopWidth: 1, borderColor: 'green'}}>
         {this.getWebView()}
         </View>
-        <Text style={{backgroundColor: "white", padding: 10, textAlign: 'center', color: "#002B2B"}}>Оплата відобразиться у додатку після її обробки бухгалтером ОСББ</Text>
+        <Text style={{backgroundColor: "white", padding: 10, textAlign: 'center', color: "#002B2B"}}>Оплата відобразиться у додатку після її обробки бухгалтером САПО</Text>
       </View>
       </View>
     );

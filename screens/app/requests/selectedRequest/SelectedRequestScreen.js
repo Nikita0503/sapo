@@ -231,7 +231,7 @@ export default class SelectedRequestScreen extends React.Component {
 
   componentDidMount() {
     var ws = new WebSocket(
-      'wss://app.osbb365.com/socket.io/?auth_token=' +
+      'wss://app.sapo365.com/socket.io/?auth_token=' +
         this.props.token +
         '&EIO=3&transport=websocket'
     );
@@ -456,26 +456,26 @@ export default class SelectedRequestScreen extends React.Component {
           return(
           <Image
             style={{width: 320, height: 300, resizeMode: 'contain'}}
-            source={{uri: 'https://app.osbb365.com' + path}}
+            source={{uri: 'https://app.sapo365.com' + path}}
           />)
         case 'png':
           return(
           <Image
             style={{width: 320, height: 300, resizeMode: 'contain'}}
-            source={{uri: 'https://app.osbb365.com' + path}}
+            source={{uri: 'https://app.sapo365.com' + path}}
           />)
         case 'svg':
           return(
           <Image
             style={{width: 320, height: 300, resizeMode: 'contain'}}
-            source={{uri: 'https://app.osbb365.com' + path}}
+            source={{uri: 'https://app.sapo365.com' + path}}
           />)
         case 'pdf':
           return(
           <PDFReader
             style={{width: 250, maxHeight: 400}}
             source={{
-              uri: 'https://app.osbb365.com' + path,
+              uri: 'https://app.sapo365.com' + path,
             }}
           />
           )
@@ -502,7 +502,7 @@ class ItemComment extends React.Component {
               borderRadius: 25
             }}
             source={{
-              uri: 'https://app.osbb365.com' + this.props.user.photo,
+              uri: 'https://app.sapo365.com' + this.props.user.photo,
             }}
           />
           <View>

@@ -84,7 +84,7 @@ export default class AddCommentToAdScreen extends React.Component {
               }
               this.onAddCommentToAdvertisementButtonSendChange(true)
               var ws = new WebSocket(
-                'wss://app.osbb365.com/socket.io/?auth_token=' +
+                'wss://app.sapo365.com/socket.io/?auth_token=' +
                   this.props.token +
                   '&EIO=3&transport=websocket'
               );

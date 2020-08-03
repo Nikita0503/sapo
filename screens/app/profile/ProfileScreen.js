@@ -76,7 +76,7 @@ export default class ProfileScreen extends React.Component {
       type: 'image/jpeg',
     });
 
-    fetch('https://app.osbb365.com/api/upload/photo?accountId=' + this.props.accountId + '&osbbId=' + this.props.osbbId +'&type=photo&workPeriod=' + this.props.workPeriods[this.props.workPeriods.length - 1], {
+    fetch('https://app.sapo365.com/api/upload/photo?accountId=' + this.props.accountId + '&osbbId=' + this.props.osbbId +'&type=photo&workPeriod=' + this.props.workPeriods[this.props.workPeriods.length - 1], {
       method: 'post',
       headers: {
         Authorization: 'Bearer ' + this.props.token,
@@ -107,7 +107,7 @@ export default class ProfileScreen extends React.Component {
       }
       formBody = formBody.join("&");
 
-      fetch('https://app.osbb365.com/api/user/me', {
+      fetch('https://app.sapo365.com/api/user/me', {
         method: 'put',
         headers: {
           Authorization: 'Bearer ' + this.props.token,
@@ -153,7 +153,7 @@ export default class ProfileScreen extends React.Component {
         source={
           {
                 uri:
-                  'https://app.osbb365.com' +
+                  'https://app.sapo365.com' +
                   this.props.imageAvatar,
               }
         }
@@ -172,7 +172,7 @@ export default class ProfileScreen extends React.Component {
           ? require('../../../content/images/add.png')
           : {
               uri:
-                'https://app.osbb365.com' +
+                'https://app.sapo365.com' +
                 this.props.userData.photo,
             }
       }
@@ -206,7 +206,7 @@ export default class ProfileScreen extends React.Component {
                 <TouchableOpacity
                   onPress={() => {
                     fetch(
-                      'https://app.osbb365.com/api/user/me/photo?accountId=' +
+                      'https://app.sapo365.com/api/user/me/photo?accountId=' +
                         this.props.accountIds[0].id +
                         '&osbbId=' +
                         this.props.osbbId +
@@ -390,7 +390,7 @@ export default class ProfileScreen extends React.Component {
 }
 
 function sendNewPassword(props, onOldPasswordChange, onNewPasswordChange, onNewRepeatPasswordChange) {
-  fetch('https://app.osbb365.com/api/user/me/password', {
+  fetch('https://app.sapo365.com/api/user/me/password', {
     method: 'PUT',
     headers: {
       Accept: 'application/json',

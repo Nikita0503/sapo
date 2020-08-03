@@ -139,7 +139,7 @@ export default class ActOfReconciliationScreen extends React.Component {
                 onPress={() => {
                   this.onShowLoadingChange(true);
                   fetch(
-                    'https://app.osbb365.com/api/tenant/charges/total?accountId=' +
+                    'https://app.sapo365.com/api/tenant/charges/total?accountId=' +
                       this.props.accountId.id +
                       '&osbbId=' +
                       this.props.osbbId +
