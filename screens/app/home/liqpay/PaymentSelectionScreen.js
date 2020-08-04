@@ -172,7 +172,12 @@ export default class PaymentSelectionScreen extends React.Component {
   render() {
     return (
       <KeyboardAvoidingView behavior="padding">
-        
+        <NavigationEvents
+          onDidFocus={() => {
+            //console.log('I am triggered');
+            this.componentDidMount();
+          }}
+        />
         <View
           style={{ width: '100%', height: '100%', backgroundColor: '#EEEEEE' }}>
           <View style={{width: '100%', height: 85, backgroundColor: '#002B2B', flexDirection: 'row', justifyContent: 'space-between'}}>

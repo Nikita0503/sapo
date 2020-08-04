@@ -285,7 +285,7 @@ export default class SelectedRequestScreen extends React.Component {
                 style={{
                   marginTop: 10,
                   marginBottom: 10,
-                  color: '#364A5F',
+                  color: '#002B2B',
                   fontSize: 18,
                 }}>
                 ↑ Сховати коментарі
@@ -309,7 +309,7 @@ export default class SelectedRequestScreen extends React.Component {
               style={{
                 marginTop: 10,
                 marginBottom: 10,
-                color: '#364A5F',
+                color: '#002B2B',
                 fontSize: 18,
               }}>
               ↓ Показати коментарі
@@ -323,7 +323,7 @@ export default class SelectedRequestScreen extends React.Component {
   getCommentsList() {
     //console.log("helloMM", this.props.selectedOfferComments)
     if(this.props.selectedOfferComments == null || this.props.selectedOfferComments.length == 0){
-      return(<Text style={{color: '#364A5F', fontSize: 16, marginVertical: 10, alignSelf: 'center'}}>Даних немає</Text>)
+      return(<Text style={{color: '#002B2B', fontSize: 16, marginVertical: 10, alignSelf: 'center'}}>Даних немає</Text>)
     }
     return (
       <FlatList
@@ -347,6 +347,12 @@ export default class SelectedRequestScreen extends React.Component {
     return (
       <View
         style={{ width: '100%', height: '100%', backgroundColor: '#EEEEEE' }}>
+        <NavigationEvents
+          onDidFocus={() => {
+            //console.log('I am triggered');
+            this.componentDidMount();
+          }}
+        />
         <ScreenHeader 
           navigation={this.props.navigation} 
           title="Заявка" 
@@ -412,7 +418,7 @@ export default class SelectedRequestScreen extends React.Component {
                   style={{
                     marginTop: 10,
                     marginBottom: 10,
-                    color: '#364A5F',
+                    color: '#002B2B',
                     fontSize: 18,
                   }}>
                   Додати коментар +
@@ -510,7 +516,7 @@ class ItemComment extends React.Component {
             <Text style={{ color: '#CDCDCD' }}>{getDateForComments(this.props.time)}</Text>
           </View>
         </View>
-        <Text style={{ color: '#364A5F', marginLeft: 20 }}>
+        <Text style={{ color: '#002B2B', marginLeft: 20 }}>
           {this.props.text}
         </Text>
         <FlatList

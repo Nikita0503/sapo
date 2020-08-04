@@ -99,6 +99,12 @@ export default class WebViewPaymentScreen extends React.Component {
   render() {
     return (
       <View style={{width: '100%', height: '100%', backgroundColor: '#54687D'}}>        
+        <NavigationEvents
+          onDidFocus={() => {
+            //console.log('I am triggered');
+            this.componentDidMount();
+          }}
+        />
         <View
           style={{ width: '100%', height: '100%', backgroundColor: 'white', justifyContent: 'space-between'}}>
           <View style={{width: '100%', height: 85, backgroundColor: '#002B2B', flexDirection: 'row', justifyContent: 'space-between'}}>

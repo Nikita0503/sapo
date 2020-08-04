@@ -232,7 +232,7 @@ export default class RequestsScreen extends React.Component {
       />);
     }else{
       if(!this.props.loading){
-        return(<Text style={{color: '#364A5F', fontSize: 16, marginVertical: 10, alignSelf: 'center'}}>Даних немає</Text>)
+        return(<Text style={{color: '#002B2B', fontSize: 16, marginVertical: 10, alignSelf: 'center'}}>Даних немає</Text>)
       }
     }
   }
@@ -279,7 +279,7 @@ export default class RequestsScreen extends React.Component {
       />);
     }else{
       if(!this.props.loading){
-        return(<Text style={{color: '#364A5F', fontSize: 16, marginVertical: 10, alignSelf: 'center'}}>Даних немає</Text>)
+        return(<Text style={{color: '#002B2B', fontSize: 16, marginVertical: 10, alignSelf: 'center'}}>Даних немає</Text>)
       }
     }
   }
@@ -300,6 +300,12 @@ export default class RequestsScreen extends React.Component {
     return (
       <View
         style={{ width: '100%', height: '100%', backgroundColor: '#EEEEEE' }}>
+        <NavigationEvents
+          onDidFocus={() => {
+            //console.log('I am triggered');
+            this.componentDidMount();
+          }}
+        />
         <ScreenHeader
           navigation={this.props.navigation}
           title="Заявки та пропозиції"

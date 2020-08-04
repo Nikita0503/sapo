@@ -154,7 +154,7 @@ export default class ScreenMyHouse extends React.Component {
       }
     }
 
-    if(currentHouseCostsData.length == 0) return(<Text style={{color: '#364A5F', fontSize: 16, marginVertical: 10, alignSelf: 'center'}}>Даних немає</Text>);
+    if(currentHouseCostsData.length == 0) return(<Text style={{color: '#002B2B', fontSize: 16, marginVertical: 10, alignSelf: 'center'}}>Даних немає</Text>);
     
     return currentHouseCostsData.map((item, i) => {
       return (

@@ -137,7 +137,7 @@ export default class AddCommentToSelectedRequestScreen extends React.Component {
                 style={{
                   marginTop: 10,
                   marginBottom: 10,
-                  color: '#364A5F',
+                  color: '#002B2B',
                   fontSize: 18,
                 }}>
                 Додати коментар

@@ -18,6 +18,8 @@ class ChatsContainer extends React.Component {
         allChats={this.props.allChats}
         allUsers={this.props.allUsers}
         selectedChat={this.props.selectedChat}
+        userData={this.props.userData}
+        imageAvatar={this.props.imageAvatar}
         setChatsAllChats={this.props.setChatsAllChats}
         setChatsAllChatsClear={this.props.setChatsAllChatsClear}
         setChatsAllUsers={this.props.setChatsAllUsers}
@@ -35,7 +37,9 @@ const mapStateToProps = state => {
     workPeriods: state.home.workPeriods,
     allChats: state.allChats.allChats,
     allUsers: state.allChats.allUsers,
-    selectedChat: state.allChats.selectedChat
+    selectedChat: state.allChats.selectedChat,
+    userData: state.home.userData,
+    imageAvatar: state.profile.imageAvatar
   };
 };
 

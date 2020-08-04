@@ -144,7 +144,12 @@ export default class ScreenChats extends React.Component {
     return (
       <View
         style={{ width: '100%', height: '100%', backgroundColor: '#EEEEEE' }}>
-        
+        <NavigationEvents
+          onDidFocus={() => {
+            //console.log('I am triggered');
+            this.componentDidMount();
+          }}
+        />
         <ScreenHeader 
             navigation={this.props.navigation} 
             title="Чати"
