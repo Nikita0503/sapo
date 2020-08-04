@@ -95,6 +95,7 @@ export default class HomeScreen extends React.Component {
 
 
   componentDidMount() {
+    this.props.navigation.navigate('Loading');
     this.onClearState()
     fetch('https://app.sapo365.com/api/user/me', {
       headers: {
@@ -146,6 +147,15 @@ export default class HomeScreen extends React.Component {
         </View>
       </ScrollView>
     );
+  }
+
+  getIsLoaded() {
+    if (
+      this.props.workPeriods.length == 0 ||
+      this.props.allApartmentData.length == 0
+    ) {
+      this.props.navigation.navigate('Loading');
+    }
   }
 
   getPayment(){

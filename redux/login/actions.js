@@ -91,7 +91,7 @@ export const fetchTokenByEmailPassword = (email, password, navigation) => {
                 Alert.alert('Невірний логін або пароль', 'Користувач не знайдений');
               }
               dispatch(setToken(token.token))
-              navigation.navigate("Menu")
+              navigation.navigate("General")
               console.log("fetchTokenByEmailPassword", token.token);
         } catch (error) {
             console.log("fetchTokenByEmailPassword", "error")
@@ -124,7 +124,7 @@ export const fetchTokenByAddress = (regionsInfo,
                 }); 
               const token = await tokenPromise.json();
               dispatch(setToken(token.token))
-              navigation.navigate("Menu")
+              navigation.navigate("General")
               console.log("fetchTokenByAddress", token.token)
         } catch (error) {
             console.log("fetchTokenByAddress", "error");

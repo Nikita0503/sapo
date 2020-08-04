@@ -1,8 +1,7 @@
 import * as React from 'react';
-import {Image} from 'react-native';
+import { Image } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import {Provider} from 'react-redux';
 import {PersistGate} from 'redux-persist/integration/react';
@@ -25,7 +24,10 @@ import ChatsContainer from './screens/app/chats/ChatsContainer';
 import ChatContainer from './screens/app/chats/selectedChat/ChatContainer';
 import PaymentSelectionContainer from './screens/app/home/liqpay/PaymentSelectionContainer';
 import WebViewPaymentContainer from './screens/app/home/liqpay/paymentWebView/WebViewPaymentContainer';
+import LoadingContainer from './screens/app/loading/LoadingContainer';
 
+const StackLogin = createStackNavigator();
+const StackGeneral = createStackNavigator();
 const StackPayment = createStackNavigator();
 const StackHome = createStackNavigator();
 const StackWorkAndBalance = createStackNavigator();
@@ -153,22 +155,41 @@ function Chats() {
   );
 }
 
+function Login() {
+  return (
+      <StackLogin.Navigator>
+        <StackLogin.Screen name="Login" component={LoginContainer} options={{ headerShown: false }}/>
+      </StackLogin.Navigator>
+    );
+}
+
+function General() {
+  return (
+      <StackGeneral.Navigator screenOptions={{ gestureEnabled: false }}>
+        <StackGeneral.Screen name="Menu" component={Menu} options={{ headerShown: false, headerLeft: null }}/>
+        <StackGeneral.Screen name="Profile" component={ProfileContainer} options={{ headerShown: false }}/>
+        <StackGeneral.Screen name="Ads" component={Ads} options={{ headerShown: false }}/>
+        <StackGeneral.Screen name="Chats" component={Chats} options={{ headerShown: false }} />
+      </StackGeneral.Navigator>
+  );
+}
+
+//store.getState().login.token
 function App() {
   return (
     <Provider store={store}>
       <PersistGate persistor={persistor}>
         <NavigationContainer>
           <Stack.Navigator>
-            <Stack.Screen name="Login" component={LoginContainer} options={{ headerShown: false }}/>
-            <Stack.Screen name="Menu" component={Menu} options={{ headerShown: false }}/>
-            <Stack.Screen name="Profile" component={ProfileContainer} options={{ headerShown: false }}/>
-            <Stack.Screen name="Ads" component={Ads} options={{ headerShown: false }}/>
-            <Stack.Screen name="Chats" component={Chats} options={{ headerShown: false }} />
+            {store.getState().login.token == null ? <Stack.Screen name="Login" component={Login} options={{ headerShown: false }}/> : null}
+            <Stack.Screen name="General" component={General} options={{ headerShown: false }}/>
+            <Stack.Screen name="Loading" component={LoadingContainer} options={{ headerShown: false }}/>
           </Stack.Navigator>
         </NavigationContainer>
       </PersistGate>
     </Provider>
   );
 }
+
 
 export default App;
