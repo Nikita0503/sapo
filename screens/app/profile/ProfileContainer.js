@@ -13,6 +13,10 @@ import {
   setUserData
 } from '../../../redux/home/actions';
 
+import {
+  setToken
+} from '../../../redux/login/actions';
+
 import ProfileScreen from './ProfileScreen';
 
 class ProfileContainer extends React.Component {
@@ -40,6 +44,7 @@ class ProfileContainer extends React.Component {
         setAvatarImage={this.props.setAvatarImage}
         setPhoneNumber={this.props.setPhoneNumber}
         setUserData={this.props.setUserData}
+        setToken={this.props.setToken}
       />
     );
   }
@@ -70,7 +75,8 @@ const mapDispatchToProps = {
   setNewRepeatPassword,
   setAvatarImage,
   setPhoneNumber,
-  setUserData
+  setUserData,
+  setToken
 };
 
 export default connect(

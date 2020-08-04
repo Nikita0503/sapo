@@ -29,6 +29,7 @@ class LoginContainer extends React.Component {
                 selectedFlat={this.props.selectedFlat}
                 selectedAccountNumber={this.props.selectedAccountNumber}
                 regionsInfo={this.props.regionsInfo}
+                token={this.props.token}
                 setCurrentTab={this.props.setCurrentTab}
                 setEmail={this.props.setEmail}
                 setPassword={this.props.setPassword}
@@ -57,7 +58,8 @@ const mapStateToProps = state => {
         selectedHouse: state.login.selectedHouse,
         selectedFlat: state.login.selectedFlat,
         selectedAccountNumber: state.login.selectedAccountNumber,
-        regionsInfo: state.login.regionsInfo
+        regionsInfo: state.login.regionsInfo,
+        token: state.login.token
     }
 }
 

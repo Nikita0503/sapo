@@ -16,6 +16,12 @@ const ACCOUNT_NUMBER_DIALOG_ID = 6;
 
 export default class LoginScreen extends React.Component {
 
+  componentWillMount(){
+    if(this.props.token != null){
+      this.props.navigation.navigate("General")
+    }
+  }
+
   componentDidMount(){
     this.props.fetchRegionsInfo();
   }

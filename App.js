@@ -181,7 +181,7 @@ function App() {
       <PersistGate persistor={persistor}>
         <NavigationContainer>
           <Stack.Navigator>
-            {store.getState().login.token == null ? <Stack.Screen name="Login" component={Login} options={{ headerShown: false }}/> : null}
+            <Stack.Screen name="Login" component={Login} options={{ headerShown: false }}/>
             <Stack.Screen name="General" component={General} options={{ headerShown: false }}/>
             <Stack.Screen name="Loading" component={LoadingContainer} options={{ headerShown: false }}/>
           </Stack.Navigator>
