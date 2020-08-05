@@ -195,6 +195,7 @@ export default App;
 */
 
 import React, { Component } from 'react';
+import { Image } from 'react-native';
 import {Provider} from 'react-redux';
 import {PersistGate} from 'redux-persist/integration/react';
 import {store, persistor} from './redux/store';
@@ -249,10 +250,42 @@ const Requests = createStackNavigator({
 })
 
 const Menu = createBottomTabNavigator({
-    Home: Home,
-    ActOfReconciliation: ActOfReconciliationContainer,
-    WorkAndBalance: WorkAndBalance,
-    Requests: Requests
+    Home: {
+      screen: Home, 
+      navigationOptions: {tabBarIcon: ({ focused }) => <Image resizeMode='contain' style={{width: 40, height: 40}} 
+        source={focused ? 
+          require('./content/images/ic_home_white.png') 
+          :
+          require('./content/images/ic_home_gray.png') }/>}},
+    ActOfReconciliation: {
+      screen: ActOfReconciliationContainer, 
+      navigationOptions: {tabBarIcon: ({ focused }) => <Image resizeMode='contain' style={{width: 40, height: 40}} 
+        source={focused ? 
+          require('./content/images/ic_text_box_check_white.png') 
+          :
+          require('./content/images/ic_text_box_check_gray.png') }/>}},
+    WorkAndBalance: {
+      screen: WorkAndBalance,
+      navigationOptions: {tabBarIcon: ({ focused }) => <Image resizeMode='contain' style={{width: 40, height: 40}} 
+        source={focused ? 
+          require('./content/images/ic_wrench_white.png') 
+          :
+          require('./content/images/ic_wrench_gray.png') }/>}},
+    Requests: {
+      screen: Requests,
+      navigationOptions: {tabBarIcon: ({ focused }) => <Image resizeMode='contain' style={{width: 40, height: 40}} 
+        source={focused ? 
+          require('./content/images/ic_map_marker_white.png') 
+          :
+          require('./content/images/ic_map_marker_gray.png') }/>}}
+}, 
+{
+  tabBarOptions: {
+    showLabel: false,
+    activeBackgroundColor: '#002B2B',
+    inactiveBackgroundColor: '#002B2B',
+    activeTintColor: 'white'
+  }
 })
 
 const Chats = createStackNavigator({

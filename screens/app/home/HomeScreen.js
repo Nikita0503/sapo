@@ -5,7 +5,6 @@ import MonthPickerContainer from '../../../components/monthPicker/MonthPickerCon
 import DataComponent from '../../../components/dataComponents/DataComponent';
 import DataClickableComponent from '../../../components/dataComponents/DataClickableComponent';
 import { ScrollView } from 'react-native-gesture-handler';
-
 export default class HomeScreen extends React.Component {
 
   constructor(props) {
