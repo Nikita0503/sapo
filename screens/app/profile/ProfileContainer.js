@@ -6,7 +6,10 @@ import {
   setNewPassword,
   setNewRepeatPassword,
   setAvatarImage,
-  setPhoneNumber
+  setPhoneNumber,
+  sendNewPhoto,
+  deletePhoto,
+  sendNewPassword
 } from '../../../redux/profile/actions';
 
 import {
@@ -32,8 +35,8 @@ class ProfileContainer extends React.Component {
         workPeriods={this.props.workPeriods}
         showPasswords={this.props.showPasswords}
         oldPassword={this.props.oldPassword}
-        newRepeatPassword={this.props.newRepeatPassword}
         newPassword={this.props.newPassword}
+        newRepeatPassword={this.props.newRepeatPassword}
         userData={this.props.userData}
         imageAvatar={this.props.imageAvatar}
         phoneNumber={this.props.phoneNumber}
@@ -45,6 +48,9 @@ class ProfileContainer extends React.Component {
         setPhoneNumber={this.props.setPhoneNumber}
         setUserData={this.props.setUserData}
         setToken={this.props.setToken}
+        sendNewPhoto={this.props.sendNewPhoto}
+        deletePhoto={this.props.deletePhoto}
+        sendNewPassword={this.props.sendNewPassword}
       />
     );
   }
@@ -76,7 +82,10 @@ const mapDispatchToProps = {
   setAvatarImage,
   setPhoneNumber,
   setUserData,
-  setToken
+  setToken,
+  sendNewPhoto,
+  deletePhoto,
+  sendNewPassword
 };
 
 export default connect(

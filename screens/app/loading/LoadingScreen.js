@@ -9,12 +9,10 @@ import {
   Alert,
 } from 'react-native';
 
-export default class ScreenLoading extends React.Component {
+export default class LoadingScreen extends React.Component {
   isLoaded() {
-  
     if (
-      this.props.workPeriods.length == 0 &&
-      this.props.allApartmentData.length == 0
+      this.props.workPeriods.length == 0 
     ) {
       return;
     } else {

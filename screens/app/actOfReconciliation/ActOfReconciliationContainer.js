@@ -11,7 +11,8 @@ import {setFromMonth,
     setFromMonthShow, 
     setFromYearShow, 
     setToMonthShow, 
-    setToYearShow} from '../../../redux/actOfReconciliation/actions';
+    setToYearShow,
+    fetchData} from '../../../redux/actOfReconciliation/actions';
 import ActOfReconciliationScreen from './ActOfReconciliationScreen';
 
 class ActOfReconciliationContainer extends React.Component{
@@ -49,6 +50,7 @@ class ActOfReconciliationContainer extends React.Component{
                 setFromYearShow={this.props.setFromYearShow}
                 setToMonthShow={this.props.setToMonthShow}
                 setToYearShow={this.props.setToYearShow}
+                fetchData={this.props.fetchData}
             />
         );
     }
@@ -89,7 +91,8 @@ const mapDispatchToProps = {
     setFromMonthShow,
     setFromYearShow,
     setToMonthShow,
-    setToYearShow
+    setToYearShow,
+    fetchData
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ActOfReconciliationContainer);

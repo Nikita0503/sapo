@@ -19,39 +19,11 @@ import { TextInputMask } from 'react-native-masked-text'
 import { Linking } from 'react-native'
 
 export default class ProfileScreen extends React.Component {
-  constructor(props) {
-    super(props);
-    this.onChangeShowPasswords = this.onChangeShowPasswords.bind(this);
-    this.onOldPasswordChange = this.onOldPasswordChange.bind(this);
-    this.onNewPasswordChange = this.onNewPasswordChange.bind(this);
-    this.onNewRepeatPasswordChange = this.onNewRepeatPasswordChange.bind(this);
-    this.onAvatarImageChange = this.onAvatarImageChange.bind(this);
-  }
-
-  onChangeShowPasswords(showPasswords) {
-    this.props.setShowPasswords(showPasswords);
-  }
-
-  onOldPasswordChange(oldPassword) {
-    this.props.setOldPassword(oldPassword);
-  }
-
-  onNewPasswordChange(newPassword) {
-    this.props.setNewPassword(newPassword);
-  }
-
-  onNewRepeatPasswordChange(newRepeatPassword) {
-    this.props.setNewRepeatPassword(newRepeatPassword);
-  }
-
-  onAvatarImageChange(photo){
-    this.props.setAvatarImage(photo);
-  }
 
   state = { showPassword: false };
   
   toggleSwitch = value => {
-    this.onChangeShowPasswords(value);
+    this.props.setShowPasswords(value);
   };
 
   callFun = () => {
@@ -65,72 +37,19 @@ export default class ProfileScreen extends React.Component {
       aspect: [4, 3],
       quality: 1,
     });
-    console.log("123", result)
     if(result.cancelled == true) return
     let photo = { uri: result.uri };
     let formdata = new FormData();
-
     formdata.append('photo', {
       uri: photo.uri,
       name: 'image.jpg',
       type: 'image/jpeg',
     });
-
-    fetch('https://app.sapo365.com/api/upload/photo?accountId=' + this.props.accountId + '&osbbId=' + this.props.osbbId +'&type=photo&workPeriod=' + this.props.workPeriods[this.props.workPeriods.length - 1], {
-      method: 'post',
-      headers: {
-        Authorization: 'Bearer ' + this.props.token,
-        'Content-Type': 'multipart/form-data',
-      },
-      body: formdata,
-    })
-    .then(response => response.json())
-    .then(responseJson => {
-      if(responseJson.filename == null){
-        Alert.alert(
-          'Помилка',
-          responseJson.message,
-          [{ text: 'OK', onPress: () => console.log('OK Pressed') }],
-          { cancelable: false }
-        );
-        return;
-      }
-      var details = {
-        photo: responseJson.filename,
-      };
-      
-      var formBody = [];
-      for (var property in details) {
-        var encodedKey = encodeURIComponent(property);
-        var encodedValue = encodeURIComponent(details[property]);
-        formBody.push(encodedKey + "=" + encodedValue);
-      }
-      formBody = formBody.join("&");
-
-      fetch('https://app.sapo365.com/api/user/me', {
-        method: 'put',
-        headers: {
-          Authorization: 'Bearer ' + this.props.token,
-          'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
-        },
-        body: formBody,
-      })
-      .then(response => response.json())
-      .then(responseJson1 => {
-        
-        this.onAvatarImageChange(responseJson.filename)
-        this.render();
-      }).catch(err => {
-        console.log(err)
-      });
-      console.log("filename", responseJson.filename);
-    })
-    .catch(err => {
-      console.log(err);
-    });
-
-    console.log("result", result);
-
+    this.props.sendNewPhoto(formdata, 
+      this.props.accountId, 
+      this.props.osbbId, 
+      this.props.workPeriods, 
+      this.props.token)
     if (!result.cancelled) {
       this.setState({ image: result.uri });
     }
@@ -164,7 +83,7 @@ export default class ProfileScreen extends React.Component {
     if(this.props.userData == null){
       return;
     }
-    console.log("userPhoto", this.props.userData)
+    //console.log("userPhoto", this.props.userData)
     return(<ImageAvatar
       indicator='bar' 
       source={
@@ -201,32 +120,13 @@ export default class ProfileScreen extends React.Component {
                 {this.getAvatar()}
               </TouchableOpacity>
               <View style={styles.container}>
-              <View style={{width: '80%', marginVertical: 15}}>
-                
+              <View style={{width: '80%', marginVertical: 15}}>       
                 <TouchableOpacity
                   onPress={() => {
-                    fetch(
-                      'https://app.sapo365.com/api/user/me/photo?accountId=' +
-                        this.props.accountIds[0].id +
-                        '&osbbId=' +
-                        this.props.osbbId +
-                        '&workPeriod=' +
-                        this.props.workPeriods[this.props.workPeriods.length - 1],
-                      {
-                        method: 'DELETE',
-                        headers: {
-                          Accept: 'application/json',
-                          'Content-Type': 'application/json',
-                          Authorization: 'Bearer ' + this.props.token + '',
-                        },
-                      }
-                    )
-                      .then(responseJson => {
-                        this.onAvatarImageChange('deleted')
-                      })
-                      .catch(error => {
-                        console.error(error);
-                      });
+                    this.props.deletePhoto(this.props.accountIds, 
+                      this.props.osbbId, 
+                      this.props.workPeriods, 
+                      this.props.token)
                   }}
                   style={{backgroundColor: "#002B2B", alignItems: 'center', justifyContent: 'center', height: 35, borderRadius: 12, paddingHorizontal: 10}}
                 >
@@ -334,7 +234,7 @@ export default class ProfileScreen extends React.Component {
                 <TextInput
                   value={this.props.oldPassword}
                   onChangeText={text => {
-                    this.onOldPasswordChange(text);
+                    this.props.setOldPassword(text);
                   }}
                   secureTextEntry={!this.props.showPasswords}
                   placeholder="Старий пароль"
@@ -343,7 +243,7 @@ export default class ProfileScreen extends React.Component {
                 <TextInput
                   value={this.props.newPassword}
                   onChangeText={text => {
-                    this.onNewPasswordChange(text);
+                    this.props.setNewPassword(text);
                   }}
                   secureTextEntry={!this.props.showPasswords}
                   placeholder="Новий пароль"
@@ -352,7 +252,7 @@ export default class ProfileScreen extends React.Component {
                 <TextInput
                   value={this.props.newRepeatPassword}
                   onChangeText={text => {
-                    this.onNewRepeatPasswordChange(text);
+                    this.props.setNewRepeatPassword(text);
                   }}
                   secureTextEntry={!this.props.showPasswords}
                   placeholder="Повторіть новий пароль"
@@ -361,7 +261,10 @@ export default class ProfileScreen extends React.Component {
               </View>
               <View style={styles.buttonStyle}>
               <TouchableOpacity
-                onPress={() => {sendNewPassword(this.props, this.onOldPasswordChange, this.onNewPasswordChange, this.onNewRepeatPasswordChange)}}
+                onPress={() => {
+                  this.props.sendNewPassword(this.props.oldPassword, this.props.newPassword, this.props.newRepeatPassword, this.props.token);
+                }
+              }
                 style={{backgroundColor: "#002B2B", alignItems: 'center', justifyContent: 'center', height: 35, borderRadius: 12}}
               >
                 <Text style={{color: 'white', fontSize: 15}}>ЗБЕРЕГТИ</Text>
@@ -390,42 +293,6 @@ export default class ProfileScreen extends React.Component {
   }
 }
 
-function sendNewPassword(props, onOldPasswordChange, onNewPasswordChange, onNewRepeatPasswordChange) {
-  fetch('https://app.sapo365.com/api/user/me/password', {
-    method: 'PUT',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-      Authorization: 'Bearer ' + props.token + '',
-    },
-    body: JSON.stringify({
-      oldPassword: props.oldPassword,
-      newPassword: props.newPassword,
-      confirmNewPassword: props.newRepeatPassword,
-    }),
-  })
-    .then(response => response.json())
-    .then(responseJson => {
-      Alert.alert(
-        'Пароль',
-        responseJson.message + '',
-        [{ text: 'OK', onPress: () => console.log('OK Pressed') }],
-        { cancelable: false }
-      );
-    })
-    .catch(error => {
-      Alert.alert(
-        'Пароль',
-        'Пароль успішно змінено',
-        [{ text: 'OK', onPress: () => console.log('OK Pressed') }],
-        { cancelable: false }
-      );
-      onOldPasswordChange('');
-      onNewPasswordChange('');
-      onNewRepeatPasswordChange('');
-      console.error(error);
-    });
-}
 
 const styles = StyleSheet.create({
   container: {

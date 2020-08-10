@@ -220,6 +220,7 @@ import RequestsContainer from './screens/app/requests/RequestsContainer';
 import AddRequestsContainer from './screens/app/requests/addRequest/AddRequestContainer';
 import SelectedRequestContainer from './screens/app/requests/selectedRequest/SelectedRequestContainer';
 import AddCommentToSelectedRequestContainer from './screens/app/requests/selectedRequest/addComment/AddCommentToSelectedRequestContainer';
+import LoadingContainer from './screens/app/loading/LoadingContainer';
 
 const Payments = createStackNavigator({
     PaymentSelection: {screen: PaymentSelectionContainer, navigationOptions: {header: null}},
@@ -305,13 +306,18 @@ const General = createStackNavigator({
     Profile: {screen: ProfileContainer, navigationOptions: {header: null}}
 });
 
+const Loading = createStackNavigator({
+    Loading: {screen: LoadingContainer, navigationOptions: {header: null}}
+})
+
 const Login = createStackNavigator({
     Login: {screen: LoginContainer, navigationOptions: {header: null}}
 });
 
 const AppNavigator = createSwitchNavigator({
-  Login: {screen: Login},
-  General: {screen: General}
+    Login: {screen: Login},
+    General: {screen: General},
+    Loading: {screen: Loading}
 });
 
 let Navigation = createAppContainer(AppNavigator);

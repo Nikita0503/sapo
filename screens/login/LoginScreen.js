@@ -18,7 +18,7 @@ export default class LoginScreen extends React.Component {
 
   componentWillMount(){
     if(this.props.token != null){
-      this.props.navigation.navigate("General")
+      //this.props.navigation.navigate("General")
     }
   }
 

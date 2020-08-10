@@ -14,21 +14,6 @@ import {
 } from 'react-native';
 import ScreenHeader from '../../../../components/ScreenHeader';
 
-const DATA_FILES = [
-  {
-    name: 'Image file',
-    type: 'jpg',
-  },
-  {
-    name: 'Image file',
-    type: 'jpg',
-  },
-  {
-    name: 'Image file',
-    type: 'jpg',
-  },
-];
-
 export default class AddRequestScreen extends React.Component {
   constructor(props) {
     super(props);
