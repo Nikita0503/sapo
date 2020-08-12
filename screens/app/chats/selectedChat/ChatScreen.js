@@ -23,58 +23,12 @@ import PDFReader from 'rn-pdf-reader-js';
 import ImageZoom from 'react-native-image-pan-zoom';
 
 export default class ChatScreen extends React.Component {
-  ws = new WebSocket(
-    'wss://app.sapo365.com/socket.io/?auth_token=' +
-      this.props.token +
-      '&EIO=3&transport=websocket'
-  );
 
   constructor(props) {
     super(props);
-    this.update = this.props.navigation.addListener('focus', () => {
-      this.componentDidMount();
-    });
-    this.onChatAllMessagesChange = this.onChatAllMessagesChange.bind(this);
-    this.onChatNewMessageChange = this.onChatNewMessageChange.bind(this);
-    this.onChatCurrentMessageChange = this.onChatCurrentMessageChange.bind(
-      this
-    );
-    this.onChatCurrentImagesChange = this.onChatCurrentImagesChange.bind(this);
-    this.onChatCurrentImagesClear = this.onChatCurrentImagesClear.bind(this);
-    this.onChatSelectedFileChange = this.onChatSelectedFileChange.bind(this);
-    this.onChatLoadingChange = this.onChatLoadingChange.bind(this);
-    this.onChatAllMessagesChange([]);
-    this.onChatCurrentMessageChange(null);
-    this.onChatCurrentImagesClear();
-  }
-
-  onChatSelectedFileChange(file){
-    this.props.setSelectedFile(file)
-  }
-
-  onChatAllMessagesChange(allMessages) {
-    this.props.setChatAllMessages(allMessages);
-  }
-
-  onChatNewMessageChange(newMessage) {
-    //console.log('newMessage1', newMessage);
-    this.props.setChatNewMessage(newMessage);
-  }
-
-  onChatCurrentMessageChange(currentMessage) {
-    this.props.setChatCurrentMessage(currentMessage);
-  }
-
-  onChatCurrentImagesChange(image) {
-    this.props.setChatCurrentImagesAdd(image);
-  }
-
-  onChatCurrentImagesClear() {
+    this.props.setChatAllMessages([]);
+    this.props.setChatCurrentMessage(null);
     this.props.setChatCurrentImagesClear([]);
-  }
-
-  onChatLoadingChange(loading){
-    this.props.setLoading(loading);
   }
 
   getPermissionAsync = async () => {
@@ -93,101 +47,30 @@ export default class ChatScreen extends React.Component {
       aspect: [4, 3],
       quality: 1
     });
-
-    //console.log("1", result);
     let formdata = new FormData();
-
     formdata.append('photo', {
       uri: result.uri,
       name: 'image.jpg',
       type: 'image/jpeg',
     });
-
-    fetch('https://app.sapo365.com/api/upload/photo?accountId=' + this.props.accountId + '&osbbId=' + this.props.osbbId +'&type=photo&workPeriod=' + this.props.workPeriods[this.props.workPeriods.length - 1], {
-      method: 'post',
-      headers: {
-        'Content-Type': 'multipart/form-data',
-        'Authorization': 'Bearer ' + this.props.token
-      },
-      body: formdata,
-    })
-      .then(response => response.json())
-      .then(response => {
-        //console.log('image uploaded', response);
-        this.onChatCurrentImagesChange(response.filename);
-      })
-      .catch(err => {
-        console.log(err);
-      });
-
-    //console.log("2", result);
-    
-
+    this.props.sendPhoto(this.props.accountId,
+      this.props.osbbId,
+      this.props.workPeriods,
+      formdata,
+      this.props.token)
     if (!result.cancelled) {
       this.setState({ image: result.uri });
     }
   };
 
   componentWillUnmount() {
-    this.ws.close();
-    //console.log('BackHandler');
+    this.props.closeChat();
   }
 
   componentDidMount() {
-    //this.getPermissionAsync();
-    //console.log('componentDid');
-    this.ws.onopen = () => {
-      this.onChatLoadingChange(true);
-      // connection opened
-      this.ws.send(
-        '429["/chat/message/list",{"conversationId":' +
-          this.props.selectedChat.id +
-          ',"limit":50,"page":1,"workPeriod":"' +
-          this.props.workPeriods[this.props.workPeriods.length - 1] +
-          '"}]'
-      );
-    };
-
-    this.ws.onmessage = e => {
-      // a message was received
-      if (e.data.substring(0, 2) == '42') {
-        const myObjStr = JSON.stringify(e.data.substring(2, e.data.length));
-        var myObj = JSON.parse(myObjStr);
-        var data = JSON.parse(myObj);
-        //console.log('aboutHouseDocuments', data[0]);
-        if (data[0] == 'messageList') {
-          this.onChatLoadingChange(false);
-          for (var i = data[1].length - 1; i >= 0; i--) {
-            this.onChatNewMessageChange(data[1][i]);
-          }
-          //this.onChatAllMessagesChange(data[1]);
-          //ws.close();
-        }
-        if (data[0] == 'newMessage') {
-          //console.log('success', 'success');
-          var message = {
-            text: data[1].text,
-            files: data[1].files,
-            userId: data[1].userId,
-          };
-          //console.log('message', messages);
-          this.onChatNewMessageChange(message);
-          this.onChatCurrentMessageChange(null);
-          //this.onChatAllMessagesChange(data[1]);
-          //ws.close();
-        }
-      }
-    };
-  }
-
-  getMessages() {
-    if (this.props.allMessages == null) {
-      //console.log('messageList1', 'null');
-      return;
-    } else {
-      //console.log('messageList1', this.props.allMessages);
-      return this.props.allMessages;
-    }
+    this.props.downloadMessages(this.props.selectedChat,
+      this.props.workPeriods,
+      this.props.token)
   }
 
   getIsMe(userId) {
@@ -199,21 +82,12 @@ export default class ChatScreen extends React.Component {
   }
 
   sendMessage() {
-    // connection opened
     if (this.props.currentMessage != null) {
-      var text = this.props.currentMessage;
-      text = text.replace(new RegExp('\n','g'), '\\n')
-      this.ws.send(
-        '429["/chat/message/create",{"text":"' +
-          text +
-          '","documents":[' +
-          this.getCurrentImages() +
-          '],"conversationId":' +
-          this.props.selectedChat.id +
-          ',"workPeriod":"' +
-          this.props.workPeriods[this.props.workPeriods.length - 1] +
-          '"}]'
-      );
+      var photos = this.getCurrentImages();
+      this.props.sendMessage(this.props.currentMessage,
+        this.props.selectedChat,
+        photos,
+        this.props.workPeriods)
     }
   }
 
@@ -226,7 +100,6 @@ export default class ChatScreen extends React.Component {
         images += ",";
       }
     }
-    //console.log("img", images);
     return images;
   }
 
@@ -241,12 +114,6 @@ export default class ChatScreen extends React.Component {
     }
   }
 
-  getTitle(){
-    //var str = JSON.stringify(this.props.navigation.getParam('title', 'Розмова'))
-    //return str.substring(1, str.length - 1);
-    return ""
-  }
-
   render() {
     return (
       <KeyboardAvoidingView behavior="padding">
@@ -254,13 +121,12 @@ export default class ChatScreen extends React.Component {
           style={{ width: '100%', height: '100%', backgroundColor: '#EEEEEE' }}>
           <NavigationEvents
             onDidFocus={() => {
-              //console.log('I am triggered');
               this.componentDidMount();
             }}
           />
           <ScreenHeader
             navigation={this.props.navigation}
-            title={this.getTitle()}
+            title={""}
             userData={this.props.userData}
             imageAvatar={this.props.imageAvatar}
           />
@@ -273,7 +139,7 @@ export default class ChatScreen extends React.Component {
               <View style={styles.chatContainer}>
                 {this.getLoadingView()}
                 <FlatList
-                  data={this.getMessages()}
+                  data={this.props.allMessages}
                   renderItem={({ item }) => (
                     <Item
                       userData={this.props.userData}
@@ -282,11 +148,10 @@ export default class ChatScreen extends React.Component {
                       me={this.getIsMe(item.userId)}
                       files={item.files}
                       allUsers={this.props.allUsers}
-                      onChatSelectedFileChange={this.onChatSelectedFileChange}
+                      setSelectedFile={this.props.setSelectedFile}
                     />
                   )}
-                  keyExtractor={item => item.text}
-                  listKey={item => item.text}
+                  keyExtractor={item => item.id}
                 />
               </View>
             </ScrollView>
@@ -297,7 +162,6 @@ export default class ChatScreen extends React.Component {
                 style={{
                   marginLeft: 10,
                   width: '85%',
-                
                   fontSize: 16,
                   borderBottomWidth: 1,
                   borderBottomColor: 'gray',
@@ -306,13 +170,11 @@ export default class ChatScreen extends React.Component {
                 }}
                 placeholder="Ваше повідомлення"
                 onChangeText={text => {
-                  this.onChatCurrentMessageChange(text);
+                  this.props.setChatCurrentMessage(text);
                   this.refs.scrollView.scrollToEnd();
                 }}
                 value={this.props.currentMessage}
               />
-
-
               <TouchableOpacity
                 onPress={() => {
                   this.sendMessage();
@@ -330,15 +192,13 @@ export default class ChatScreen extends React.Component {
             <View style={{alignSelf: 'center'}}>
               {this.getFileShowDialog()}
             </View>
-            
-            
             <Dialog.Button
               label="OK"
               onPress={() => {
-                this.onChatSelectedFileChange(null);
+                this.props.setSelectedFile(null);
               }}
             />
-          </Dialog.Container>
+        </Dialog.Container>
       </KeyboardAvoidingView>
     );
   }
@@ -357,8 +217,6 @@ export default class ChatScreen extends React.Component {
     if(this.props.chatSelectedFile != null){
       var type = this.props.chatSelectedFile.substring(this.props.chatSelectedFile.length - 3)
       var path = this.props.chatSelectedFile;
-      //type = 'jpg'
-      //console.log("TYPE", type)
       switch(type){
         case 'jpg':
           return(
@@ -417,7 +275,7 @@ class Item extends React.Component {
         {this.getMessageText()}
         <FlatList
           data={this.props.files}
-          renderItem={({ item }) => <ItemImage onChatSelectedFileChange={this.props.onChatSelectedFileChange} image={item} />}
+          renderItem={({ item }) => <ItemImage setSelectedFile={this.props.setSelectedFile} image={item} />}
           keyExtractor={item => item}
           listKey={item => item}
         />
@@ -436,14 +294,8 @@ class Item extends React.Component {
   }
 
   getUserName(){
-    console.log("userName2", this.props.userData)
-    console.log("userName1", this.props.userId)
     for(var i = 0; i < this.props.allUsers.length; i++){
-      
       if(this.props.me){
-        /*if(this.props.allUsers[i].userId == this.props.userId){
-          return this.props.allUsers[i].fullName
-        }*/
         return this.props.userData.firstName + " " + this.props.userData.lastName
       }else{
         if(this.props.allUsers[i].id == this.props.userId){
@@ -459,33 +311,18 @@ class Item extends React.Component {
 class ItemImage extends React.Component {
   render() {
     return (
-        getImage(this.props.image, this.props.onChatSelectedFileChange)
+        getImage(this.props.image, this.props.setSelectedFile)
     );
   }
 }
 
-function getImage(image, onChatSelectedFileChange) {
+function getImage(image, setSelectedFile) {
   switch (image.substring(image.length - 3)) {
-    /*case 'lsx':
-      return (
-        <Image
-          style={{ width: 40, height: 50 }}
-          source={require('../../../../images/ic_xls.png')}
-        />
-      );
-    case 'xls':
-      return (
-        <Image
-          style={{ width: 40, height: 50 }}
-          source={require('../../../../images/ic_xls.png')}
-        />
-      );*/
-
     case 'pdf':
       return (
         <TouchableOpacity
           onPress = {() => {
-            onChatSelectedFileChange(image);
+            setSelectedFile(image);
           }
         }
         style={{
@@ -505,7 +342,7 @@ function getImage(image, onChatSelectedFileChange) {
       return (
         <TouchableOpacity
           onPress = {() => {
-            onChatSelectedFileChange(image);
+            setSelectedFile(image);
           }
         }
         style={{
@@ -526,7 +363,7 @@ function getImage(image, onChatSelectedFileChange) {
       return (
         <TouchableOpacity
           onPress = {() => {
-            onChatSelectedFileChange(image);
+            setSelectedFile(image);
           }
         }
         style={{
@@ -547,7 +384,7 @@ function getImage(image, onChatSelectedFileChange) {
       return (
         <TouchableOpacity
           onPress = {() => {
-            onChatSelectedFileChange(image);
+            setSelectedFile(image);
           }
         }
         style={{
@@ -601,7 +438,6 @@ const styles = StyleSheet.create({
   },
   messageContainer: {
     width: '100%',
-    
     alignItems: 'center',
     flexDirection: 'row',
     backgroundColor: 'white',

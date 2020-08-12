@@ -2,7 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import {
   setAddCommentToAdvertisementText,
-  setAddCommentToAdvertisementButtonSend
+  setAddCommentToAdvertisementButtonSend,
+  sendComment
 } from '../../../../redux/ads/addComment/actions';
 import AddCommentToAdScreen from './AddCommentToAdScreen';
 
@@ -20,6 +21,7 @@ class AddCommentToAdContainer extends React.Component {
         isDisabledButtonSend={this.props.isDisabledButtonSend}
         setAddCommentToAdvertisementText={this.props.setAddCommentToAdvertisementText}
         setAddCommentToAdvertisementButtonSend={this.props.setAddCommentToAdvertisementButtonSend}
+        sendComment={this.props.sendComment}
       />
     );
   }
@@ -39,7 +41,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = {
   setAddCommentToAdvertisementText,
-  setAddCommentToAdvertisementButtonSend
+  setAddCommentToAdvertisementButtonSend,
+  sendComment
 };
 
 export default connect(

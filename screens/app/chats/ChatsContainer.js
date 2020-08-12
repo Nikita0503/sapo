@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import {setChatsAllChats, 
         setChatsAllChatsClear, 
         setChatsAllUsers, 
-        setAllChatsSelectedChat} from '../../../redux/chats/actions';
+        setAllChatsSelectedChat,
+        fetchAllChats} from '../../../redux/chats/actions';
 import ChatsScreen from './ChatsScreen';
 
 class ChatsContainer extends React.Component {
@@ -24,6 +25,7 @@ class ChatsContainer extends React.Component {
         setChatsAllChatsClear={this.props.setChatsAllChatsClear}
         setChatsAllUsers={this.props.setChatsAllUsers}
         setAllChatsSelectedChat={this.props.setAllChatsSelectedChat}
+        fetchAllChats={this.props.fetchAllChats}
       />
     );
   }
@@ -47,7 +49,8 @@ const mapDispatchToProps = {
   setChatsAllChats,
   setChatsAllChatsClear,
   setChatsAllUsers,
-  setAllChatsSelectedChat
+  setAllChatsSelectedChat,
+  fetchAllChats
 };
 
 export default connect(

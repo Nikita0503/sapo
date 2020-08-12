@@ -6,7 +6,11 @@ import {setChatAllMessages,
      setChatCurrentImagesAdd, 
      setChatCurrentImagesClear, 
      setSelectedFile, 
-     setLoading} from '../../../../redux/chats/selectedChat/actions';
+     setLoading,
+     sendPhoto,
+     downloadMessages,
+     sendMessage,
+     closeChat} from '../../../../redux/chats/selectedChat/actions';
 import ChatScreen from './ChatScreen';
 
 class ChatContainer extends React.Component {
@@ -33,6 +37,10 @@ class ChatContainer extends React.Component {
         setChatCurrentImagesClear={this.props.setChatCurrentImagesClear}
         setSelectedFile={this.props.setSelectedFile}
         setLoading={this.props.setLoading}
+        sendPhoto={this.props.sendPhoto}
+        downloadMessages={this.props.downloadMessages}
+        sendMessage={this.props.sendMessage}
+        closeChat={this.props.closeChat}
       />
     );
   }
@@ -56,13 +64,17 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = {
-  setChatAllMessages: setChatAllMessages,
-  setChatNewMessage: setChatNewMessage,
-  setChatCurrentMessage: setChatCurrentMessage,
-  setChatCurrentImagesAdd: setChatCurrentImagesAdd,
-  setChatCurrentImagesClear: setChatCurrentImagesClear,
-  setSelectedFile: setSelectedFile,
-  setLoading: setLoading
+  setChatAllMessages,
+  setChatNewMessage,
+  setChatCurrentMessage,
+  setChatCurrentImagesAdd,
+  setChatCurrentImagesClear,
+  setSelectedFile,
+  setLoading,
+  sendPhoto,
+  downloadMessages,
+  sendMessage,
+  closeChat
 };
 
 export default connect(

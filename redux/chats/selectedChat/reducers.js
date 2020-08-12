@@ -24,9 +24,10 @@ export const selectedChatReducer = (state = defaultState, action) => {
         allMessages: action.payload
       }
     case SELECTED_CHAT_ADD_MESSAGE:
+      var message = state.allMessages.find(item => item.id == action.payload.id)
       return {
         ...state,
-        allMessages: [...state.allMessages, action.payload],
+        allMessages: message == undefined ? [...state.allMessages, action.payload] : [...state.allMessages],
       }
     case SELECTED_CHAT_CURRENT_MESSAGE:
       return {
