@@ -1,3 +1,4 @@
+import Toast from 'react-native-tiny-toast'
 export const CHANGE_ADVERTISEMENT_TEXT = 'CHANGE_ADVERTISEMENT_TEXT';
 export const CHANGE_ADVERTISEMENT_BUTTON_SEND = 'CHANGE_ADVERTISEMENT_BUTTON_SEND';
 
@@ -41,7 +42,8 @@ export const sendComment = (addCommentToAdvertisementText, selectedPost, navigat
               maskStyle:{},
             })
             dispatch(setAddCommentToAdvertisementText(null));
-            navigation.goBack()
+            navigation.goBack();
+            ws.close()
           }
         };
       } catch (error) {

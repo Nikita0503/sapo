@@ -7,7 +7,11 @@ import {
   setAllComments,
   setAllCommentsClear,
   setSelectedPostComments,
-  setAdvertisementSelectedFile
+  setAdvertisementSelectedFile,
+  fetchAllAds,
+  fetchOsbbName,
+  fetchSelectedPostComments,
+  toVote
 } from '../../../redux/ads/actions';
 import AdsScreen from './AdsScreen';
 
@@ -35,6 +39,10 @@ class AdsContainer extends React.Component {
         setAllComments={this.props.setAllComments}
         setAllCommentsClear={this.props.setAllCommentsClear}
         setAdvertisementSelectedFile={this.props.setAdvertisementSelectedFile}
+        fetchAllAds={this.props.fetchAllAds}
+        fetchOsbbName={this.props.fetchOsbbName}
+        fetchSelectedPostComments={this.props.fetchSelectedPostComments}
+        toVote={this.props.toVote}
       />
     );
   }
@@ -64,7 +72,11 @@ const mapDispatchToProps = {
   setSelectedPostComments,
   setAllComments,
   setAllCommentsClear,
-  setAdvertisementSelectedFile
+  setAdvertisementSelectedFile,
+  fetchAllAds,
+  fetchOsbbName,
+  fetchSelectedPostComments,
+  toVote
 };
 
 export default connect(

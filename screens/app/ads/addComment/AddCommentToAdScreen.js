@@ -12,7 +12,6 @@ import {
   TextInput,
 } from 'react-native';
 import ScreenHeader from '../../../../components/ScreenHeader';
-import Toast from 'react-native-tiny-toast'
 
 export default class AddCommentToAdScreen extends React.Component {
   constructor(props) {

@@ -18,153 +18,13 @@ import PDFReader from 'rn-pdf-reader-js';
 import ImageZoom from 'react-native-image-pan-zoom';
 
 export default class AdsScreen extends React.Component {
-  constructor(props) {
-    super(props);
-    this.update = this.props.navigation.addListener('focus', () => {
-      this.componentDidMount();
-    });
-    this.onAdvertisementDataChange = this.onAdvertisementDataChange.bind(this);
-    this.onAdvertisementOsbbNameChange = this.onAdvertisementOsbbNameChange.bind(
-      this
-    );
-    this.onSelectedPostChange = this.onSelectedPostChange.bind(this);
-    this.onSelectedPostCommentsChange = this.onSelectedPostCommentsChange.bind(this);
-    this.onAllCommentsChange = this.onAllCommentsChange.bind(this);
-    this.onAllCommentsClear = this.onAllCommentsClear.bind(this);
-    this.onAdvertisementSelectedFileChange = this.onAdvertisementSelectedFileChange.bind(this);
-  }
-
-  onAdvertisementDataChange(advertisementData) {
-    this.props.setAdvertisementData(advertisementData);
-  }
-
-  onAdvertisementOsbbNameChange(advertisementOsbbName) {
-    this.props.setAdvertisementOsbbName(advertisementOsbbName);
-  }
-
-  onSelectedPostChange(selectedPost) {
-    this.props.setSelectedPost(selectedPost);
-  }
-
-  onSelectedPostCommentsChange(selectedPost) {
-    this.props.setSelectedPostComments(selectedPost)
-  }
-
-  onAllCommentsChange(comments) {
-    this.props.setAllComments(comments);
-  }
-
-  onAllCommentsClear() {
-    this.props.setAllCommentsClear([]);
-  }
-
-  onAdvertisementSelectedFileChange(selectedFile){
-    this.props.setAdvertisementSelectedFile(selectedFile)
-  }
-
-  onSelectedPostAllComentsChange(comments){
-    this.props.setSelectedPostAllComents(comments)
-  }
 
   componentDidMount() {
-    this.onSelectedPostChange(null);
-    this.onAllCommentsClear();
-    this.fetchOsbbName();
-    console.log('I am triggered123');
-    var ws = new WebSocket(
-      'wss://app.sapo365.com/socket.io/?auth_token=' +
-        this.props.token +
-        '&EIO=3&transport=websocket'
-    );
-
-    ws.onopen = () => {
-      // connection opened123
-      ws.send('4221["/notice/list",{"page":1,"limit":50}]'); // send a message
-    }; //428["/comment/create",{"text":"qwe","noticeId":53}]
-
-    ws.onmessage = e => {
-      // a message was received
-      if (e.data.substring(0, 4) == '4321') {
-        const myObjStr = JSON.stringify(e.data.substring(4, e.data.length));
-        var myObj = JSON.parse(myObjStr);
-        var data = JSON.parse(myObj);
-        for (var i = 0; i < data[0].length; i++) {
-          for (var j = 0; j < data[0][i].variants.length; j++) {
-            data[0][i].variants[j].id = data[0][i].id;
-          }
-        }
-        this.onAdvertisementDataChange(data[0]);
-        if (data[0].length > 0) {
-          this.fetchCommentsByAdvertisementId(0);
-        }
-        ws.close();
-      }
-    };
-  }
-
-  fetchCommentsByAdvertisementId(index) {
-    var ws = new WebSocket(
-      'wss://app.sapo365.com/socket.io/?auth_token=' +
-        this.props.token +
-        '&EIO=3&transport=websocket'
-    );
-
-    ws.onopen = () => {
-      // connection opened123
-      ws.send(
-        '4210["/notice/one/comments",{"id":' +
-          this.props.advertisementData[index].id +
-          ',"page":1,"limit":10}]'
-      ); // send a message
-    }; //428["/comment/create",{"text":"qwe","noticeId":53}]
-
-    ws.onmessage = e => {
-      // a message was received
-      if (e.data.substring(0, 4) == '4310') {
-        const myObjStr = JSON.stringify(e.data.substring(4, e.data.length));
-        var myObj = JSON.parse(myObjStr);
-        var data = JSON.parse(myObj);
-        var obj = {
-          id: this.props.advertisementData[index].id,
-          data: data[0],
-        };
-        this.onAllCommentsChange(obj);
-        //console.log('comments123', obj);
-        ws.close();
-        index++;
-        if (index != this.props.advertisementData.length) {
-          this.fetchCommentsByAdvertisementId(index);
-        }
-      }
-    };
-  }
-
-  fetchOsbbName() {
-    fetch(
-      'https://app.sapo365.com/api/tenant/osbb?accountId=' +
-        this.props.accountId +
-        '&osbbId=' +
-        this.props.osbbId +
-        '&workPeriod=' +
-        this.props.workPeriods[this.props.workPeriods.length - 1],
-      /*'https://app.sapo365.com/api/tenant/osbb?'
-    + 'accountId=' + this.props.accountId
-    + '&osbbId=' + this.props.osbbId
-    + 'workPeriod=' + this.props.workPeriods[this.props.workPeriods.length-1]*/ {
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-          Authorization: 'Bearer ' + this.props.token + '',
-        },
-      }
-    )
-      .then(response => response.json())
-      .then(responseJson => {
-        this.onAdvertisementOsbbNameChange(responseJson);
-      })
-      .catch(error => {
-        console.error(error);
-      });
+    this.props.fetchOsbbName(this.props.accountId, 
+      this.props.osbbId, 
+      this.props.workPeriods, 
+      this.props.token);
+    this.props.fetchAllAds(this.props.token);
   }
 
   getLoadingView(){
@@ -179,68 +39,63 @@ export default class AdsScreen extends React.Component {
     }
   }
 
-  
-getFileShowDialog(){
-  if(this.props.advertisementSelectedFile != null){
-    var type = this.props.advertisementSelectedFile.substring(this.props.advertisementSelectedFile.length - 3)
-    var path = this.props.advertisementSelectedFile;
-    //type = 'jpg'
-    console.log("TYPE", type)
-    switch(type){
-      case 'jpg':
-        return(
-          <ImageZoom cropWidth={320}
-                       cropHeight={300}
-                       imageWidth={320}
-                       imageHeight={300}>
-        <Image
-          style={{width: 320, height: 300, resizeMode: 'contain'}}
-          source={{uri: 'https://app.sapo365.com' + path}}
-        /></ImageZoom>)
-      case 'png':
-        return(
-          <ImageZoom cropWidth={320}
-                       cropHeight={300}
-                       imageWidth={320}
-                       imageHeight={300}>
-        <Image
-          style={{width: 320, height: 300, resizeMode: 'contain'}}
-          source={{uri: 'https://app.sapo365.com' + path}}
-        /></ImageZoom>)
-      case 'svg':
-        return(
-          <ImageZoom cropWidth={320}
-                       cropHeight={300}
-                       imageWidth={320}
-                       imageHeight={300}>
-        <Image
-          style={{width: 320, height: 300, resizeMode: 'contain'}}
-          source={{uri: 'https://app.sapo365.com' + path}}
-        /></ImageZoom>)
-      case 'pdf':
-        return(
-        <PDFReader
-          style={{width: 250, maxHeight: 400}}
-          source={{
-            uri: 'https://app.sapo365.com' + path,
-          }}
-        />
-        ) 
-      default: 
-        //download('https://app.sapo365.com' + path)
-        return(<Text>У розробці...</Text>)
-        
+  getFileShowDialog(){
+    if(this.props.advertisementSelectedFile != null){
+      var type = this.props.advertisementSelectedFile.substring(this.props.advertisementSelectedFile.length - 3)
+      var path = this.props.advertisementSelectedFile;
+      console.log("TYPE", type)
+      switch(type){
+        case 'jpg':
+          return(
+            <ImageZoom cropWidth={320}
+                        cropHeight={300}
+                        imageWidth={320}
+                        imageHeight={300}>
+          <Image
+            style={{width: 320, height: 300, resizeMode: 'contain'}}
+            source={{uri: 'https://app.sapo365.com' + path}}
+          /></ImageZoom>)
+        case 'png':
+          return(
+            <ImageZoom cropWidth={320}
+                        cropHeight={300}
+                        imageWidth={320}
+                        imageHeight={300}>
+          <Image
+            style={{width: 320, height: 300, resizeMode: 'contain'}}
+            source={{uri: 'https://app.sapo365.com' + path}}
+          /></ImageZoom>)
+        case 'svg':
+          return(
+            <ImageZoom cropWidth={320}
+                        cropHeight={300}
+                        imageWidth={320}
+                        imageHeight={300}>
+          <Image
+            style={{width: 320, height: 300, resizeMode: 'contain'}}
+            source={{uri: 'https://app.sapo365.com' + path}}
+          /></ImageZoom>)
+        case 'pdf':
+          return(
+          <PDFReader
+            style={{width: 250, maxHeight: 400}}
+            source={{
+              uri: 'https://app.sapo365.com' + path,
+            }}
+          />
+          ) 
+        default: 
+          return(<Text>У розробці...</Text>)
+      }
     }
   }
-}
 
   render() {
     return (
       <View
-        style={{ width: '100%', height: '100%', backgroundColor: '#EEEEEE',  }}>
+        style={{ width: '100%', height: '100%', backgroundColor: '#EEEEEE'}}>
         <NavigationEvents
           onDidFocus={() => {
-            //console.log('I am triggered');
             this.componentDidMount();
           }}
         />
@@ -252,11 +107,11 @@ getFileShowDialog(){
         <View style={styles.container}>
           {this.getLoadingView()}
           <FlatList
-            style={{ marginBottom: 80 }}
+            style={{ marginBottom: 80, width: '100%' }}
             showsVerticalScrollIndicator={false}
             data={this.props.advertisementData}
             renderItem={({ item }) => (
-              <Item
+              <Post
                 token={this.props.token}
                 author={
                   this.props.advertisementOsbbName == null
@@ -267,14 +122,13 @@ getFileShowDialog(){
                 allComments={this.props.allComments}
                 selectedPost={this.props.selectedPost}
                 selectedPostComments={this.props.selectedPostComments}
-                onSelectedPostChange={this.onSelectedPostChange}
-                onSelectedPostCommentsChange={this.onSelectedPostCommentsChange}
                 navigation={this.props.navigation}
                 advertisementData={this.props.advertisementData}
+                setSelectedPost={this.props.setSelectedPost}
+                setSelectedPostComments={this.props.setSelectedPostComments}
                 selectedPostAllComents={this.props.selectedPostAllComents}
-                onAdvertisementDataChange={this.onAdvertisementDataChange}
-                onAdvertisementSelectedFileChange={this.onAdvertisementSelectedFileChange}
-                onSelectedPostAllComentsChange={this.onSelectedPostAllComentsChange}
+                setAdvertisementSelectedFile={this.props.setAdvertisementSelectedFile}
+                toVote={this.props.toVote}
               />
             )}
             keyExtractor={item => item.header}
@@ -290,11 +144,10 @@ getFileShowDialog(){
             <View style={{alignSelf: 'center'}}>
               {this.getFileShowDialog()}
             </View>
-            
             <Dialog.Button
               label="OK"
               onPress={() => {
-                this.onAdvertisementSelectedFileChange(null);
+                this.props.setAdvertisementSelectedFile(null);
               }}
             />
           </Dialog.Container>
@@ -357,7 +210,84 @@ function getDate(data) {
   );
 }
 
-class Item extends React.Component {
+class Post extends React.Component {
+
+  render() {
+    return (
+      <View style={{ margin: 5, backgroundColor: 'white', width: '95%', borderRadius: 15 }}>
+        <Text
+          style={{
+            color: '#002B2B',
+            marginHorizontal: 10,
+            marginVertical: 5,
+            fontSize: 20,
+          }}>
+          {this.props.data.header}
+        </Text>
+        <View style={{ flexDirection: 'row' }}>
+          <View>
+            <Text style={{ color: '#002B2B', marginHorizontal: 10 }}>
+              {this.props.author}
+            </Text>
+            <Text style={{ color: '#CDCDCD', marginHorizontal: 10 }}>
+              {getDate(this.props.data.updatedAt)}
+            </Text>
+          </View>
+        </View>
+        <Text style={{ marginHorizontal: 10, marginVertical: 5, fontSize: 14 }}>
+          {this.props.data.text}
+        </Text>
+        <FlatList
+          horizontal
+          style={{marginStart: 5}}
+          data={this.props.data.documents}
+          renderItem={({ item }) => <ItemFile file={item} setAdvertisementSelectedFile={this.props.setAdvertisementSelectedFile}/>}
+          listKey={(item, index) => 'C' + index.toString()}
+        />
+        {this.getVoting()}
+        <TouchableOpacity
+          onPress={() => {
+            this.props.setSelectedPost(this.props.data);
+            this.props.navigation.navigate('AddCommentToAd');
+          }}>
+          <View
+            style={{
+              backgroundColor: '#F9F9F9',
+              alignItems: 'center',
+              margin: 10,
+              borderRadius: 15
+            }}>
+            <Text
+              style={{
+                marginTop: 10,
+                marginBottom: 10,
+                color: '#002B2B',
+                fontSize: 18,
+              }}>
+              Додати коментар +
+            </Text>
+          </View>
+        </TouchableOpacity>
+        {this.showComments()}
+      </View>
+    );
+  }
+
+  getVoting() {
+    if (this.props.data.voteClosed == null) {
+      return;
+    }
+    if (this.props.data.voteClosed) {
+      return <View>{this.getVotingResult()}</View>;
+    } else {
+      if (this.props.data.voted) {
+        return <View>{this.getVotedVoting()}</View>;
+      } else {
+        return <View>{this.getActiveVoting()}</View>;
+      }
+    }
+  }
+
   getVotingResult() {
     return this.props.data.variants.map(variant => {
       return (
@@ -424,69 +354,7 @@ class Item extends React.Component {
             value={variant.header}
             color="pink"
             onPress={() => {
-              //alert(variant.id);
-
-              var ws = new WebSocket(
-                'wss://app.sapo365.com/socket.io/?auth_token=' +
-                  this.props.token +
-                  '&EIO=3&transport=websocket'
-              );
-
-              ws.onopen = () => {
-                /*
-                ws.send(
-                  '4210["/notice/vote/optionSelected",{"noticeId":' +
-                    variant.id +
-                    ',"voteVariantId":' +
-                    variant.variantId +
-                    '}]'
-                );*/
-                Alert.alert(
-                  'Підтвердження',
-                  'Ви впевненні у вашому варіанті?',
-                  [
-                    {text: 'Так', onPress: () => {
-                      ws.send(
-                        '4210["/notice/vote/optionSelected",{"noticeId":' +
-                          variant.id +
-                          ',"voteVariantId":' +
-                          variant.variantId +
-                          '}]'
-                      );
-                    }},
-                    {text: 'Ні', onPress: () => console.log('No pressed')}
-                  ],
-                  { cancelable: true }
-                )
-              };
-
-              ws.onmessage = e => {
-                // a message was received
-                if (e.data.substring(0, 4) == '4310') {
-                  var data = this.props.advertisementData;
-                  Alert.alert(
-                    'Повідомлення',
-                    'Ваш голос було зараховано',
-                    [
-                      {text: 'OK', onPress: () => console.log('OK Pressed')},
-                    ],
-                    { cancelable: true }
-                  )
-                  for (var i = 0; i < data.length; i++) {
-                    if (variant.id == data[i].id) {
-                      for (var j = 0; j < data[i].variants.length; j++) {
-                        if (
-                          data[i].variants[j].variantId == variant.variantId
-                        ) {
-                          data[i].variants[j].selected = true;
-                          data[i].voted = true;
-                        }
-                      }
-                    }
-                  }
-                  this.props.onAdvertisementDataChange(data);
-                }
-              };
+              this.props.toVote(this.props.advertisementData, variant, this.props.token);
             }}
           />
           <Text style={{ fontSize: 16, color: '#B2B2B2', marginTop: 6 }}>
@@ -495,21 +363,6 @@ class Item extends React.Component {
         </View>
       );
     });
-  }
-
-  getVoting() {
-    if (this.props.data.voteClosed == null) {
-      return;
-    }
-    if (this.props.data.voteClosed) {
-      return <View>{this.getVotingResult()}</View>;
-    } else {
-      if (this.props.data.voted) {
-        return <View>{this.getVotedVoting()}</View>;
-      } else {
-        return <View>{this.getActiveVoting()}</View>;
-      }
-    }
   }
 
   getCommentsListData() {
@@ -523,37 +376,14 @@ class Item extends React.Component {
     }
   }
 
-  fetchSelectedPostComments() {
-    var ws = new WebSocket(
-      'wss://app.sapo365.com/socket.io/?auth_token=' +
-        this.props.token +
-        '&EIO=3&transport=websocket'
-    );
-
-    ws.onopen = () => {
-      // connection opened123
-      ws.send(
-        '4210["/notice/one/comments",{"id":' +
-          this.props.selectedPostComments.id +
-          ',"page":1,"limit":10}]'
-      ); // send a message
-    }; //428["/comment/create",{"text":"qwe","noticeId":53}]
-
-    ws.onmessage = e => {
-      // a message was received
-      if (e.data.substring(0, 4) == '4310') {
-        const myObjStr = JSON.stringify(e.data.substring(4, e.data.length));
-        var myObj = JSON.parse(myObjStr);
-        var data = JSON.parse(myObj);
-        var obj = {
-          id: this.props.advertisementData[index].id,
-          data: data[0],
-        };
-        this.onAllCommentsChange(data[0]);
-        console.log('comments123', data[0]);
-        ws.close();
+  getNoCommentsView(){
+    if(this.getCommentsListData() != null){
+      if(this.getCommentsListData().length == 0){
+        return(<Text style={{color: '#002B2B', fontSize: 16, marginTop: 10, alignSelf: 'center'}}>Даних немає</Text>)
       }
-    };
+    }else{
+      return(<ActivityIndicator size="large" style={styles.loader} color="#002B2B" />)
+    }
   }
 
   showComments() {
@@ -561,24 +391,13 @@ class Item extends React.Component {
       return (
         <TouchableOpacity
           onPress={() => {
-            this.props.onSelectedPostCommentsChange(this.props.data);
-            //this.props.onCommentListChange(null);
+            this.props.setSelectedPostComments(this.props.data);
           }}>
           <View
-            style={{
-              width: '100%',
-              backgroundColor: '#F9F9F9',
-              alignItems: 'center',
-              borderRadius: 15
-            }}>
+            style={{width: '100%', backgroundColor: '#F9F9F9', alignItems: 'center', borderRadius: 15}}>
             <Text
-              style={{
-                marginTop: 10,
-                marginBottom: 10,
-                color: '#002B2B',
-                fontSize: 18,
-              }}>
-              ↓ Показати коментарі
+              style={{marginTop: 10, marginBottom: 10, color: '#002B2B', fontSize: 18}}>
+                ↓ Показати коментарі
             </Text>
           </View>
         </TouchableOpacity>
@@ -588,21 +407,14 @@ class Item extends React.Component {
       return (
         <TouchableOpacity
           onPress={() => {
-            this.props.onSelectedPostCommentsChange(this.props.data);
+            this.props.setSelectedPostComments(this.props.data);
           }}>
           <View
             style={{
-              width: '100%',
-              backgroundColor: '#F9F9F9',
-              alignItems: 'center',
+              width: '100%', backgroundColor: '#F9F9F9', alignItems: 'center',
             }}>
             <Text
-              style={{
-                marginTop: 10,
-                marginBottom: 10,
-                color: '#002B2B',
-                fontSize: 18,
-              }}>
+              style={{marginTop: 10, marginBottom: 10, color: '#002B2B', fontSize: 18}}>
               ↓ Показати коментарі
             </Text>
           </View>
@@ -614,138 +426,28 @@ class Item extends React.Component {
             visible={this.props.selectedPostComments.id == this.props.data.id}>
               {this.getNoCommentsView()}
             <FlatList
-            style={{height: '70%' }}
-            data={this.getCommentsListData()}
-            renderItem={({ item }) => (
-              <ItemComment
-                author={item.User.lastName + ' ' + item.User.firstName}
-                text={item.text}
-                time={getDate(item.updatedAt)}
-                photo={item.User.photo}
-              />
+              style={{height: '70%' }}
+              data={this.getCommentsListData()}
+              renderItem={({ item }) => (
+                <ItemComment
+                  author={item.User.lastName + ' ' + item.User.firstName}
+                  text={item.text}
+                  time={getDate(item.updatedAt)}
+                  photo={item.User.photo}
+                />
             )}
             keyExtractor={item => item.id}
           />
-            
             <Dialog.Button
               label="OK"
               onPress={() => {
-                this.props.onSelectedPostCommentsChange(null);
+                this.props.setSelectedPostComments(null);
               }}
             />
           </Dialog.Container>
         
       );
     }
-  }
-      /*<View>
-          <TouchableOpacity
-            onPress={() => {
-              this.props.onSelectedPostCommentsChange(null);
-            }}>
-            <View
-              style={{
-                width: '100%',
-                backgroundColor: '#F9F9F9',
-                alignItems: 'center',
-              }}>
-              <Text
-                style={{
-                  marginTop: 10,
-                  marginBottom: 10,
-                  color: '#364A5F',
-                  fontSize: 18,
-                }}>
-                ↑ Сховати коментарі
-              </Text>
-            </View>
-          </TouchableOpacity>
-          {this.getNoCommentsView()}
-          <FlatList
-            style={{ marginVertical: 10 }}
-            data={this.getCommentsListData()}
-            renderItem={({ item }) => (
-              <ItemComment
-                author={item.User.lastName + ' ' + item.User.firstName}
-                text={item.text}
-                time={getDate(item.updatedAt)}
-                photo={item.User.photo}
-              />
-            )}
-            keyExtractor={item => item.id}
-          />
-        </View> */
-  getNoCommentsView(){
-    if(this.getCommentsListData() != null){
-      if(this.getCommentsListData().length == 0){
-        return(<Text style={{color: '#002B2B', fontSize: 16, marginTop: 10, alignSelf: 'center'}}>Даних немає</Text>)
-      }
-    }else{
-      return(
-          <ActivityIndicator size="large" style={styles.loader} color="#002B2B" />
-          )
-    }
-  }
-
-  render() {
-    return (
-      <View style={{ margin: 5, backgroundColor: 'white', width: '95%', borderRadius: 15 }}>
-        <Text
-          style={{
-            color: '#002B2B',
-            marginHorizontal: 10,
-            marginVertical: 5,
-            fontSize: 20,
-          }}>
-          {this.props.data.header}
-        </Text>
-        <View style={{ flexDirection: 'row' }}>
-          <View>
-            <Text style={{ color: '#002B2B', marginHorizontal: 10 }}>
-              {this.props.author}
-            </Text>
-            <Text style={{ color: '#CDCDCD', marginHorizontal: 10 }}>
-              {getDate(this.props.data.updatedAt)}
-            </Text>
-          </View>
-        </View>
-        <Text style={{ marginHorizontal: 10, marginVertical: 5, fontSize: 14 }}>
-          {this.props.data.text}
-        </Text>
-        <FlatList
-          horizontal
-          style={{marginStart: 5}}
-          data={this.props.data.documents}
-          renderItem={({ item }) => <ItemFile file={item} onAdvertisementSelectedFileChange={this.props.onAdvertisementSelectedFileChange}/>}
-          listKey={(item, index) => 'C' + index.toString()}
-        />
-        {this.getVoting()}
-        <TouchableOpacity
-          onPress={() => {
-            this.props.onSelectedPostChange(this.props.data);
-            this.props.navigation.navigate('AddCommentToAd');
-          }}>
-          <View
-            style={{
-              backgroundColor: '#F9F9F9',
-              alignItems: 'center',
-              margin: 10,
-              borderRadius: 15
-            }}>
-            <Text
-              style={{
-                marginTop: 10,
-                marginBottom: 10,
-                color: '#002B2B',
-                fontSize: 18,
-              }}>
-              Додати коментар +
-            </Text>
-          </View>
-        </TouchableOpacity>
-        {this.showComments()}
-      </View>
-    );
   }
 }
 
@@ -800,12 +502,11 @@ class ItemFile extends React.Component {
   render() {
     return (
       <TouchableOpacity onPress={() => {
-        this.props.onAdvertisementSelectedFileChange(this.props.file)
+        this.props.setAdvertisementSelectedFile(this.props.file)
       }}>
         <View
           style={{
             flexDirection: 'row',
-            
           }}>
           {getImage(this.props.file)}
         </View>
@@ -860,4 +561,7 @@ const styles = StyleSheet.create({
     marginEnd: 5,
     alignItems: 'center',
   },
+  commentsButton: {
+    
+  }
 });
