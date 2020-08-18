@@ -4,7 +4,8 @@ import { setAddOfferTopic,
          setAddOfferText, 
          setAddOfferSystem, 
          setAddOfferPublicity, 
-         setAddOfferButtonSendIsDisabled 
+         setAddOfferButtonSendIsDisabled,
+         addOffer
         } from '../../../../redux/requests/addRequest/actions';
 import AddRequestScreen from './AddRequestScreen';
 
@@ -29,6 +30,7 @@ class AddRequestContainer extends React.Component {
         setAddOfferSystem={this.props.setAddOfferSystem}
         setAddOfferPublicity={this.props.setAddOfferPublicity}
         setAddOfferButtonSendIsDisabled={this.props.setAddOfferButtonSendIsDisabled}
+        addOffer={this.props.addOffer}
       />
     );
   }
@@ -55,7 +57,8 @@ const mapDispatchToProps = {
   setAddOfferText,
   setAddOfferSystem,
   setAddOfferPublicity,
-  setAddOfferButtonSendIsDisabled
+  setAddOfferButtonSendIsDisabled,
+  addOffer
 };
 
 export default connect(

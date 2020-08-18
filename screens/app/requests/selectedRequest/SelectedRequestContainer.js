@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { setSelectedOfferComments, setSelectedFile } from '../../../../redux/requests/selectedRequest/actions';
+import { setSelectedOfferComments, setSelectedFile, fetchRequest } from '../../../../redux/requests/selectedRequest/actions';
 import SelectedRequestScreen from './SelectedRequestScreen';
 
 class SelectedRequestContainer extends React.Component {
@@ -20,6 +20,7 @@ class SelectedRequestContainer extends React.Component {
         imageAvatar={this.props.imageAvatar}
         setSelectedOfferComments={this.props.setSelectedOfferComments}
         setSelectedFile={this.props.setSelectedFile}
+        fetchRequest={this.props.fetchRequest}
       />
     );
   }
@@ -42,7 +43,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = {
   setSelectedOfferComments,
-  setSelectedFile
+  setSelectedFile,
+  fetchRequest
 };
 
 export default connect(

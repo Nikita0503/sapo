@@ -2,7 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { 
     setAddCommentToOffer, 
-    setIsDisabledButtonSendChange } from '../../../../../redux/requests/selectedRequest/addComment/actions';
+    setIsDisabledButtonSendChange,
+    addComment } from '../../../../../redux/requests/selectedRequest/addComment/actions';
 import AddCommentToSelectedRequestScreen from './AddCommentToSelectedRequestScreen';
 
 class AddCommentToSelectedRequestContainer extends React.Component {
@@ -21,6 +22,7 @@ class AddCommentToSelectedRequestContainer extends React.Component {
         setAddCommentToOffer={this.props.setAddCommentToOffer}
         selectedOfferData={this.props.selectedOfferData}
         setIsDisabledButtonSendChange={this.props.setIsDisabledButtonSendChange}
+        addComment={this.props.addComment}
       />
     );
   }
@@ -42,7 +44,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = {
   setAddCommentToOffer,
-  setIsDisabledButtonSendChange
+  setIsDisabledButtonSendChange,
+  addComment
 };
 
 export default connect(

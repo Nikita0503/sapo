@@ -14,29 +14,6 @@ import { NavigationEvents } from 'react-navigation';
 import Dialog from 'react-native-dialog';
 import PDFReader from 'rn-pdf-reader-js';
 
-const DATA_FILES = [
-  {
-    name: 'Excel file',
-    type: 'xls',
-  },
-  {
-    name: 'PDF file',
-    type: 'pdf',
-  },
-  {
-    name: 'DOC file',
-    type: 'doc',
-  },
-  {
-    name: 'TXT file',
-    type: 'txt',
-  },
-  {
-    name: 'Image file',
-    type: 'jpg',
-  },
-];
-
 function getDateForComments(data) {
   if (data == null) return;
   var date = new Date(data);
@@ -141,130 +118,20 @@ export default class SelectedRequestScreen extends React.Component {
     this.update = this.props.navigation.addListener('focus', () => {
       this.componentDidMount();
     });
-    this.onSelectedOfferCommentsChange = this.onSelectedOfferCommentsChange.bind(
-      this
-    );
-    this.onOfferSelectedFileChange = this.onOfferSelectedFileChange.bind(this);
-  }
-
-  onSelectedOfferCommentsChange(comments) {
-    //console.log('comments2', comments);
-    this.props.setSelectedOfferComments(comments);
-  }
-
-  onOfferSelectedFileChange(file){
-    this.props.setSelectedFile(file)
   }
 
   state = {
-    myComment: '',
-    isShown: false,
-    comments: [
-      {
-        author: {
-          name: 'Vasya',
-          photo: '../../../../content/images/ic_txt.png',
-        },
-        text:
-          'Коммента́рий (лат. commentārius — заметки, записки; толкование) — пояснения к тексту, рассуждения, замечания о чём-нибудь или в Интернете — к посту (сообщению).',
-        time: 'Feb 12, 2019 20:00',
-        files: [
-          {
-            name: 'Excel file',
-            file: 'xls',
-          },
-          {
-            name: 'PDF file',
-            file: 'pdf',
-          },
-          {
-            name: 'Excel file',
-            file: 'xls',
-          },
-          {
-            name: 'PDF file',
-            file: 'pdf',
-          },
-          {
-            name: 'Excel file',
-            file: 'jpg',
-          },
-          {
-            name: 'PDF file',
-            file: 'pdf',
-          },
-          {
-            name: 'Excel file',
-            file: 'xls',
-          },
-          {
-            name: 'PDF file',
-            file: 'txt',
-          },
-          {
-            name: 'Excel file',
-            file: 'xls',
-          },
-          {
-            name: 'PDF file',
-            file: 'pdf',
-          },
-        ],
-      },
-
-      {
-        author: {
-          name: 'Petya',
-          photo: '.../../../../content/images/ic_txt.png',
-        },
-        text:
-          'comment2comment2comment2comment2comment2comment2comment2comment2comment2comment2comment2comment2comment2comment2comment2',
-        time: 'Jun 1, 2020 10:00',
-      },
-    ],
+    isShown: false
   };
 
-  getSelectedOffer() {
-    
-    //console.log('selectedOffer1', this.props.selectedOfferComments);
-  }
-
   componentDidMount() {
-    var ws = new WebSocket(
-      'wss://app.sapo365.com/socket.io/?auth_token=' +
-        this.props.token +
-        '&EIO=3&transport=websocket'
-    );
-
-    ws.onopen = () => {
-      // connection opened
-      ws.send(
-        '4216["/claim/comment/list",{"id":' +
-          this.props.selectedOfferData.id +
-          ',"workPeriod":"' +
-          this.props.workPeriods[this.props.workPeriods.length - 1] +
-          '"}]'
-      ); // send a message
-    };
-
-    ws.onmessage = e => {
-      // a message was received
-      if (e.data.substring(0, 4) == '4316') {
-        const myObjStr = JSON.stringify(e.data.substring(4, e.data.length));
-        var myObj = JSON.parse(myObjStr);
-        var data = JSON.parse(myObj);
-        //console.log('comments1', data);
-        this.onSelectedOfferCommentsChange(data[0]);
-      }
-    };
+    this.props.fetchRequest(this.props.selectedOfferData, this.props.workPeriods, this.props.token)
   }
 
   getComments() {
     if (this.props.selectedOfferComments == null) {
-      //console.log('comments3', 'null');
       return;
     } else {
-      //console.log('comments3', this.props.selectedOfferComments);
       return this.props.selectedOfferComments;
     }
   }
@@ -321,7 +188,6 @@ export default class SelectedRequestScreen extends React.Component {
   }
 
   getCommentsList() {
-    //console.log("helloMM", this.props.selectedOfferComments)
     if(this.props.selectedOfferComments == null || this.props.selectedOfferComments.length == 0){
       return(<Text style={{color: '#002B2B', fontSize: 16, marginVertical: 10, alignSelf: 'center'}}>Даних немає</Text>)
     }
@@ -335,7 +201,7 @@ export default class SelectedRequestScreen extends React.Component {
             text={item.text}
             time={item.updatedAt}
             files={item.attachment}
-            onOfferSelectedFileChange={this.onOfferSelectedFileChange}
+            setSelectedFile={this.props.setSelectedFile}
           />
         )}
         keyExtractor={item => item.name}
@@ -349,7 +215,6 @@ export default class SelectedRequestScreen extends React.Component {
         style={{ width: '100%', height: '100%', backgroundColor: '#EEEEEE' }}>
         <NavigationEvents
           onDidFocus={() => {
-            //console.log('I am triggered');
             this.componentDidMount();
           }}
         />
@@ -363,8 +228,6 @@ export default class SelectedRequestScreen extends React.Component {
           <View style={styles.container}>
             <View style={{ width: '100%', backgroundColor: '#F9F9F9', borderRadius: 15 }}>
               <View style={{ flexDirection: 'row' }}>
-                
-                {this.getSelectedOffer()}
                 <View>
                   <Text style={{ color: '#364A5F', marginStart: 10 }}>
                     Заявка №{this.props.selectedOfferData.id} від{' '}
@@ -398,7 +261,7 @@ export default class SelectedRequestScreen extends React.Component {
               <FlatList
                 data={this.props.selectedOfferData.attachment}
                 renderItem={({ item }) => (
-                  <ItemFile name={item.name} path={item.filename} onOfferSelectedFileChange={this.onOfferSelectedFileChange} />
+                  <ItemFile name={item.name} path={item.filename} setSelectedFile={this.props.setSelectedFile} />
                 )}
                 keyExtractor={item => item.name}
               />
@@ -438,12 +301,10 @@ export default class SelectedRequestScreen extends React.Component {
             <View style={{alignSelf: 'center'}}>
               {this.getFileShowDialog()}
             </View>
-            
-            
             <Dialog.Button
               label="OK"
               onPress={() => {
-                this.onOfferSelectedFileChange(null);
+                this.props.setSelectedFile(null);
               }}
             />
           </Dialog.Container>
@@ -453,10 +314,8 @@ export default class SelectedRequestScreen extends React.Component {
 
   getFileShowDialog(){
     if(this.props.offerSelectedFile != null){
-      var type = this.props.offerSelectedFile.path.substring(this.props.offerSelectedFile.path.length - 3)
+      var type = this.props.offerSelectedFile.path.substring(this.props.offerSelectedFile.path.length - 3);
       var path = this.props.offerSelectedFile.path;
-      //type = 'jpg'
-      //console.log("TYPE", type)
       switch(type){
         case 'jpg':
           return(
@@ -523,7 +382,7 @@ class ItemComment extends React.Component {
             horizontal
             data={this.props.files}
             renderItem={({ item }) => (
-            <ItemFileComment name={item.name} path={item.filename} onOfferSelectedFileChange={this.props.onOfferSelectedFileChange} />
+            <ItemFileComment name={item.name} path={item.filename} setSelectedFile={this.props.setSelectedFile} />
           )}
           keyExtractor={item => item.claimId}
           listKey={item => item.name}
@@ -542,7 +401,7 @@ class ItemFile extends React.Component {
           name: this.props.name,
           path: this.props.path
         }
-        this.props.onOfferSelectedFileChange(obj)
+        this.props.setSelectedFile(obj)
       }}>
         <View>
           
@@ -561,7 +420,7 @@ class ItemFileComment extends React.Component {
           name: this.props.name,
           path: this.props.path
         }
-        this.props.onOfferSelectedFileChange(obj)
+        this.props.setSelectedFile(obj)
       }}>
         <View
           style={{

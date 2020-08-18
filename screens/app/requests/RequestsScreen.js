@@ -15,165 +15,10 @@ import ScreenHeader from '../../../components/ScreenHeader';
 import ActionButton from 'react-native-action-button';
 import { NavigationEvents } from 'react-navigation';
 
-const DATA_OFFERS = [
-  {
-    name: 'Утримання будинку',
-    system: 'вода',
-    status: 'прийнята',
-    condition: 'Публічна',
-  },
-  {
-    name: 'Утримання будинку',
-    system: 'вода',
-    status: 'прийнята',
-    condition: 'Публічна',
-  },
-  {
-    name: 'Утримання будинку',
-    system: 'вода',
-    status: 'прийнята',
-    condition: 'Публічна',
-  },
-];
-
 export default class RequestsScreen extends React.Component {
-
-  constructor(props) {
-    super(props);
-    this.update = this.props.navigation.addListener('focus', () => {
-      this.componentDidMount();
-    });
-    this.onChangeApplicationAndOffersData = this.onChangeApplicationAndOffersData.bind(
-      this
-    );
-    this.onApplicationsAndOffersDataClear = this.onApplicationsAndOffersDataClear.bind(
-      this
-    );
-    this.onChangeSelectedOfferData = this.onChangeSelectedOfferData.bind(this);
-    this.onApplicationsAndOffersOnlyMy = this.onApplicationsAndOffersOnlyMy.bind(this);
-    this.onApplicationsAndOffersLoading = this.onApplicationsAndOffersLoading.bind(this);
-    this.updateScreen = this.updateScreen.bind(this);
-  }
-
-  updateScreen(){
-    this.componentDidMount();
-  }
-
-  onChangeApplicationAndOffersData(applicationAndOffersData) {
-    this.props.setApplicationsAndOffersData(applicationAndOffersData);
-  }
-
-  onApplicationsAndOffersDataClear() {
-    this.props.setApplicationsAndOffersDataClear([]);
-  }
-
-  onChangeSelectedOfferData(selectedOfferData) {
-    this.props.setSelectedOfferData(selectedOfferData);
-  }
-
-  onApplicationsAndOffersOnlyMy(onlyMy){
-    this.props.setApplicationsAndOffersOnlyMy(onlyMy);
-  }
-
-  onApplicationsAndOffersLoading(loading){
-    this.props.setApplicationsAndOffersLoading(loading)
-  }
-
   
-
   componentDidMount() {
-    
-    //this.onApplicationsAndOffersLoading(true);
-    this.props.setApplicationsAndOffersLoading(true)
-    this.onApplicationsAndOffersDataClear();
-    var ws = new WebSocket(
-      'wss://app.sapo365.com/socket.io/?auth_token=' +
-        this.props.token +
-        '&EIO=3&transport=websocket'
-    );
-
-    ws.onopen = () => {
-      this.onApplicationsAndOffersLoading(true);
-      // connection opened
-      ws.send(
-        '4210["/claim/list",{"my":false,"archive":true,"workPeriod":"' +
-          this.props.workPeriods[this.props.workPeriods.length - 1] +
-          '"}]'
-      );
-      ws.send(
-        '4211["/claim/list",{"my":false,"archive":false,"workPeriod":"' +
-          this.props.workPeriods[this.props.workPeriods.length - 1] +
-          '"}]'
-      );
-      ws.send(
-        '4212["/claim/list",{"my":true,"archive":true,"workPeriod":"' +
-          this.props.workPeriods[this.props.workPeriods.length - 1] +
-          '"}]'
-      );
-      ws.send(
-        '4213["/claim/list",{"my":true,"archive":false,"workPeriod":"' +
-          this.props.workPeriods[this.props.workPeriods.length - 1] +
-          '"}]'
-      );
-      // send a message
-    };
-
-    ws.onmessage = e => {
-      // a message was received
-      if (e.data.substring(0, 4) == '4310') {
-        const myObjStr = JSON.stringify(e.data.substring(4, e.data.length));
-        var myObj = JSON.parse(myObjStr);
-        var data = JSON.parse(myObj);
-        //console.log('OffersData', data[0]);
-        var obj = {
-          archive: true,
-          data: data[0].data,
-          my: false
-        };
-        //console.log("archive", obj);
-        this.onChangeApplicationAndOffersData(obj);
-        this.onApplicationsAndOffersLoading(false);
-      }
-      if (e.data.substring(0, 4) == '4311') {
-        const myObjStr = JSON.stringify(e.data.substring(4, e.data.length));
-        myObj = JSON.parse(myObjStr);
-        data = JSON.parse(myObj);
-
-        obj = {
-          archive: false,
-          data: data[0].data,
-          my: false
-        };
-        //console.log("archive", obj);
-        this.onChangeApplicationAndOffersData(obj);
-      }
-      if (e.data.substring(0, 4) == '4312') {
-        const myObjStr = JSON.stringify(e.data.substring(4, e.data.length));
-        myObj = JSON.parse(myObjStr);
-        data = JSON.parse(myObj);
-        //console.log('OffersData', data[0]);
-        obj = {
-          archive: true,
-          data: data[0].data,
-          my: true
-        };
-        //console.log("archive", obj);
-        this.onChangeApplicationAndOffersData(obj);
-      }
-      if (e.data.substring(0, 4) == '4313') {
-        const myObjStr = JSON.stringify(e.data.substring(4, e.data.length));
-        myObj = JSON.parse(myObjStr);
-        data = JSON.parse(myObj);
-
-        obj = {
-          archive: false,
-          data: data[0].data,
-          my: true
-        };
-        //console.log("archive", obj);
-        this.onChangeApplicationAndOffersData(obj);
-      }
-    };
+    this.props.fetchAllRequests(this.props.workPeriods, this.props.token)
   }
 
   getLoading() {
@@ -199,15 +44,11 @@ export default class RequestsScreen extends React.Component {
         if (new Date(a.createdAt) > new Date(b.createdAt)) {
           return -1;
         }
-        // a должно быть равным b
         return 0;
       });
       if(this.props.firstlyOpened){
         data.sort(function(x, y) {
-          // true values first
           return (x.isOpened === y.isOpened)? 0 : x.isOpened? -1 : 1;
-          // false values first
-          // return (x === y)? 0 : x? 1 : -1;
         });
       }
       return(<FlatList
@@ -224,8 +65,8 @@ export default class RequestsScreen extends React.Component {
             condition={item.isOpened}
             navigation={this.props.navigation}
             userData={this.props.userData}
-            onChangeSelectedOfferData={this.onChangeSelectedOfferData}
-            componentDidMount={this.updateScreen}
+            setSelectedOfferData={this.props.setSelectedOfferData}
+            withdrawRequest={this.props.withdrawRequest}
           />
         )}
         keyExtractor={item => item.id}
@@ -271,8 +112,8 @@ export default class RequestsScreen extends React.Component {
             condition={item.isOpened}
             navigation={this.props.navigation}
             userData={this.props.userData}
-            onChangeSelectedOfferData={this.onChangeSelectedOfferData}
-            componentDidMount={this.updateScreen}
+            setSelectedOfferData={this.props.setSelectedOfferData}
+            withdrawRequest={this.props.withdrawRequest}
           />
         )}
         keyExtractor={item => item.id}
@@ -285,7 +126,7 @@ export default class RequestsScreen extends React.Component {
   }
   
   toggleSwitch = value => {
-    this.onApplicationsAndOffersOnlyMy(value);
+    this.props.setApplicationsAndOffersOnlyMy(value);
   };
 
   toggleSwitchFirstly = () => {
@@ -302,7 +143,6 @@ export default class RequestsScreen extends React.Component {
         style={{ width: '100%', height: '100%', backgroundColor: '#EEEEEE' }}>
         <NavigationEvents
           onDidFocus={() => {
-            //console.log('I am triggered');
             this.componentDidMount();
           }}
         />
@@ -447,8 +287,6 @@ class Item extends React.Component {
     return (
       <TouchableOpacity
         onLongPress={() => {
-          console.log("ITEM", this.props.token)
-          
           if(!this.props.archived){
             if(this.props.fullData.isOpened){
               if(this.props.fullData.fromUser.login == this.props.userData.login){
@@ -457,26 +295,7 @@ class Item extends React.Component {
                   'Ви впевненні що хочете відкликати заявку?',
                   [
                     {text: 'Так', onPress: () => {
-                      var ws = new WebSocket(
-                        'wss://app.sapo365.com/socket.io/?auth_token=' +
-                          this.props.token +
-                          '&EIO=3&transport=websocket'
-                      );
-                      console.log("ITEM", "click")
-                      ws.onopen = () => {
-                        console.log("ITEM", "open")
-                        ws.send(
-                          '4217["/claim/update",{"id":' + this.props.fullData.id + ',"statusId":8,"isOpened":false,"workPeriod":"'+ this.props.workPeriods[this.props.workPeriods.size - 1] +'"}]'
-                        );
-                      }
-
-                      ws.onmessage = e => {
-                        if(e.data.substring(0, 4) == '4317') {
-                          Alert.alert('Повідомлення','Відхилено успішно',[{text: 'OK'}])
-                          ws.close();
-                          this.props.componentDidMount();
-                        }
-                      }
+                      this.props.withdrawRequest(this.props.fullData, this.props.workPeriods, this.props.token);
                     }},
                     {text: 'Ні', onPress: () => {
                       console.log("hide")
@@ -505,7 +324,7 @@ class Item extends React.Component {
           }
         }}
         onPress={() => {
-          this.props.onChangeSelectedOfferData(this.props.fullData);
+          this.props.setSelectedOfferData(this.props.fullData);
           this.props.navigation.navigate('SelectedRequest', { title: this.props.name });
         }}>
         <View style={{ flexDirection: 'row', paddingTop: 5 }}>

@@ -13,33 +13,11 @@ import {
 } from 'react-native';
 import ScreenHeader from '../../../../../components/ScreenHeader';
 
-const DATA_FILES = [
-  {
-    name: 'Image file',
-    type: 'jpg',
-  },
-  {
-    name: 'Image file',
-    type: 'jpg',
-  },
-];
-
 export default class AddCommentToSelectedRequestScreen extends React.Component {
   constructor(props) {
     super(props);
-    this.onAddCommentToOfferChange = this.onAddCommentToOfferChange.bind(this);
-    this.onIsDisabledButtonSendChange = this.onIsDisabledButtonSendChange.bind(this);
-    this.onAddCommentToOfferChange(null)
-    this.onIsDisabledButtonSendChange(false);
-  }
-
-  onAddCommentToOfferChange(comments) {
-    console.log('comments2', comments);
-    this.props.setAddCommentToOffer(comments);
-  }
-
-  onIsDisabledButtonSendChange(isDisabled){
-    this.props.setIsDisabledButtonSendChange(isDisabled);
+    this.props.setAddCommentToOffer(null)
+    this.props.setIsDisabledButtonSendChange(false);
   }
 
   render() {
@@ -65,7 +43,7 @@ export default class AddCommentToSelectedRequestScreen extends React.Component {
               }}
               placeholder="Ваш коментар"
               onChangeText={text => {
-                this.onAddCommentToOfferChange(text);
+                this.props.setAddCommentToOffer(text);
               }}
               value={this.props.addCommentToOfferComment}
             />
@@ -79,58 +57,11 @@ export default class AddCommentToSelectedRequestScreen extends React.Component {
               borderRadius: 15
             }}
             onPress={() => {
-              if(this.props.addCommentToOfferComment == null || this.props.addCommentToOfferComment.trim() == ''){
-                Alert.alert(
-                  'Повідомлення',
-                  'Неможливо додати коментар. Введіть текст',
-                  [
-                    {text: 'OK', onPress: () => console.log('OK Pressed')},
-                  ],
-                  { cancelable: true }
-                )
-                return
-              }
-              this.onIsDisabledButtonSendChange(true);
-              var ws = new WebSocket(
-                'wss://app.sapo365.com/socket.io/?auth_token=' +
-                  this.props.token +
-                  '&EIO=3&transport=websocket'
-              );
-
-              ws.onopen = () => {
-                // connection opened
-                var text = this.props.addCommentToOfferComment;
-                text = text.replace(new RegExp('\n','g'), '\\n')
-                var message = '4213["/claim/comment/create",{"id":' +
-                    this.props.selectedOfferData.id +
-                    ',"text":"' +
-                    text +
-                    '","documents":[],"workPeriod":"' +
-                    this.props.workPeriods[this.props.workPeriods.length - 1] +
-                    '"}]';
-                    console.log("addCommentToOffer", message);
-                ws.send(
-                  message
-                );
-              };
-
-              ws.onmessage = e => {
-                
-                // a message was received
-                console.log('123', e.data);
-                if (e.data.substring(0, 4) == '4313') {
-                  Alert.alert(
-                    'Повідомлення',
-                    'Надіслано успішно!',
-                    [
-                      {text: 'OK', onPress: () => console.log('OK Pressed')},
-                    ],
-                    { cancelable: true }
-                  )
-                  this.onAddCommentToOfferChange(null);
-                  this.props.navigation.goBack();
-                }
-              };
+              this.props.addComment(this.props.addCommentToOfferComment,
+                this.props.selectedOfferData,
+                this.props.workPeriods,
+                this.props.navigation,
+                this.props.token)
             }}>
             <View>
               <Text

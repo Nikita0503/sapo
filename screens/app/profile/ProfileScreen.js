@@ -83,7 +83,6 @@ export default class ProfileScreen extends React.Component {
     if(this.props.userData == null){
       return;
     }
-    //console.log("userPhoto", this.props.userData)
     return(<ImageAvatar
       indicator='bar' 
       source={

@@ -7,7 +7,9 @@ import {
   setApplicationsAndOffersOnlyMy,
   setApplicationsAndOffersLoading,
   setApplicationsAndOffersFirstlyOpened,
-  setApplicationsAndOffersDisplayAcrhived
+  setApplicationsAndOffersDisplayAcrhived,
+  fetchAllRequests,
+  withdrawRequest
 } from '../../../redux/requests/actions';
 import RequestsScreen from './RequestsScreen';
 
@@ -39,6 +41,8 @@ class RequestsContainer extends React.Component{
             setApplicationsAndOffersLoading={this.props.setApplicationsAndOffersLoading}
             setApplicationsAndOffersFirstlyOpened={this.props.setApplicationsAndOffersFirstlyOpened}
             setApplicationsAndOffersDisplayAcrhived={this.props.setApplicationsAndOffersDisplayAcrhived}
+            fetchAllRequests={this.props.fetchAllRequests}
+            withdrawRequest={this.props.withdrawRequest}
         />)
     }
 }
@@ -67,7 +71,9 @@ const mapDispatchToProps = {
     setApplicationsAndOffersOnlyMy,
     setApplicationsAndOffersLoading,
     setApplicationsAndOffersFirstlyOpened,
-    setApplicationsAndOffersDisplayAcrhived  
+    setApplicationsAndOffersDisplayAcrhived,
+    fetchAllRequests,
+    withdrawRequest
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(RequestsContainer);

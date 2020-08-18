@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {setAllHouseData, setAllHouseCostsData } from '../../../redux/worksAndBalance/actions';
+import {setAllHouseData, setAllHouseCostsData, fetchHouseData } from '../../../redux/worksAndBalance/actions';
 import {setExpensesGeneralData, setExpensesFilesData } from '../../../redux/worksAndBalance/expenses/actions';
 import WorksAndBalanceScreen from './WorksAndBalanceScreen';
 
@@ -22,6 +22,7 @@ class WorksAndBalanceContainer extends React.Component{
             setAllHouseCostsData={this.props.setAllHouseCostsData}
             setExpensesGeneralData={this.props.setExpensesGeneralData}
             setExpensesFilesData={this.props.setExpensesFilesData}
+            fetchHouseData={this.props.fetchHouseData}
         />)
     }
 }
@@ -41,10 +42,11 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = {
-    setAllHouseData: setAllHouseData,
-    setAllHouseCostsData: setAllHouseCostsData,
-    setExpensesGeneralData: setExpensesGeneralData,
-    setExpensesFilesData: setExpensesFilesData
+    setAllHouseData,
+    setAllHouseCostsData,
+    setExpensesGeneralData,
+    setExpensesFilesData,
+    fetchHouseData
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(WorksAndBalanceContainer);

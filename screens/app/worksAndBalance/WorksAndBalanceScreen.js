@@ -15,88 +15,12 @@ import DataComponent from '../../../components/dataComponents/DataComponent';
 import DataClickableComponent from '../../../components/dataComponents/DataClickableComponent';
 
 export default class ScreenMyHouse extends React.Component {
-  constructor(props) {
-    super(props);
-    this.onAllHouseDataChange = this.onAllHouseDataChange.bind(this);
-    this.onAllHouseCostsDataChange = this.onAllHouseCostsDataChange.bind(this);
-    this.onExpensesGeneralDataChange = this.onExpensesGeneralDataChange.bind(this);
-    this.onExpensesFilesDataChange = this.onExpensesFilesDataChange.bind(this);
-  }
-
-  onAllHouseDataChange(allHouseData) {
-    this.props.setAllHouseData(allHouseData);
-  }
-
-  onAllHouseCostsDataChange(allHouseCostsData) {
-    this.props.setAllHouseCostsData(allHouseCostsData);
-  }
-
-  onExpensesGeneralDataChange(expensesGeneralData){
-    this.props.setExpensesGeneralData(expensesGeneralData);
-  }
-
-  onExpensesFilesDataChange(expensesFileData){
-    this.props.setExpensesFilesData(expensesFileData);
-  }
 
   componentDidMount() {
-    var ws = new WebSocket(
-      'wss://app.sapo365.com/socket.io/?auth_token=' +
-        this.props.token +
-        '&EIO=3&transport=websocket'
-    );
-    ws.onmessage = e => {
-      // a message was received
-      if (e.data.substring(0, 2) == '42') {
-        const myObjStr = JSON.stringify(e.data.substring(2, e.data.length));
-        var myObj = JSON.parse(myObjStr);
-        var data = JSON.parse(myObj);
-        var dataByPeriods = new Array();
-        for (var i = 0; i < data[1].OsbbData.Periods.length; i++) {
-          var dataObj = {
-            period: data[1].OsbbData.Periods[i].period,
-            data: data[1].OsbbData.Periods[i],
-          };
-          dataByPeriods.push(dataObj);
-        }
-        console.log("onAllHouseDataChange", dataByPeriods[dataByPeriods.length - 1])
-        this.onAllHouseDataChange(dataByPeriods);
-        ws.close();
-      }
-    };
-    this.fetchHouseCosts(0);
-  }
-
-  fetchHouseCosts(workPeriodIndex) {
-    fetch(
-      'https://app.sapo365.com/api/tenant/costs?accountId=' +
-        this.props.accountId.id +
-        '&osbbId=' +
-        this.props.osbbId +
-        '&workPeriod=' +
-        this.props.workPeriods[workPeriodIndex],
-      {
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-          Authorization: 'Bearer ' + this.props.token + '',
-        },
-      }
-    )
-      .then(response => response.json())
-      .then(responseJson => {
-        var data = {
-          period: this.props.workPeriods[workPeriodIndex],
-          data: responseJson,
-        };
-        this.onAllHouseCostsDataChange(data);
-        if (workPeriodIndex != this.props.workPeriods.length - 1) {
-          this.fetchHouseCosts(workPeriodIndex + 1);
-        }
-      })
-      .catch(error => {
-        console.error(error);
-      });
+    this.props.fetchHouseData(this.props.accountId, 
+      this.props.osbbId, 
+      this.props.workPeriods, 
+      this.props.token)
   }
 
   getHouseDataByCurrentPeriod() {
@@ -143,7 +67,6 @@ export default class ScreenMyHouse extends React.Component {
     if (this.props.allHouseCostsData.length != this.props.workPeriods.length) {
       return(<ActivityIndicator size="large" style={styles.loader, {marginTop: 10, marginBottom: 5}} color="#002B2B" />);
     }
-
     var currentHouseCostsData;
     for (var i = 0; i < this.props.allHouseCostsData.length; i++) {
       if (
@@ -153,9 +76,7 @@ export default class ScreenMyHouse extends React.Component {
         break;
       }
     }
-
     if(currentHouseCostsData.length == 0) return(<Text style={{color: '#002B2B', fontSize: 16, marginVertical: 10, alignSelf: 'center'}}>Даних немає</Text>);
-    
     return currentHouseCostsData.map((item, i) => {
       return (
         <TouchableOpacity

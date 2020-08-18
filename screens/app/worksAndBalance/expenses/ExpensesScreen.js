@@ -22,87 +22,22 @@ function getDate(data) {
   if(day < 10) day = "0" + day;
   var month = date.getMonth() + 1;
   if(month < 10) month = "0" + month
-  /*switch (date.getMonth()) {
-    case 0:
-      month = ' січ. ';
-      break;
-    case 1:
-      month = ' лют. ';
-      break;
-    case 2:
-      month = ' бер. ';
-      break;
-    case 3:
-      month = ' квіт. ';
-      break;
-    case 4:
-      month = ' трав. ';
-      break;
-    case 5:
-      month = ' черв. ';
-      break;
-    case 6:
-      month = ' лип. ';
-      break;
-    case 7:
-      month = ' серп. ';
-      break;
-    case 8:
-      month = ' вер. ';
-      break;
-    case 9:
-      month = ' жовт. ';
-      break;
-    case 10:
-      month = ' лист. ';
-      break;
-    case 11:
-      month = ' груд. ';
-      break;
-  }*/
   return day + " " + month + " " + date.getFullYear();
 }
 
 export default class ExpensesScreen extends React.Component {
+
   constructor(props) {
     super(props);
-    this.onExpensesDataChange = this.onExpensesDataChange.bind(this);
-    this.onExpensesDataChange(null);
-    this.onExpensesSelectedFileChange = this.onExpensesSelectedFileChange.bind(this);
-  }
-
-  onExpensesDataChange(expenseData) {
-    this.props.setExpensesData(expenseData);
-  }
-
-  onExpensesSelectedFileChange(selectedFile){
-    this.props.setExpensesSelectedFile(selectedFile)
+    this.props.setExpensesData(null);
   }
 
   componentDidMount() {
-    fetch(
-      'https://app.sapo365.com/api/tenant/costs/' +
-        this.props.expensesGeneralData.id +
-        '/transcript?accountId=' +
-        this.props.accountId.id +
-        '&osbbId=' +
-        this.props.osbbId,
-      {
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-          Authorization: 'Bearer ' + this.props.token,
-        },
-      }
-    )
-      .then(response => response.json())
-      .then(responseJson => {
-        this.onExpensesDataChange(responseJson);
-        //console.log("onExpensesDataChange", responseJson);
-      })
-      .catch(error => {
-        console.error(error);
-      });
+    this.props.fetchExpenses(
+      this.props.expensesGeneralData, 
+      this.props.accountId, 
+      this.props.osbbId, 
+      this.props.token)
   }
 
   getExpensesGeneralData() {
@@ -110,23 +45,23 @@ export default class ExpensesScreen extends React.Component {
     return (
       <View style={styles.container}>
         <View
-              style={{
-                width: '100%',
-                backgroundColor: '#F9F9F9',
-                alignItems: 'center',
-                borderRadius: 15
-              }}>
-              <Text
-                style={{
-                  marginTop: 10,
-                  marginBottom: 10,
-                  color: '#002B2B',
-                  fontSize: 18,
-                  textAlign: 'center',
-                }}>
-                {data.name}
-              </Text>
-            </View>
+          style={{
+            width: '100%',
+            backgroundColor: '#F9F9F9',
+            alignItems: 'center',
+            borderRadius: 15
+          }}>
+          <Text
+            style={{
+              marginTop: 10,
+              marginBottom: 10,
+              color: '#002B2B',
+              fontSize: 18,
+              textAlign: 'center',
+            }}>
+            {data.name}
+          </Text>
+        </View>
         <DataComponent
           name="Вартість"
           number={parseFloat(data.cost).toFixed(2)}
@@ -140,13 +75,15 @@ export default class ExpensesScreen extends React.Component {
   }
 
   getExpensesFilesData(){
-    if(this.props.expensesFilesData == null){ return(
-      <View style={styles.container}>
-        <Text style={{color: '#002B2B', fontSize: 16, marginTop: 10, alignSelf: 'center'}}>
-          Дані відсутні
-        </Text>
-      </View>
-    ) }
+    if(this.props.expensesFilesData == null) {
+      return(
+        <View style={styles.container}>
+          <Text style={{color: '#002B2B', fontSize: 16, marginTop: 10, alignSelf: 'center'}}>
+            Дані відсутні
+          </Text>
+        </View>
+      ) 
+    }
     if(this.props.expensesFilesData[0] == null){ return }
     return(
       <FlatList
@@ -154,7 +91,7 @@ export default class ExpensesScreen extends React.Component {
         data={this.props.expensesFilesData}
         renderItem={({ item }) => {
           var type = item.substring(item.length - 3, item.length)
-          return (<ItemFile file={type} path={item} onExpensesSelectedFileChange={this.onExpensesSelectedFileChange}/>)
+          return (<ItemFile file={type} path={item} setExpensesSelectedFile={this.props.setExpensesSelectedFile}/>)
           }
         }
         listKey={(item, index) => 'C' + index.toString()}
@@ -162,9 +99,7 @@ export default class ExpensesScreen extends React.Component {
     );
   }
 
-
   getLoadingView(){
-    //console.log("exp2", this.props.expensesData)
     if(this.props.expensesData == null)
     return(
     <View style={styles.container}>
@@ -178,50 +113,53 @@ export default class ExpensesScreen extends React.Component {
     if(this.props.expensesSelectedFile != null){
       var type = this.props.expensesSelectedFile.path.substring(this.props.expensesSelectedFile.path.length - 3)
       var path = this.props.expensesSelectedFile.path;
-      //type = 'jpg'
-      console.log("TYPE", type)
       switch(type){
         case 'jpg':
           return(
-            <ImageZoom cropWidth={320}
-                       cropHeight={300}
-                       imageWidth={320}
-                       imageHeight={300}>
-          <Image
-            style={{width: 320, height: 300, resizeMode: 'contain'}}
-            source={{uri: 'https://app.sapo365.com' + path}}
-          /></ImageZoom>)
+            <ImageZoom 
+              cropWidth={320}
+              cropHeight={300}
+              imageWidth={320}
+              imageHeight={300}>
+              <Image
+                style={{width: 320, height: 300, resizeMode: 'contain'}}
+                source={{uri: 'https://app.sapo365.com' + path}}
+              />
+            </ImageZoom>)
         case 'png':
           return(
-            <ImageZoom cropWidth={320}
-                       cropHeight={300}
-                       imageWidth={320}
-                       imageHeight={300}>
-          <Image
-            style={{width: 320, height: 300, resizeMode: 'contain'}}
-            source={{uri: 'https://app.sapo365.com' + path}}
-          /></ImageZoom>)
+            <ImageZoom 
+              cropWidth={320}
+              cropHeight={300}
+              imageWidth={320}
+              imageHeight={300}>
+              <Image
+                style={{width: 320, height: 300, resizeMode: 'contain'}}
+                source={{uri: 'https://app.sapo365.com' + path}}
+              />
+            </ImageZoom>)
         case 'svg':
-          return(<ImageZoom cropWidth={320}
-            cropHeight={300}
-            imageWidth={320}
-            imageHeight={300}>
-          <Image
-            style={{width: 320, height: 300, resizeMode: 'contain'}}
-            source={{uri: 'https://app.sapo365.com' + path}}
-          /></ImageZoom>)
+          return(
+            <ImageZoom cropWidth={320}
+              cropHeight={300}
+              imageWidth={320}
+              imageHeight={300}>
+              <Image
+                style={{width: 320, height: 300, resizeMode: 'contain'}}
+                source={{uri: 'https://app.sapo365.com' + path}}
+              />
+              </ImageZoom>)
         case 'pdf':
           return(
-          <PDFReader
-            style={{width: 250, maxHeight: 400}}
-            source={{
-              uri: 'https://app.sapo365.com' + path,
-            }}
-          />
+            <PDFReader
+              style={{width: 250, maxHeight: 400}}
+              source={{
+                uri: 'https://app.sapo365.com' + path,
+              }}
+            />
           )
         default: 
           return(<Text>In developing...</Text>)
-
       }
     }
   }
@@ -317,11 +255,10 @@ export default class ExpensesScreen extends React.Component {
               {this.getFileShowDialog()}
             </View>
             
-            
             <Dialog.Button
               label="OK"
               onPress={() => {
-                this.onExpensesSelectedFileChange(null);
+                this.props.setExpensesSelectedFile(null);
               }}
             />
           </Dialog.Container>
@@ -340,7 +277,7 @@ class ItemFile extends React.Component {
           name: this.props.file,
           path: this.props.path
         }
-        this.props.onExpensesSelectedFileChange(obj)
+        this.props.setExpensesSelectedFile(obj)
       }}>
         <View
           style={{

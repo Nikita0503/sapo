@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import {setExpensesData, setExpensesSelectedFile } from '../../../../redux/worksAndBalance/expenses/actions';
+import {setExpensesData, setExpensesSelectedFile, fetchExpenses } from '../../../../redux/worksAndBalance/expenses/actions';
 import ExpensesScreen from './ExpensesScreen';
 
 class ExpensesContainer extends React.Component {
@@ -21,6 +21,7 @@ class ExpensesContainer extends React.Component {
         imageAvatar={this.props.imageAvatar}
         setExpensesData={this.props.setExpensesData}
         setExpensesSelectedFile={this.props.setExpensesSelectedFile}
+        fetchExpenses={this.props.fetchExpenses}
       />
     );
   }
@@ -44,7 +45,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = {
   setExpensesData,
-  setExpensesSelectedFile
+  setExpensesSelectedFile,
+  fetchExpenses
 };
 
 export default connect(

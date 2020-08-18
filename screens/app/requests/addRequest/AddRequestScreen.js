@@ -17,42 +17,17 @@ import ScreenHeader from '../../../../components/ScreenHeader';
 export default class AddRequestScreen extends React.Component {
   constructor(props) {
     super(props);
-    this.onTopicChange = this.onTopicChange.bind(this);
-    this.onTextChange = this.onTextChange.bind(this);
-    this.onSystemChange = this.onSystemChange.bind(this);
-    this.onPublicityChange = this.onPublicityChange.bind(this);
-    this.onSetButtonSendDisabledChange = this.onSetButtonSendDisabledChange.bind(this);
-    this.onTopicChange(null);
-    this.onTextChange(null);
-    this.onSystemChange(null);
-    this.onPublicityChange(null);
-    this.onSetButtonSendDisabledChange(false);
-  }
-
-  onTopicChange(topic) {
-    this.props.setAddOfferTopic(topic);
-  }
-
-  onTextChange(text) {
-    this.props.setAddOfferText(text);
-  }
-
-  onSystemChange(system) {
-    this.props.setAddOfferSystem(system);
-  }
-
-  onPublicityChange(publicity) {
-    this.props.setAddOfferPublicity(publicity);
-  }
-  
-  onSetButtonSendDisabledChange(isDisabled){
-    this.props.setAddOfferButtonSendIsDisabled(isDisabled);
+    this.props.setAddOfferTopic(null);
+    this.props.setAddOfferText(null);
+    this.props.setAddOfferSystem(null);
+    this.props.setAddOfferPublicity(null);
+    this.props.setAddOfferButtonSendIsDisabled(false);
   }
 
   setStartSelected(){
     if(this.props.addOfferSystem == null){
-      this.onSystemChange(1);
-      this.onPublicityChange(1);
+      this.props.setAddOfferSystem(1);
+      this.props.setAddOfferPublicity(1);
     }
   }
 
@@ -78,7 +53,7 @@ export default class AddRequestScreen extends React.Component {
               }}
               placeholder="Тема"
               onChangeText={text => {
-                this.onTopicChange(text);
+                this.props.setAddOfferTopic(text);
               }}
               value={this.props.addOfferTopic}
             />
@@ -89,9 +64,8 @@ export default class AddRequestScreen extends React.Component {
                 selectedValue={this.props.addOfferSystem}
                 style={{ width: '45%', marginLeft: 15 }}
                 onValueChange={(itemValue, itemIndex) => {
-                  this.onSystemChange(itemValue);
+                  this.props.setAddOfferSystem(itemValue);
                 }}>
-               
                 <Picker.Item key={0} label={'вода'} value={1} />
                 <Picker.Item key={0} label={'тепло'} value={2} />
                 <Picker.Item key={0} label={'газ'} value={3} />
@@ -114,10 +88,8 @@ export default class AddRequestScreen extends React.Component {
                 selectedValue={this.props.addOfferPublicity}
                 style={{ width: '45%', marginLeft: 10 }}
                 onValueChange={(itemValue, itemIndex) => {
-                
-                  this.onPublicityChange(itemValue);
+                  this.props.setAddOfferPublicity(itemValue);
                 }}>
-                
                 <Picker.Item key={0} label={'публічна'} value={1} />
                 <Picker.Item key={0} label={'приватна'} value={2} />
               </Picker>
@@ -132,7 +104,7 @@ export default class AddRequestScreen extends React.Component {
               }}
               placeholder="Введіть текст заявки або пропозиції"
               onChangeText={text => {
-                this.onTextChange(text);
+                this.props.setAddOfferText(text);
               }}
               value={this.props.addOfferText}
             />
@@ -146,80 +118,13 @@ export default class AddRequestScreen extends React.Component {
               borderRadius: 15
             }}
             onPress={() => {
-              console.log("send", 
-                this.props.addOfferTopic +
-                  ' ' +
-                  this.props.addOfferText +
-                  ' ' +
-                  this.props.addOfferSystem +
-                  ' ' +
-                  this.props.addOfferPublicity
-              );
-              if(this.props.addOfferTopic == null 
-                || this.props.addOfferText == null
-                || this.props.addOfferSystem == null
-                || this.props.addOfferPublicity == null
-                || this.props.addOfferTopic.trim() == ''
-                || this.props.addOfferText.trim() == ''){
-                  Alert.alert(
-                    'Повідомлення',
-                    'Заповнено некоректно',
-                    [
-                      {text: 'OK', onPress: () => console.log('OK Pressed')},
-                    ],
-                    { cancelable: true }
-                  )
-                  return
-                }
-                this.onSetButtonSendDisabledChange(true);
-              var ws = new WebSocket(
-                'wss://app.sapo365.com/socket.io/?auth_token=' +
-                  this.props.token +
-                  '&EIO=3&transport=websocket'
-              );
-
-              ws.onopen = () => {
-                var text = this.props.addOfferText;
-                text = text.replace(new RegExp('\n','g'), '\\n')
-                // connection opened
-                var bool = this.props.addOfferPublicity ==
-                    1
-                    ? 'true'
-                    : 'false';
-                var text = '4211["/claim/create",{"subject":"' +
-                    this.props.addOfferTopic +
-                    '","text":"' +
-                    text +
-                    '","systemId":"' +
-                    this.props.addOfferSystem +
-                    '","isPublic":' + bool
-                     +
-                        ',"documents":[],"workPeriod":"' +
-                        this.props.workPeriods[
-                          this.props.workPeriods.length - 1
-                        ] +
-                        '"}]';
-                  //console.log('message',text)
-                ws.send(
-                  text
-                );
-              };
-
-              ws.onmessage = e => {
-                // a message was received
-                  //console.log('response', e.data)
-                if (e.data.substring(0, 4) == '4311') {
-                  Alert.alert(
-                    'Повідомлення',
-                    'Надіслано успішно!',
-                    [
-                      {text: 'OK', onPress: () => console.log('OK Pressed')},
-                    ],
-                    { cancelable: true }
-                  )
-                  this.props.navigation.goBack();
-                }
-              };
+              this.props.addOffer(this.props.addOfferText, 
+                this.props.addOfferSystem, 
+                this.props.addOfferPublicity, 
+                this.props.addOfferTopic, 
+                this.props.workPeriods, 
+                this.props.navigation, 
+                this.props.token)
             }}>
             <View>
               <Text
