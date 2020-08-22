@@ -14,7 +14,6 @@ export default class WebViewPaymentScreen extends React.Component {
   }
 
   backAction = () => {
-    //this.props.navigation.goBack(null)
     this.props.navigation.navigate('PaymentSelection');
     BackHandler.removeEventListener("hardwareBackPress", this.backAction);
     return true;
@@ -27,9 +26,7 @@ export default class WebViewPaymentScreen extends React.Component {
       "hardwareBackPress",
       this.backAction
     );
-    console.log('liqpayData', this.props);
     var d = new Date();
-    //var n = d.getTime();
     var details = {
       private_key: this.props.liqpayData[0].liqPayPrivateKey,
       public_key: this.props.liqpayData[0].liqPayPublicKey,
@@ -67,14 +64,11 @@ export default class WebViewPaymentScreen extends React.Component {
           data: responseJson.data,
           signature: responseJson.signature,
         });
-        console.log('1235', this.state);
       });
   }
 
   _onNavigationStateChange(webViewState){
     if(webViewState.url == 'https://sapo365.com/tenant#/home'){
-      //this.props.navigation.goBack(null)
-      //this.props.navigation.navigate('PaymentSelection');
       this.backAction()
     }
   }
@@ -101,7 +95,6 @@ export default class WebViewPaymentScreen extends React.Component {
       <View style={{width: '100%', height: '100%', backgroundColor: '#54687D'}}>        
         <NavigationEvents
           onDidFocus={() => {
-            //console.log('I am triggered');
             this.componentDidMount();
           }}
         />

@@ -565,10 +565,6 @@ function fetchApartmentData(
         });
       }
       var uniqAccountIds = getUniqueAccountIds(osbbIds);
-      //console.log("accountsStart", uniqAccountIds)
-      //onAccountIdsChange(uniqAccountIds);
-      //onAccountIdChange(uniqAccountIds[0].id);
-      //onNumberChange(uniqAccountIds[0].number);
       let workPeriods = new Array();
       var period;
       fetchDebt(token, uniqAccountIds, data[1].OsbbData.OsbbId, data[1].OsbbData.Periods[data[1].OsbbData.Periods.length - 1].period, onDebtDataChange)
