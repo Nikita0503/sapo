@@ -1,5 +1,5 @@
 import React, {PureComponent} from 'react';
-import { StyleSheet, Text, View, Image, TextInput, TouchableOpacity, Dimensions, ScrollView, TouchableWithoutFeedback, KeyboardAvoidingView, Keyboard } from 'react-native';
+import { StyleSheet, Text, View, Image, TextInput, TouchableOpacity, Dimensions, ScrollView, TouchableWithoutFeedback, KeyboardAvoidingView, Keyboard, Alert } from 'react-native';
 import { TabView, TabBar, SceneMap } from 'react-native-tab-view';
 import SearchableDropdown from 'react-native-searchable-dropdown';
 import Dialog from 'react-native-dialog';
@@ -13,6 +13,8 @@ const STREET_DIALOG_ID = 3;
 const HOUSE_DIALOG_ID = 4;
 const FLAT_DIALOG_ID = 5;
 const ACCOUNT_NUMBER_DIALOG_ID = 6;
+const CITY_COMPANY_DIALOG_ID = 7;
+const COMPANY_DIALOG_ID = 8;
 
 export default class LoginScreen extends React.Component {
 
@@ -23,7 +25,8 @@ export default class LoginScreen extends React.Component {
   }
 
   componentDidMount(){
-    this.props.fetchRegionsInfo();
+    //this.props.fetchRegionsInfo();
+    this.props.fetchCompaniesInfo();
   }
   
   constructor(props) {
@@ -44,6 +47,8 @@ export default class LoginScreen extends React.Component {
         {this.getHouseDialog()}
         {this.getFlatDialog()}
         {this.getAccountNumberDialog()}
+        {this.getCityCompanyDialog()}
+        {this.getCompanyDialog()}
       </View>
     );
   }
@@ -85,7 +90,9 @@ export default class LoginScreen extends React.Component {
               {this.getEmailPasswordForm()}
             </View>
             <View>
-              {this.getAddressForm()}
+              {
+                this.props.regionsInfo == null ? this.getCompanyForm() : this.getAddressForm()
+              }
             </View>
           </ViewPager>  
         </KeyboardAvoidingView>
@@ -129,12 +136,75 @@ export default class LoginScreen extends React.Component {
     </View>);
   }
 
+  getCompanyForm(){
+    return(
+      <ScrollView>
+        <View style={{alignItems: 'center', justifyContent: 'center', flexDirection: 'column'}}>
+          <View style={{alignItems: 'center', margin: 10 }}>
+            <Text>Управляюча компанія</Text>
+          </View>
+          <TouchableOpacity
+            onPress={() => {
+              this.props.setShownDialogId(CITY_COMPANY_DIALOG_ID)
+              this.props.setSelectedCompany(null)
+              this.props.setSelectedCityCompany(null)
+            }}
+            style={{width: '80%', backgroundColor: '#EFEFEF', borderRadius: 12, paddingTop: 6, paddingBottom: 0, paddingHorizontal: 15, marginHorizontal: 5, }}>
+            <View style={{borderColor: '#002B2B',  borderBottomWidth: 1, marginBottom: 6, paddingBottom: 2, paddingHorizontal: 2}}>
+              <Text style={this.props.selectedCityCompany == null ? {fontSize: 15, color: 'gray'} : {fontSize: 15}}>
+                {this.props.selectedCityCompany == null ? 'Оберіть місто' : this.props.selectedCityCompany}
+              </Text>
+            </View>
+          </TouchableOpacity>
+
+          <TouchableOpacity 
+              onPress={() => {
+                this.props.setShownDialogId(COMPANY_DIALOG_ID)
+                this.props.setSelectedCompany(null)
+              }}
+              style={{width: '80%', backgroundColor: '#EFEFEF', marginTop: 10, borderRadius: 12, paddingTop: 6, paddingBottom: 0, paddingHorizontal: 15, marginHorizontal: 5, }}>
+              <View style={{borderColor: '#002B2B',  borderBottomWidth: 1, marginBottom: 6, paddingBottom: 2, paddingHorizontal: 2}}>
+                <Text style={this.props.selectedCompany == null ? {fontSize: 15, color: 'gray'} : {fontSize: 15}}>
+                  {this.props.selectedCompany == null ? 'Оберіть компанію' : this.props.selectedCompany.name}
+                </Text>
+              </View> 
+            </TouchableOpacity>
+
+            <View style={{margin: 5, width: '80%', marginTop: 15, marginBottom: 20}}>
+            <TouchableOpacity
+              onPress={() => {
+                if(this.props.selectedCityCompany == null
+                  || this.props.selectedCompany == null){
+                    Alert.alert('Укажіть усі пункти', 'Оберіть управляючу компанію');
+                    return
+                  }
+                  this.props.fetchRegionsInfo(this.props.selectedCompany.id)
+                
+              }}
+              style={{backgroundColor: "#002B2B", alignItems: 'center', justifyContent: 'center', height: 35, borderRadius: 12}}>
+                <Text style={{color: 'white', fontSize: 15}}>Далі</Text>
+            </TouchableOpacity>
+          </View>
+
+        </View>
+      </ScrollView>
+    )
+  }
+
   getAddressForm(){
     return(
       <ScrollView>
+        <TouchableOpacity
+          style={{backgroundColor: "#002B2B", alignItems: 'center', justifyContent: 'center', alignSelf: 'flex-end', height: 25, borderRadius: 8, width: 70, marginRight: 10, marginTop: 5}}
+          onPress={() => {
+            this.props.setRegionsInfo(null)
+          }}>
+            <Text style={{color: 'white', fontSize: 12, marginHorizontal: 4}}>{'< Назад'}</Text>
+        </TouchableOpacity>
         <View style={{alignItems: 'center'}}>
+        
           <View style={{alignItems: 'center', margin: 10 }}>
-              <Text>Авторизуйтеся за адресою</Text>
+            <Text>Авторизуйтеся за адресою</Text>
           </View>
           
           <TouchableOpacity
@@ -551,7 +621,110 @@ export default class LoginScreen extends React.Component {
           }}
         />
       </Dialog.Container>);
-  } 
+  }
+  
+  getCityCompanyDialog(){
+    if(this.props.companiesInfo == null) return;
+    return(
+      <Dialog.Container visible={this.props.shownDialogId == CITY_COMPANY_DIALOG_ID ? true : false}>
+        <Dialog.Title>
+          Оберіть місто
+        </Dialog.Title>
+        <SearchableDropdown
+            onItemSelect={(item) => {
+              this.props.setSelectedCityCompany(item.name)
+              //console.log("ITEM", item)
+              this.props.setCompanies(item.osbbs)
+            }}
+            containerStyle={{ paddingHorizontal: 10, paddingVertical: 5 }}
+            itemStyle={{
+              padding: 10              
+            }}
+            itemsContainerStyle={{ maxHeight: 140, borderRadius: 12 }}
+            items={this.props.companiesInfo}
+            textInputProps={
+              {
+                placeholder: "Місто",
+                underlineColorAndroid: "transparent",
+                style: {
+                  maxWidth: '90%',
+                  width: '90%', 
+                  borderBottomWidth: 1, 
+                  borderColor: '#002B2B',
+                  alignSelf: 'center', 
+                  fontSize: 16,
+                  paddingTop: 0,
+                  paddingBottom: 1,
+                  marginBottom: 1
+                },
+                onTextChange: text => {}
+              }
+            }
+            listProps={
+              {
+                nestedScrollEnabled: true,
+              }
+            }
+          />
+        <Dialog.Button
+          label="Підтвердити"
+          onPress={() => {
+            this.props.setShownDialogId(null)
+          }}
+        />
+      </Dialog.Container>);
+  }
+
+  getCompanyDialog(){
+    if(this.props.companiesInfo == null) return;
+    return(
+      <Dialog.Container visible={this.props.shownDialogId == COMPANY_DIALOG_ID ? true : false}>
+        <Dialog.Title>
+          Оберіть компанію
+        </Dialog.Title>
+        <SearchableDropdown
+            onItemSelect={(item) => {
+              this.props.setSelectedCompany(item)
+              console.log("ITEM_COMPANY", item)
+            }}
+            containerStyle={{ paddingHorizontal: 10, paddingVertical: 5 }}
+            itemStyle={{
+              padding: 10              
+            }}
+            itemsContainerStyle={{ maxHeight: 140, borderRadius: 12 }}
+            items={this.props.companies}
+            textInputProps={
+              {
+                placeholder: "Компанія",
+                underlineColorAndroid: "transparent",
+                style: {
+                  maxWidth: '90%',
+                  width: '90%', 
+                  borderBottomWidth: 1, 
+                  borderColor: '#002B2B',
+                  alignSelf: 'center', 
+                  fontSize: 16,
+                  paddingTop: 0,
+                  paddingBottom: 1,
+                  marginBottom: 1
+                },
+                onTextChange: text => {}
+              }
+            }
+            listProps={
+              {
+                nestedScrollEnabled: true,
+              }
+            }
+          />
+        <Dialog.Button
+          label="Підтвердити"
+          onPress={() => {
+            this.props.setShownDialogId(null)
+          }}
+        />
+      </Dialog.Container>);
+  }
 }
 
 const styles = StyleSheet.create({

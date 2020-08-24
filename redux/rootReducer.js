@@ -25,7 +25,7 @@ import {houseExpensesReducer} from './worksAndBalance/expenses/reducers';
 const persistConfig = {
     key: 'root',
     storage: AsyncStorage,
-    whitelist: ['login']
+    whitelist: ['']
 }
 
 const rootReducer = combineReducers({

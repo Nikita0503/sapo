@@ -12,7 +12,13 @@ import {setCurrentTab,
      setSelectedAccountNumber,
      fetchTokenByEmailPassword,
      fetchTokenByAddress,
-     fetchRegionsInfo} from '../../redux/login/actions';
+     fetchRegionsInfo,
+     fetchCompaniesInfo,
+     setSelectedCityCompany,
+     setCompanies,
+     setSelectedCompany,
+     setRegionsInfo
+    } from '../../redux/login/actions';
 import LoginScreen from './LoginScreen';
 
 class LoginContainer extends React.Component {
@@ -29,6 +35,10 @@ class LoginContainer extends React.Component {
                 selectedFlat={this.props.selectedFlat}
                 selectedAccountNumber={this.props.selectedAccountNumber}
                 regionsInfo={this.props.regionsInfo}
+                companiesInfo={this.props.companiesInfo}
+                selectedCityCompany={this.props.selectedCityCompany}
+                companies={this.props.companies}
+                selectedCompany={this.props.selectedCompany}
                 token={this.props.token}
                 setCurrentTab={this.props.setCurrentTab}
                 setEmail={this.props.setEmail}
@@ -43,6 +53,11 @@ class LoginContainer extends React.Component {
                 fetchTokenByEmailPassword={this.props.fetchTokenByEmailPassword}
                 fetchTokenByAddress={this.props.fetchTokenByAddress}
                 fetchRegionsInfo={this.props.fetchRegionsInfo}
+                fetchCompaniesInfo={this.props.fetchCompaniesInfo}
+                setSelectedCityCompany={this.props.setSelectedCityCompany}
+                setCompanies={this.props.setCompanies}
+                setSelectedCompany={this.props.setSelectedCompany}
+                setRegionsInfo={this.props.setRegionsInfo}
             />
         )
     }
@@ -59,6 +74,10 @@ const mapStateToProps = state => {
         selectedFlat: state.login.selectedFlat,
         selectedAccountNumber: state.login.selectedAccountNumber,
         regionsInfo: state.login.regionsInfo,
+        companiesInfo: state.login.companiesInfo,
+        selectedCityCompany: state.login.selectedCityCompany,
+        companies: state.login.companies,
+        selectedCompany: state.login.selectedCompany,
         token: state.login.token
     }
 }
@@ -76,7 +95,12 @@ const mapDispatchToProps = {
     setSelectedAccountNumber,
     fetchTokenByEmailPassword,
     fetchTokenByAddress,
-    fetchRegionsInfo
+    fetchRegionsInfo,
+    fetchCompaniesInfo,
+    setSelectedCityCompany,
+    setCompanies,
+    setSelectedCompany,
+    setRegionsInfo
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginContainer);

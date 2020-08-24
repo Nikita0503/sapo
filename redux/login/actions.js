@@ -11,6 +11,10 @@ export const CHANGE_SELECTED_FLAT = 'CHANGE_SELECTED_FLAT';
 export const CHANGE_SELECTED_ACCOUNT_NUMBER = 'CHANGE_SELECTED_ACCOUNT_NUMBER';
 export const CHANGE_TOKEN = 'CHANGE_TOKEN';
 export const CHANGE_REGIONS_INFO = 'CHANGE_REGIONS_INFO';
+export const CHANGE_COMPANIES_INFO = 'CHANGE_COMPANIES_INFO';
+export const CHANGE_SELECTED_CITY_COMPANY = 'CHANGE_SELECTED_CITY_COMPANY';
+export const CHANGE_COMPANIES = 'CHANGE_COMPANIES';
+export const CHANGE_SELECTED_COMPANY = 'CHANGE_SELECTED_COMPANY';
 
 export const setCurrentTab = currentTab => ({
     type: CHANGE_CURRENT_TAB,
@@ -71,6 +75,26 @@ export const setRegionsInfo = regionsInfo => ({
     type: CHANGE_REGIONS_INFO,
     payload: regionsInfo
 })
+
+export const setCompaniesInfo = companiesInfo => ({
+    type: CHANGE_COMPANIES_INFO,
+    payload: companiesInfo
+})
+
+export const setSelectedCityCompany = selectedCity => ({
+    type: CHANGE_SELECTED_CITY_COMPANY,
+    payload: selectedCity
+});
+
+export const setCompanies = companies => ({
+    type: CHANGE_COMPANIES,
+    payload: companies
+});
+
+export const setSelectedCompany = selectedCompany => ({
+    type: CHANGE_SELECTED_COMPANY,
+    payload: selectedCompany
+});
 
 export const fetchTokenByEmailPassword = (email, password, navigation) => {
     return async dispatch => {
@@ -137,10 +161,28 @@ export const fetchTokenByAddress = (regionsInfo,
     }
 }
 
-export const fetchRegionsInfo = () => {
+export const fetchCompaniesInfo = () => {
     return async dispatch => {
         try {
-            const regionsInfoPromise = await fetch('https://app.sapo365.com/auth/osbb/2', {
+            const companiesInfoPromise = await fetch('https://app.sapo365.com/auth/select/city', {
+                method: 'GET',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                }
+            });
+            const companiesInfo = await companiesInfoPromise.json();
+            dispatch(setCompaniesInfo(companiesInfo));
+        } catch (error) {
+            console.log("fetchCompaniesInfo", "error");
+        }
+    }
+}
+
+export const fetchRegionsInfo = (id) => {
+    return async dispatch => {
+        try {
+            const regionsInfoPromise = await fetch('https://app.sapo365.com/auth/osbb/' + id, {
                 method: 'GET',
                 headers: {
                     Accept: 'application/json',
@@ -148,7 +190,6 @@ export const fetchRegionsInfo = () => {
                 }
             });
             const regionsInfo = await regionsInfoPromise.json();
-            console.log("fetchRegionsInfo", regionsInfo.region);
             dispatch(setRegionsInfo(regionsInfo));
         } catch (error) {
             console.log("fetchRegionsInfo", "error");

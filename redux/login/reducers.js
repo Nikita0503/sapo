@@ -10,6 +10,10 @@ import {CHANGE_CURRENT_TAB,
      CHANGE_SELECTED_ACCOUNT_NUMBER,
      CHANGE_TOKEN,
      CHANGE_REGIONS_INFO,
+     CHANGE_COMPANIES_INFO,
+     CHANGE_SELECTED_CITY_COMPANY,
+     CHANGE_COMPANIES,
+     CHANGE_SELECTED_COMPANY
     } from './actions';
 
 const defaultState = {
@@ -24,7 +28,11 @@ const defaultState = {
     selectedFlat: null,
     selectedAccountNumber: null,
     token: null,
-    regionsInfo: null
+    regionsInfo: null,
+    companiesInfo: null,
+    selectedCityCompany: null,
+    companies: null,
+    selectedCompany: null
 }
 
 export const loginReducer = (state = defaultState, action) => {
@@ -89,6 +97,26 @@ export const loginReducer = (state = defaultState, action) => {
                 ...state,
                 regionsInfo: action.payload
             }    
+        case CHANGE_COMPANIES_INFO:
+            return {
+                ...state,
+                companiesInfo: action.payload
+            }
+        case CHANGE_SELECTED_CITY_COMPANY:
+            return {
+                ...state,
+                selectedCityCompany: action.payload
+            }
+        case CHANGE_COMPANIES:
+            return {
+                ...state,
+                companies: action.payload
+            }
+        case CHANGE_SELECTED_COMPANY:
+            return {
+                ...state,
+                selectedCompany: action.payload
+            }
     }
     return state;
 }
