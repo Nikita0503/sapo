@@ -10,7 +10,7 @@ export default class WebViewPaymentScreen extends React.Component {
     this.update = this.props.navigation.addListener('focus', () => {
       this.componentDidMount();
     });
-    this.state = { isLoading: true };
+    this.props.setLoading(true)
   }
 
   backAction = () => {
@@ -18,8 +18,6 @@ export default class WebViewPaymentScreen extends React.Component {
     BackHandler.removeEventListener("hardwareBackPress", this.backAction);
     return true;
   };
-
-
 
   componentDidMount() {
     BackHandler.addEventListener(
@@ -42,7 +40,6 @@ export default class WebViewPaymentScreen extends React.Component {
         '","language":"uk"' +
         '}',
     };
-
     var formBody = [];
     for (var property in details) {
       var encodedKey = encodeURIComponent(property);
@@ -50,21 +47,7 @@ export default class WebViewPaymentScreen extends React.Component {
       formBody.push(encodedKey + '=' + encodedValue);
     }
     formBody = formBody.join('&');
-
-    fetch('https://www.liqpay.ua/apiweb/sandbox/get_data_signature', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
-      },
-      body: formBody,
-    })
-      .then(response => response.json())
-      .then(responseJson => {
-        this.setState({
-          data: responseJson.data,
-          signature: responseJson.signature,
-        });
-      });
+    this.props.sendPaymentRequest(formBody)
   }
 
   _onNavigationStateChange(webViewState){
@@ -81,9 +64,9 @@ export default class WebViewPaymentScreen extends React.Component {
       source={{
         html:
           '<form method="POST" action="https://www.liqpay.ua/api/3/checkout" accept-charset="utf-8"> <input type="hidden" name="data" value="' +
-          this.state.data +
+          this.props.data +
           '"/><input type="hidden" name="signature" value="' +
-          this.state.signature +
+          this.props.signature +
           '"/><input style="width: 500; margin-left: 24%; margin-top: 60%" type="image" src="https://static.liqpay.ua/buttons/p1ru.radius.png"/></form>',
       }}
       style={{width: '100%', alignSelf: 'center'}}
@@ -101,23 +84,22 @@ export default class WebViewPaymentScreen extends React.Component {
         <View
           style={{ width: '100%', height: '100%', backgroundColor: 'white', justifyContent: 'space-between'}}>
           <View style={{width: '100%', height: 85, backgroundColor: '#002B2B', flexDirection: 'row', justifyContent: 'space-between'}}>
-          <TouchableOpacity style={{marginTop: 45}} onPress={()=>{
-            this.props.navigation.goBack(null)
-            this.props.navigation.navigate('PaymentSelection');
-          }}>
-            <Image
-                  style={{ width: 20, height: 20, marginLeft: 20 }}
-                  source={require('../../../../../content/images/ic_left_row.png')}
-                />
-                
-          </TouchableOpacity>
+            <TouchableOpacity style={{marginTop: 45}} onPress={()=>{
+              this.props.navigation.goBack(null)
+              this.props.navigation.navigate('PaymentSelection');
+            }}>
+              <Image
+                style={{ width: 20, height: 20, marginLeft: 20 }}
+                source={require('../../../../../content/images/ic_left_row.png')}
+              />
+            </TouchableOpacity>
           <Text style={{marginTop: 45, marginEnd: 20, color: 'white'}}>Оплата</Text>
+          </View>
+          <View style={{width: '90%', height: '80%', justifyContent: 'center', alignSelf: 'center', borderBottomWidth: 1, borderStartWidth: 1, borderRightWidth: 1, borderTopWidth: 1, borderColor: 'green'}}>
+            {this.getWebView()}
+          </View>
+          <Text style={{backgroundColor: "white", padding: 10, textAlign: 'center', color: "#002B2B"}}>Оплата відобразиться у додатку після її обробки бухгалтером САПО</Text>
         </View>
-        <View style={{width: '90%', height: '80%', justifyContent: 'center', alignSelf: 'center', borderBottomWidth: 1, borderStartWidth: 1, borderRightWidth: 1, borderTopWidth: 1, borderColor: 'green'}}>
-        {this.getWebView()}
-        </View>
-        <Text style={{backgroundColor: "white", padding: 10, textAlign: 'center', color: "#002B2B"}}>Оплата відобразиться у додатку після її обробки бухгалтером САПО</Text>
-      </View>
       </View>
     );
   }

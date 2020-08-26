@@ -117,7 +117,6 @@ export const fetchTokenByEmailPassword = (email, password, navigation) => {
               }
               dispatch(setToken(token.token))
               navigation.navigate("General")
-              console.log("fetchTokenByEmailPassword", token.token);
         } catch (error) {
             console.log("fetchTokenByEmailPassword", "error")
         }
@@ -154,7 +153,6 @@ export const fetchTokenByAddress = (regionsInfo,
               }
               dispatch(setToken(token.token))
               navigation.navigate("General")
-              console.log("fetchTokenByAddress", token.token)
         } catch (error) {
             console.log("fetchTokenByAddress", "error");
         }

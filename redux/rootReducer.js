@@ -1,6 +1,5 @@
 import {combineReducers} from 'redux';
 import {persistReducer} from 'redux-persist';
-//import storage from 'redux-persist/lib/storage';
 import AsyncStorage from '@react-native-community/async-storage';
 
 import {loginReducer} from './login/reducers';
@@ -21,11 +20,12 @@ import {selectedChatReducer} from './chats/selectedChat/reducers';
 import {paymentSelectionReducer} from './home/liqpay/reducers';
 import {houseReducer} from './worksAndBalance/reducers';
 import {houseExpensesReducer} from './worksAndBalance/expenses/reducers';
+import {webViewReducer} from './home/liqpay/webView/reducers'
 
 const persistConfig = {
     key: 'root',
     storage: AsyncStorage,
-    whitelist: ['']
+    whitelist: ['login']
 }
 
 const rootReducer = combineReducers({
@@ -46,7 +46,8 @@ const rootReducer = combineReducers({
     selectedChat: selectedChatReducer,
     paymentSelection: paymentSelectionReducer,
     house: houseReducer,
-    houseExpenses: houseExpensesReducer
+    houseExpenses: houseExpensesReducer,
+    webView: webViewReducer
 });
 
 export default persistReducer(persistConfig, rootReducer);

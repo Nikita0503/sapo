@@ -5,6 +5,7 @@ import MonthPickerContainer from '../../../components/monthPicker/MonthPickerCon
 import DataComponent from '../../../components/dataComponents/DataComponent';
 import DataClickableComponent from '../../../components/dataComponents/DataClickableComponent';
 import { ScrollView } from 'react-native-gesture-handler';
+
 export default class HomeScreen extends React.Component {
 
   constructor(props) {
@@ -92,42 +93,11 @@ export default class HomeScreen extends React.Component {
     this.props.clearState()
   }
 
-
   componentDidMount() {
     this.getIsLoaded()
-    this.onClearState()
-    fetch('https://app.sapo365.com/api/user/me', {
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + this.props.token + '',
-      },
-    })
-      .then(response => response.json())
-      .then(responseJson => {
-        //console.log(responseJson)
-        this.onUserDataChange(responseJson);
-        fetchApartmentData(
-          this.props.token,
-          this.props.navigation,
-          this.onOsbbIdChange,
-          this.onAccountIdChange,
-          this.onAccountIdsChange,
-          this.onNumberChange,
-          this.onWorkPeriodsChange,
-          this.onCurrentWorkPeriodChange,
-          this.onAllApartmentDataChange,
-          this.onCurrentApartmentDataChange,
-          this.onAllCostsDataChange,
-          this.onCurrentCostsDataChange,
-          this.onDebtDataChange,
-          this.onLiqpayDataChange,
-          this.onSetIsActivatedChange
-        );
-      })
-      .catch(error => {
-        console.error(error);
-      });
+    this.props.clearState()
+    this.props.fetchUserData(this.props.token)
+    this.props.fetchApartmentData(this.props.token, this.props.navigation)
   }
 
   render() {
@@ -159,45 +129,45 @@ export default class HomeScreen extends React.Component {
   getPayment(){
     return(
       <View style={{width: '95%', alignItems: 'center'}}>
-            <View
+        <View
+          style={{
+            marginTop: 5,
+            width: '100%',
+            backgroundColor: 'white',
+            alignItems: 'center',
+            borderRadius: 15
+          }}>
+            <Text
               style={{
-                marginTop: 5,
-                width: '100%',
-                backgroundColor: 'white',
-                alignItems: 'center',
-                borderRadius: 15
+                marginTop: 10,
+                marginBottom: 2,
+                color: '#002B2B',
+                fontSize: 18,
               }}>
-                <Text
-                  style={{
-                    marginTop: 10,
-                    marginBottom: 2,
-                    color: '#002B2B',
-                    fontSize: 18,
-                  }}>
-                  До сплати за
-                </Text>
-                <Text
-                  style={{
-                    marginTop: 2,
-                    marginBottom: 2,
-                    color: '#002B2B',
-                    fontSize: 18,
-                  }}>
-                  {this.getLastPeriod()}
-                </Text>
-                <Text
-                  style={{
-                    marginTop: 2,
-                    fontWeight: 'bold',
-                    marginBottom: 10,
-                    color: '#002B2B',
-                    fontSize: 18,
-                  }}>
-                  {this.getDebtByCurrentAccountId()} грн.
-                </Text>
-              {this.getPaymentButton()}
-            </View>
-          </View>
+              До сплати за
+            </Text>
+            <Text
+              style={{
+                marginTop: 2,
+                marginBottom: 2,
+                color: '#002B2B',
+                fontSize: 18,
+              }}>
+              {this.getLastPeriod()}
+            </Text>
+            <Text
+              style={{
+                marginTop: 2,
+                fontWeight: 'bold',
+                marginBottom: 10,
+                color: '#002B2B',
+                fontSize: 18,
+              }}>
+              {this.getDebtByCurrentAccountId()} грн.
+            </Text>
+          {this.getPaymentButton()}
+        </View>
+      </View>
     );
   }
 
@@ -551,7 +521,7 @@ function fetchApartmentData(
       //console.log("START", data[1].UserData.isActivated)
       onSetIsActivatedChange(data[1].UserData.isActivated)
       if(!data[1].UserData.isActivated){
-        Alert.alert('Повідомлення', 'Аккаунт не було активовано головою ОСББ')
+        Alert.alert('Повідомлення', 'Аккаунт не було активовано головою САПО')
         navigation.navigate('Auth')
         return
       } 
@@ -657,19 +627,16 @@ function fetchGeneralDataApartment(
   onAccountIdChange,
   userAccounts
 ) {
-  var requestString =
-    'https://app.sapo365.com/api/tenant/charges/total?' +
-    'accountId=' +
-    accountId.id +
-    '&osbbId=' +
-    osbbId;
-
-  fetch(requestString, {
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-      Authorization: 'Bearer ' + token + '',
-    },
+  fetch('https://app.sapo365.com/api/tenant/charges/total?' +
+      'accountId=' +
+      accountId.id +
+      '&osbbId=' +
+      osbbId, {
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + token + '',
+        },
   })
     .then(response => response.json())
     .then(responseJson => {
@@ -721,8 +688,6 @@ function getMaxId(responseJson, userAccounts) {
     id: ids[ids.length - 1],
     number: number,
   };
-  //console.log("uesrAccounts", userAccounts)
-  //console.log("ids", responseJson)
   return maxId;
 }
 

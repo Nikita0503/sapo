@@ -14,7 +14,9 @@ import {
     setDebtData,
     setLiqpayData,
     setIsActivated,
-    clearState
+    clearState,
+    fetchUserData,
+    fetchApartmentData
   } from '../../../redux/home/actions';
 import { setCurrentWorkPeriod } from '../../../redux/monthPicker/actions';
 import HomeScreen from './HomeScreen';
@@ -54,6 +56,8 @@ class HomeContainer extends React.Component {
                 setLiqpayData={this.props.setLiqpayData}
                 setIsActivated={this.props.setIsActivated}
                 clearState={this.props.clearState}
+                fetchUserData={this.props.fetchUserData}
+                fetchApartmentData={this.props.fetchApartmentData}
             />
         )
     }
@@ -94,7 +98,9 @@ const mapDispatchToProps = {
     setDebtData,
     setLiqpayData,
     setIsActivated,
-    clearState
+    clearState,
+    fetchUserData,
+    fetchApartmentData
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomeContainer);
