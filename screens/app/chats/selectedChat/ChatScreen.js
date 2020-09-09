@@ -42,12 +42,45 @@ export default class ChatScreen extends React.Component {
 
   _pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
+      base64: true,
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
       aspect: [4, 3],
       quality: 1
     });
-    let formdata = new FormData();
+    console.log("123", result)
+
+    
+    var ws = new WebSocket(
+      'wss://app.sapo365.com/socket.io/?auth_token=' +
+        this.props.token +
+        '&EIO=3&transport=websocket'
+    );
+
+    ws.onopen = () => {
+      
+      ws.send(
+        '42["socket.io-file::createFile",{"id":"u_0","name":"file1.png","size":2293127,"chunkSize":40960,"sent":0,"uploadTo":"documents"}]'
+      );
+      ws.send(
+        '451-["socket.io-file::stream::u_0",{"_placeholder":true,"num":0}]'
+      );
+
+      ws.send(result.base64)
+    };
+
+    ws.onmessage = e => {
+        //console.log("resp", e.data)  
+    };
+
+    /*ImgToBase64.getBase64String(result.uri)
+      .then(base64String => {
+        console.log("BASE_64", 123)
+        console.log("BASE_64", base64String)}
+      )
+      .catch(err => console.log("error", err));*/
+
+    /*let formdata = new FormData();
     formdata.append('photo', {
       uri: result.uri,
       name: 'image.jpg',
@@ -60,7 +93,8 @@ export default class ChatScreen extends React.Component {
       this.props.token)
     if (!result.cancelled) {
       this.setState({ image: result.uri });
-    }
+    }*/
+
   };
 
   componentWillUnmount() {
@@ -116,8 +150,8 @@ export default class ChatScreen extends React.Component {
 
   render() {
     return (
-      <KeyboardAvoidingView behavior="padding">
-        <View
+      <KeyboardAvoidingView behavior={Platform.OS == "ios" ? "padding" : "height"}>
+        <View behavior="padding"
           style={{ width: '100%', height: '100%', backgroundColor: '#EEEEEE' }}>
           <NavigationEvents
             onDidFocus={() => {
@@ -161,7 +195,7 @@ export default class ChatScreen extends React.Component {
               multiline
                 style={{
                   marginLeft: 10,
-                  width: '85%',
+                  width: '75%',
                   fontSize: 16,
                   borderBottomWidth: 1,
                   borderBottomColor: 'gray',
@@ -175,6 +209,13 @@ export default class ChatScreen extends React.Component {
                 }}
                 value={this.props.currentMessage}
               />
+              <TouchableOpacity
+                onPress={this._pickImage}>
+                <Image
+                  style={{ width: 35, height: 35, marginHorizontal: 5 }}
+                  source={require('../../../../content/images/ic_clip.png')}
+                />
+              </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => {
                   this.sendMessage();

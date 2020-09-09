@@ -17,7 +17,8 @@ import {setCurrentTab,
      setSelectedCityCompany,
      setCompanies,
      setSelectedCompany,
-     setRegionsInfo
+     setRegionsInfo,
+     setAuthMethod
     } from '../../redux/login/actions';
 import LoginScreen from './LoginScreen';
 
@@ -40,6 +41,7 @@ class LoginContainer extends React.Component {
                 companies={this.props.companies}
                 selectedCompany={this.props.selectedCompany}
                 token={this.props.token}
+                authMethod={this.props.authMethod}
                 setCurrentTab={this.props.setCurrentTab}
                 setEmail={this.props.setEmail}
                 setPassword={this.props.setPassword}
@@ -58,6 +60,7 @@ class LoginContainer extends React.Component {
                 setCompanies={this.props.setCompanies}
                 setSelectedCompany={this.props.setSelectedCompany}
                 setRegionsInfo={this.props.setRegionsInfo}
+                setAuthMethod={this.props.setAuthMethod}
             />
         )
     }
@@ -78,7 +81,8 @@ const mapStateToProps = state => {
         selectedCityCompany: state.login.selectedCityCompany,
         companies: state.login.companies,
         selectedCompany: state.login.selectedCompany,
-        token: state.login.token
+        token: state.login.token,
+        authMethod: state.login.authMethod
     }
 }
 
@@ -100,7 +104,8 @@ const mapDispatchToProps = {
     setSelectedCityCompany,
     setCompanies,
     setSelectedCompany,
-    setRegionsInfo
+    setRegionsInfo,
+    setAuthMethod
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginContainer);

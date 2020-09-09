@@ -15,6 +15,9 @@ export const CHANGE_COMPANIES_INFO = 'CHANGE_COMPANIES_INFO';
 export const CHANGE_SELECTED_CITY_COMPANY = 'CHANGE_SELECTED_CITY_COMPANY';
 export const CHANGE_COMPANIES = 'CHANGE_COMPANIES';
 export const CHANGE_SELECTED_COMPANY = 'CHANGE_SELECTED_COMPANY';
+export const CHANGE_AUTH_METHOD = 'CHANGE_AUTH_METHOD';
+const AUTH_METHOD_LOGIN = 0;
+const AUTH_METHOD_ADDRESS = 1;
 
 export const setCurrentTab = currentTab => ({
     type: CHANGE_CURRENT_TAB,
@@ -96,6 +99,11 @@ export const setSelectedCompany = selectedCompany => ({
     payload: selectedCompany
 });
 
+export const setAuthMethod = method => ({
+    type: CHANGE_AUTH_METHOD,
+    payload: method
+});
+
 export const fetchTokenByEmailPassword = (email, password, navigation) => {
     return async dispatch => {
         try{
@@ -116,6 +124,7 @@ export const fetchTokenByEmailPassword = (email, password, navigation) => {
                 return
               }
               dispatch(setToken(token.token))
+              dispatch(setAuthMethod(AUTH_METHOD_LOGIN))
               navigation.navigate("General")
         } catch (error) {
             console.log("fetchTokenByEmailPassword", "error")
@@ -152,6 +161,7 @@ export const fetchTokenByAddress = (regionsInfo,
                 return
               }
               dispatch(setToken(token.token))
+              dispatch(setAuthMethod(AUTH_METHOD_ADDRESS))
               navigation.navigate("General")
         } catch (error) {
             console.log("fetchTokenByAddress", "error");

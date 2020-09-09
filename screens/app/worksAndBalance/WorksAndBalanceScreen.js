@@ -44,26 +44,27 @@ export default class ScreenMyHouse extends React.Component {
     return (
       <View style={styles.container}>
         <DataComponent
-          name="Нараховано"
-          number={currentHouseData.chargesTotal}
+          name="Початкове сальдо"
+          number={/*currentHouseData == null ? " " : currentHouseData.chargesTotal*/"0.00"}
         />
         <DataComponent
-          name="Зібрано коштів"
-          number={currentHouseData.paymentsTotal}
+          name="Доходи"
+          number={/*currentHouseData == null ? " " : currentHouseData.paymentsTotal*/"0.00"}
         />
         <DataComponent
-          name="Витрачено"
-          number={currentHouseData.accountingsTotal}
+          name="Витрати"
+          number={/*currentHouseData == null ? " " : currentHouseData.accountingsTotal*/"0.00"}
         />
         <DataComponent
-          name="Фактичний залишок коштів"
-          number={currentHouseData.accumulation}
+          name="Кінцеве сальдо"
+          number={/*currentHouseData == null ? " " : currentHouseData.accumulation*/"0.00"}
         />
       </View>
     );
   }
 
   getHouseCostsDataByCurrentPeriod() {
+    return(<Text style={{color: '#002B2B', fontSize: 16, marginVertical: 10, alignSelf: 'center'}}>Даних немає</Text>)
     if (this.props.allHouseCostsData.length != this.props.workPeriods.length) {
       return(<ActivityIndicator size="large" style={styles.loader, {marginTop: 10, marginBottom: 5}} color="#002B2B" />);
     }
@@ -76,7 +77,7 @@ export default class ScreenMyHouse extends React.Component {
         break;
       }
     }
-    if(currentHouseCostsData.length == 0) return(<Text style={{color: '#002B2B', fontSize: 16, marginVertical: 10, alignSelf: 'center'}}>Даних немає</Text>);
+    if(currentHouseCostsData.length == 0) return (<Text style={{color: '#002B2B', fontSize: 16, marginVertical: 10, alignSelf: 'center'}}>Даних немає</Text>);
     return currentHouseCostsData.map((item, i) => {
       return (
         <TouchableOpacity
@@ -123,7 +124,7 @@ export default class ScreenMyHouse extends React.Component {
                   color: '#002B2B',
                   fontSize: 18,
                 }}>
-                Витрати
+                Витрати за місяць
               </Text>
             </View>
 

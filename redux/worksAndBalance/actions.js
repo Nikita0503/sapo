@@ -36,15 +36,14 @@ export const fetchHouseData = (accountId, osbbId, workPeriods, token) => {
           ws.close();
         }
       };
-      fetchHouseCosts(0, accountId, osbbId, workPeriods, token);
+      fetchHouseCosts(0, accountId, osbbId, workPeriods, token, dispatch);
     } catch (error) {
       console.log("fetchHouseDataChange", "error")
     }
   }
 }
 
-const fetchHouseCosts = (workPeriodIndex, accountId, osbbId, workPeriods, token) => {
-  return async dispatch => {
+const fetchHouseCosts = async (workPeriodIndex, accountId, osbbId, workPeriods, token, dispatch) => {
     fetch(
       'https://app.sapo365.com/api/tenant/costs?accountId=' +
         accountId.id +
@@ -66,14 +65,15 @@ const fetchHouseCosts = (workPeriodIndex, accountId, osbbId, workPeriods, token)
         period: workPeriods[workPeriodIndex],
         data: responseJson,
       };
+      console.log("fetchHouseDataChange", data)
       dispatch(setAllHouseData(data));
       if (workPeriodIndex != workPeriods.length - 1) {
-        fetchHouseCosts(workPeriodIndex + 1, accountId, osbbId, workPeriods, token);
+        fetchHouseCosts(workPeriodIndex + 1, accountId, osbbId, workPeriods, token, dispatch);
       }
     })
     .catch(error => {
       console.error(error);
     });
-  }
+  
 }
 

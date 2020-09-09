@@ -13,7 +13,8 @@ import {CHANGE_CURRENT_TAB,
      CHANGE_COMPANIES_INFO,
      CHANGE_SELECTED_CITY_COMPANY,
      CHANGE_COMPANIES,
-     CHANGE_SELECTED_COMPANY
+     CHANGE_SELECTED_COMPANY,
+     CHANGE_AUTH_METHOD
     } from './actions';
 
 const defaultState = {
@@ -32,7 +33,8 @@ const defaultState = {
     companiesInfo: null,
     selectedCityCompany: null,
     companies: null,
-    selectedCompany: null
+    selectedCompany: null,
+    authMethod: null
 }
 
 export const loginReducer = (state = defaultState, action) => {
@@ -116,6 +118,11 @@ export const loginReducer = (state = defaultState, action) => {
             return {
                 ...state,
                 selectedCompany: action.payload
+            }
+        case CHANGE_AUTH_METHOD:
+            return {
+                ...state,
+                authMethod: action.payload
             }
     }
     return state;

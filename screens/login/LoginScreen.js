@@ -15,12 +15,34 @@ const FLAT_DIALOG_ID = 5;
 const ACCOUNT_NUMBER_DIALOG_ID = 6;
 const CITY_COMPANY_DIALOG_ID = 7;
 const COMPANY_DIALOG_ID = 8;
+const AUTH_METHOD_LOGIN = 0;
+const AUTH_METHOD_ADDRESS = 1;
 
 export default class LoginScreen extends React.Component {
 
   componentWillMount(){
-    if(this.props.token != null){
-      //this.props.navigation.navigate("General")
+    if(this.props.authMethod != null){
+      if(this.props.authMethod == AUTH_METHOD_LOGIN){
+        if(this.props.email == null || this.props.password == null){
+          return
+        }
+        this.props.fetchTokenByEmailPassword(this.props.email, this.props.password, this.props.navigation)
+      }
+      if(this.props.authMethod == AUTH_METHOD_ADDRESS){
+        if(this.props.regionsInfo == null
+          || this.props.selectedStreet == null
+          || this.props.selectedHouse == null
+          || this.props.selectedFlat == null
+          || this.props.selectedAccountNumber == null){
+            return
+          }
+        this.props.fetchTokenByAddress(this.props.regionsInfo, 
+          this.props.selectedStreet.id, 
+          this.props.selectedHouse,
+          this.props.selectedFlat,
+          this.props.selectedAccountNumber,
+          this.props.navigation)
+      }
     }
   }
 
@@ -197,6 +219,12 @@ export default class LoginScreen extends React.Component {
         <TouchableOpacity
           style={{backgroundColor: "#002B2B", alignItems: 'center', justifyContent: 'center', alignSelf: 'flex-end', height: 25, borderRadius: 8, width: 70, marginRight: 10, marginTop: 5}}
           onPress={() => {
+            this.props.setSelectedAccountNumber(null)
+            this.props.setSelectedFlat(null)
+            this.props.setSelectedHouse(null)
+            this.props.setSelectedStreet(null)
+            this.props.setSelectedCity(null)
+            this.props.setSelectedRegion(null)
             this.props.setRegionsInfo(null)
           }}>
             <Text style={{color: 'white', fontSize: 12, marginHorizontal: 4}}>{'< Назад'}</Text>

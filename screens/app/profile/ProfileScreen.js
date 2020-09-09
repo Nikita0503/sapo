@@ -277,6 +277,7 @@ export default class ProfileScreen extends React.Component {
               <TouchableOpacity
                   onPress={() => {
                     this.props.setToken(null)
+                    this.props.setAuthMethod(null)
                     this.props.navigation.navigate('Login')
                   }}
                   style={{backgroundColor: "#002B2B", alignItems: 'center', justifyContent: 'center', height: 35, borderRadius: 12}}

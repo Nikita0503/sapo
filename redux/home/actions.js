@@ -264,6 +264,7 @@ const fetchCostsData = async (token, currentPeriod, workPeriods, accountId, osbb
             dispatch(setAllCostsData(data));
             if (currentPeriod == 0) {
               dispatch(setCurrentCostsData(data));
+              //console.log("fetchCostsData", data)
             }
           }
           currentPeriod++;
@@ -312,13 +313,16 @@ const fetchGeneralDataApartment = async (token, osbbId, accountId, workPeriods, 
                 },
           })
           const responseJson = await generalDataPromise.json();
+          //console.log("alldata", responseJson)
           var accountId = getMaxId(responseJson, userAccounts);
           dispatch(setAccountIds(accountId));
           dispatch(setAccountId(accountId));
+          //console.log("workPeriod", responseJson.chargesList)
           for (var j = 0; j < workPeriods.length; j++) {
             var data;
             var list = new Array();
             for (var z = 0; z < responseJson.chargesList.length; z++) {
+              
               if (
                 workPeriods[j].period ==
                 getMonth(responseJson.chargesList[z].workPeriodInDayMonth)
@@ -331,10 +335,11 @@ const fetchGeneralDataApartment = async (token, osbbId, accountId, workPeriods, 
               data: list,
               accountId: accountId,
             };
+            
             dispatch(setAllApartmentData(data));
           }
       } catch (error) {
-          console.log("fetchLiqpayData", error)
+          console.log("generalDataApartment", error)
       }
 }
 
@@ -362,40 +367,40 @@ function getMaxId(responseJson, userAccounts) {
 function getMonth(data) {
   var month;
   switch (data.substring(0, data.length - 5)) {
-    case 'Січень':
+    case 'Січня':
       month = '01';
       break;
-    case 'Лютий':
+    case 'Лютого':
       month = '02';
       break;
-    case 'Березень':
+    case 'Березня':
       month = '03';
       break;
-    case 'Квітень':
+    case 'Квітня':
       month = '04';
       break;
-    case 'Травень':
+    case 'Травня':
       month = '05';
       break;
-    case 'Червень':
+    case 'Червня':
       month = '06';
       break;
-    case 'Липень':
+    case 'Липня':
       month = '07';
       break;
-    case 'Серпень':
+    case 'Серпня':
       month = '08';
       break;
-    case 'Вересень':
+    case 'Вересня':
       month = '09';
       break;
-    case 'Жовтень':
+    case 'Жовтня':
       month = '10';
       break;
-    case 'Листопад':
+    case 'Листопада':
       month = '11';
       break;
-    case 'Грудень':
+    case 'Грудня':
       month = '12';
       break;
   }

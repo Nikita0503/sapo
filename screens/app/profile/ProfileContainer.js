@@ -17,7 +17,8 @@ import {
 } from '../../../redux/home/actions';
 
 import {
-  setToken
+  setToken,
+  setAuthMethod
 } from '../../../redux/login/actions';
 
 import ProfileScreen from './ProfileScreen';
@@ -51,6 +52,7 @@ class ProfileContainer extends React.Component {
         sendNewPhoto={this.props.sendNewPhoto}
         deletePhoto={this.props.deletePhoto}
         sendNewPassword={this.props.sendNewPassword}
+        setAuthMethod={this.props.setAuthMethod}
       />
     );
   }
@@ -85,7 +87,8 @@ const mapDispatchToProps = {
   setToken,
   sendNewPhoto,
   deletePhoto,
-  sendNewPassword
+  sendNewPassword,
+  setAuthMethod
 };
 
 export default connect(
