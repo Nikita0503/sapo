@@ -4,7 +4,6 @@ export const CHANGE_ADVERTISEMENT_DATA = 'CHANGE_ADVERTISEMENT_DATA';
 export const CHANGE_ADVERTISEMENT_SELECTED_POST = 'CHANGE_ADVERTISEMENT_SELECTED_POST';
 export const CHANGE_ADVERTISEMENT_SELECTED_POST_COMMENTS = 'CHANGE_ADVERTISEMENT_SELECTED_POST_COMMENTS';
 export const CHANGE_ADVERTISEMENT_ALL_COMMENTS = 'CHANGE_ADVERTISEMENT_ALL_COMMENTS';
-export const CHANGE_ADVERTISEMENT_ALL_COMMENTS_CLEAR = 'CHANGE_ADVERTISEMENT_ALL_COMMENTS_CLEAR';
 export const CHANGE_ADVERTISEMENT_SELECTED_FILE = 'CHANGE_ADVERTISEMENT_SELECTED_FILE';
 
 export const setAdvertisementOsbbName = advertisementOsbbName => ({
@@ -32,9 +31,6 @@ export const setAllComments = allComments => ({
   payload: allComments
 });
 
-export const setAllCommentsClear = () => ({
-  type: CHANGE_ADVERTISEMENT_ALL_COMMENTS_CLEAR,
-});
 
 export const setAdvertisementSelectedFile = selectedFile => ({
   type: CHANGE_ADVERTISEMENT_SELECTED_FILE,
@@ -45,7 +41,7 @@ export const fetchAllAds = (token) => {
   return async dispatch => {
       try {
         dispatch(setSelectedPost(null));
-        dispatch(setAllCommentsClear());
+        dispatch(setAllComments(null));
         var ws = new WebSocket(
           'wss://app.sapo365.com/socket.io/?auth_token=' +
             token +
@@ -194,8 +190,9 @@ export const toVote = (advertisementData, variant, token) => {
   }
 }
 
-const fetchSelectedPostComments = (advertisementData, selectedPostComments, index, token) => {
+export const fetchSelectedPostComments = (selectedPostComments, token) => {
   return async dispatch => {
+    dispatch(setAllComments(null))
     var ws = new WebSocket(
       'wss://app.sapo365.com/socket.io/?auth_token=' +
         token +
@@ -213,10 +210,6 @@ const fetchSelectedPostComments = (advertisementData, selectedPostComments, inde
         const myObjStr = JSON.stringify(e.data.substring(4, e.data.length));
         var myObj = JSON.parse(myObjStr);
         var data = JSON.parse(myObj);
-        var obj = {
-          id: advertisementData[index].id,
-          data: data[0],
-        };
         dispatch(setAllComments(data[0]));
         ws.close();
       }

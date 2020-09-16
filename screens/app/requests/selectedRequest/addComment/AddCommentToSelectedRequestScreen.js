@@ -14,6 +14,7 @@ import {
 import ScreenHeader from '../../../../../components/ScreenHeader';
 
 export default class AddCommentToSelectedRequestScreen extends React.Component {
+  
   constructor(props) {
     super(props);
     this.props.setAddCommentToOffer(null)

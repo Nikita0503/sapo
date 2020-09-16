@@ -123,7 +123,6 @@ export default class ActOfReconciliationScreen extends React.Component {
                 }
               }
             }}>
-            
             {getYearsItems(this.props.workPeriods)}
             {this.setStartFromAndTo()}
           </Picker>

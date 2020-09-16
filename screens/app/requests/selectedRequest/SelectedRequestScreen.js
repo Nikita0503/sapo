@@ -404,7 +404,6 @@ class ItemFile extends React.Component {
         this.props.setSelectedFile(obj)
       }}>
         <View>
-          
           {getImageWithText(this.props.path, this.props.name)}
         </View>
       </TouchableOpacity>

@@ -56,7 +56,7 @@ export const fetchLiqpayData = (token, accountId, osbbId, workPeriods) => {
   }
 }
 
-export const fetchChargesData = (token, accountId, osbbId, workPeriods) => {
+export const fetchChargesData = (token, accountId, osbbId, workPeriods) => { 
   return async dispatch => {
       try{
           const chargesDataPromise = await fetch(

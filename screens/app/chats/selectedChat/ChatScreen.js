@@ -139,13 +139,29 @@ export default class ChatScreen extends React.Component {
 
   getLoadingView(){
     if(this.props.loading){
-      return(<View style={styles.container, {marginTop: '50%'}}>
-        <ActivityIndicator size="large" style={styles.loader} color="#002B2B" />
-        <Text style={{color: '#002B2B', fontSize: 16, marginTop: 20, alignSelf: 'center'}}>
-          Зачекайте, дані завантажуються
-        </Text>
+      return(
+        <View style={styles.container, {marginTop: '50%'}}>
+          <ActivityIndicator size="large" style={styles.loader} color="#002B2B" />
+          <Text style={{color: '#002B2B', fontSize: 16, marginTop: 20, alignSelf: 'center'}}>
+            Зачекайте, дані завантажуються
+          </Text>
         </View>);
     }
+  }
+
+  getMessages(){
+    var allMessages = new Array();
+    for(var i = 0; i < this.props.allMessages.length; i++){
+      var exist = false;
+      for(var j = 0; j < allMessages.length; j++){
+        if(this.props.allMessages[i].id == allMessages[j].id){
+          exist = true;
+          break;
+        }
+      }
+      if(!exist) allMessages.push(this.props.allMessages[i])
+    }
+    return allMessages;
   }
 
   render() {
@@ -173,7 +189,7 @@ export default class ChatScreen extends React.Component {
               <View style={styles.chatContainer}>
                 {this.getLoadingView()}
                 <FlatList
-                  data={this.props.allMessages}
+                  data={this.getMessages()}
                   renderItem={({ item }) => (
                     <Item
                       userData={this.props.userData}

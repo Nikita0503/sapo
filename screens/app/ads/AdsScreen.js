@@ -18,7 +18,7 @@ import PDFReader from 'rn-pdf-reader-js';
 import ImageZoom from 'react-native-image-pan-zoom';
 
 export default class AdsScreen extends React.Component {
-
+  
   componentDidMount() {
     this.props.fetchOsbbName(this.props.accountId, 
       this.props.osbbId, 
@@ -103,7 +103,7 @@ export default class AdsScreen extends React.Component {
             navigation={this.props.navigation} 
             title="Оголошення"
             userData={this.props.userData}
-            imageAvatar={this.props.imageAvatar} />
+            imageAvatar={this.props.imageAvatar}/>
         <View style={styles.container}>
           {this.getLoadingView()}
           <FlatList
@@ -129,6 +129,7 @@ export default class AdsScreen extends React.Component {
                 selectedPostAllComents={this.props.selectedPostAllComents}
                 setAdvertisementSelectedFile={this.props.setAdvertisementSelectedFile}
                 toVote={this.props.toVote}
+                fetchSelectedPostComments={this.props.fetchSelectedPostComments}
               />
             )}
             keyExtractor={item => item.header}
@@ -366,14 +367,11 @@ class Post extends React.Component {
   }
 
   getCommentsListData() {
-    if (this.props.allComments.length == 0) {
-      return;
+    console.log("this.props.allComments", this.props.allComments)
+    if (this.props.allComments == null) {
+      return null;
     }
-    for (var i = 0; i < this.props.allComments.length; i++) {
-      if (this.props.allComments[i].id == this.props.data.id) {
-        return this.props.allComments[i].data;
-      }
-    }
+    return this.props.allComments
   }
 
   getNoCommentsView(){
@@ -392,6 +390,7 @@ class Post extends React.Component {
         <TouchableOpacity
           onPress={() => {
             this.props.setSelectedPostComments(this.props.data);
+            this.props.fetchSelectedPostComments(this.props.data, this.props.token);
           }}>
           <View
             style={{width: '100%', backgroundColor: '#F9F9F9', alignItems: 'center', borderRadius: 15}}>
@@ -408,6 +407,7 @@ class Post extends React.Component {
         <TouchableOpacity
           onPress={() => {
             this.props.setSelectedPostComments(this.props.data);
+            this.props.fetchSelectedPostComments(this.props.data, this.props.token);
           }}>
           <View
             style={{
@@ -560,8 +560,5 @@ const styles = StyleSheet.create({
     marginLeft: 5,
     marginEnd: 5,
     alignItems: 'center',
-  },
-  commentsButton: {
-    
   }
 });

@@ -8,10 +8,6 @@ import { ScrollView } from 'react-native-gesture-handler';
 
 export default class HomeScreen extends React.Component {
 
-  constructor(props) {
-    super(props);
-  }
-
   componentDidMount() {
     this.getIsLoaded()
     this.props.clearState()

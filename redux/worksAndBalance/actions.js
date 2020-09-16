@@ -66,7 +66,7 @@ const fetchHouseCosts = async (workPeriodIndex, accountId, osbbId, workPeriods, 
         data: responseJson,
       };
       console.log("fetchHouseDataChange", data)
-      dispatch(setAllHouseData(data));
+      dispatch(setAllHouseCostsData(data));
       if (workPeriodIndex != workPeriods.length - 1) {
         fetchHouseCosts(workPeriodIndex + 1, accountId, osbbId, workPeriods, token, dispatch);
       }

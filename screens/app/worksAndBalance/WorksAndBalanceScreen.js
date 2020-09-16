@@ -14,7 +14,7 @@ import MonthPickerContainer from '../../../components/monthPicker/MonthPickerCon
 import DataComponent from '../../../components/dataComponents/DataComponent';
 import DataClickableComponent from '../../../components/dataComponents/DataClickableComponent';
 
-export default class ScreenMyHouse extends React.Component {
+export default class WorksAndBalanceScreen extends React.Component {
 
   componentDidMount() {
     this.props.fetchHouseData(this.props.accountId, 

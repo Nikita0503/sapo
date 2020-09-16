@@ -4,7 +4,6 @@ import {
   CHANGE_ADVERTISEMENT_SELECTED_POST,
   CHANGE_ADVERTISEMENT_SELECTED_POST_COMMENTS,
   CHANGE_ADVERTISEMENT_ALL_COMMENTS,
-  CHANGE_ADVERTISEMENT_ALL_COMMENTS_CLEAR,
   CHANGE_ADVERTISEMENT_SELECTED_FILE
 } from './actions';
 
@@ -13,7 +12,7 @@ const defaultState = {
   advertisementData: null,
   selectedPost: null,
   selectedPostComments: null,
-  allComments: [],
+  allComments: null,
   advertisementSelectedFile: null
 };
 
@@ -43,13 +42,8 @@ export const advertisementReducer = (state = defaultState, action) => {
     case CHANGE_ADVERTISEMENT_ALL_COMMENTS:
       return {
         ...state,
-        allComments: [...state.allComments, action.payload],
+        allComments: action.payload,
       };
-    case CHANGE_ADVERTISEMENT_ALL_COMMENTS_CLEAR:
-      return {
-        ...state,
-        allComments: []
-      }
     case CHANGE_ADVERTISEMENT_SELECTED_FILE:
       return {
         ...state,

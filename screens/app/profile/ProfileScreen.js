@@ -26,10 +26,6 @@ export default class ProfileScreen extends React.Component {
     this.props.setShowPasswords(value);
   };
 
-  callFun = () => {
-    alert('Image Clicked122');
-  };
-
   _pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,

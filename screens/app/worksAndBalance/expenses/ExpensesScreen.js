@@ -26,7 +26,6 @@ function getDate(data) {
 }
 
 export default class ExpensesScreen extends React.Component {
-
   constructor(props) {
     super(props);
     this.props.setExpensesData(null);

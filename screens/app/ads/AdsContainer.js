@@ -5,7 +5,6 @@ import {
   setAdvertisementData,
   setSelectedPost,
   setAllComments,
-  setAllCommentsClear,
   setSelectedPostComments,
   setAdvertisementSelectedFile,
   fetchAllAds,
@@ -37,7 +36,6 @@ class AdsContainer extends React.Component {
         setSelectedPost={this.props.setSelectedPost}
         setSelectedPostComments={this.props.setSelectedPostComments}
         setAllComments={this.props.setAllComments}
-        setAllCommentsClear={this.props.setAllCommentsClear}
         setAdvertisementSelectedFile={this.props.setAdvertisementSelectedFile}
         fetchAllAds={this.props.fetchAllAds}
         fetchOsbbName={this.props.fetchOsbbName}
@@ -71,7 +69,6 @@ const mapDispatchToProps = {
   setSelectedPost,
   setSelectedPostComments,
   setAllComments,
-  setAllCommentsClear,
   setAdvertisementSelectedFile,
   fetchAllAds,
   fetchOsbbName,
