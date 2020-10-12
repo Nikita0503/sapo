@@ -21,6 +21,7 @@ import * as Permissions from 'expo-permissions';
 import Dialog from 'react-native-dialog';
 import PDFReader from 'rn-pdf-reader-js';
 import ImageZoom from 'react-native-image-pan-zoom';
+import ReversedFlatList from 'react-native-reversed-flat-list';
 
 export default class ChatScreen extends React.Component {
 
@@ -181,34 +182,25 @@ export default class ChatScreen extends React.Component {
             imageAvatar={this.props.imageAvatar}
           />
           <View style={styles.container}>
-            <ScrollView
-              ref="scrollView"
-              onContentSizeChange={(width, height) =>
-                this.refs.scrollView.scrollToEnd()
-              }>
-              <View style={styles.chatContainer}>
-                {this.getLoadingView()}
-                <FlatList
-                  data={this.getMessages()}
-                  renderItem={({ item }) => (
-                    <Item
-                      userData={this.props.userData}
-                      text={item.text}
-                      userId={item.userId}
-                      me={this.getIsMe(item.userId)}
-                      files={item.files}
-                      allUsers={this.props.allUsers}
-                      setSelectedFile={this.props.setSelectedFile}
-                    />
-                  )}
-                  keyExtractor={item => item.id}
+            <ReversedFlatList
+              data={this.getMessages()}
+              renderItem={({ item }) => (
+                <Item
+                  userData={this.props.userData}
+                  text={item.text}
+                  userId={item.userId}
+                  me={this.getIsMe(item.userId)}
+                  files={item.files}
+                  allUsers={this.props.allUsers}
+                  setSelectedFile={this.props.setSelectedFile}
                 />
-              </View>
-            </ScrollView>
+              )}
+              keyExtractor={item => item.id}
+            />
 
             <View style={styles.messageContainer}>
               <TextInput
-              multiline
+                multiline
                 style={{
                   marginLeft: 10,
                   width: '75%',
@@ -221,7 +213,7 @@ export default class ChatScreen extends React.Component {
                 placeholder="Ваше повідомлення"
                 onChangeText={text => {
                   this.props.setChatCurrentMessage(text);
-                  this.refs.scrollView.scrollToEnd();
+                  //this.refs.scrollView.scrollToEnd();
                 }}
                 value={this.props.currentMessage}
               />

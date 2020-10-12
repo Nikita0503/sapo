@@ -2,7 +2,7 @@
   "expo": {
     "name": "САПО 365",
     "slug": "sapo",
-    "version": "5.0.0",
+    "version": "6.0.0",
     "orientation": "portrait",
     "icon": "./content/images/ic_sapo.png",
     "splash": {
@@ -18,12 +18,12 @@
     ],
     "ios": {
       "bundleIdentifier": "com.sapo365.sapo365",
-      "buildNumber": "5.0.0",
+      "buildNumber": "6.0.0",
       "supportsTablet": true
     },
     "android": {
       "package": "com.sapo365.sapo365",
-      "versionCode": 5
+      "versionCode": 6
     },
     "web": {
       "favicon": "./assets/favicon.png"
