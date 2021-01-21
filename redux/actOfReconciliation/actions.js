@@ -59,7 +59,7 @@ export const fetchData = (accountId, osbbId, fromMonth, toMonth, token) => {
   return async dispatch => {
       try {
           const dataPromise = await fetch(
-            'https://app.sapo365.com/api/tenant/charges/total?accountId=' +
+            'https://app.gsoft.net.ua/api/tenant/charges/total?accountId=' +
               accountId.id +
               '&osbbId=' +
               osbbId +

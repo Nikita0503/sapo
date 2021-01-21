@@ -56,7 +56,7 @@ export default class HomeScreen extends React.Component {
               style={{
                 marginTop: 10,
                 marginBottom: 2,
-                color: '#002B2B',
+                color: '#062A4F',
                 fontSize: 18,
               }}>
               До сплати за
@@ -65,7 +65,7 @@ export default class HomeScreen extends React.Component {
               style={{
                 marginTop: 2,
                 marginBottom: 2,
-                color: '#002B2B',
+                color: '#062A4F',
                 fontSize: 18,
               }}>
               {this.getLastPeriod()}
@@ -75,7 +75,7 @@ export default class HomeScreen extends React.Component {
                 marginTop: 2,
                 fontWeight: 'bold',
                 marginBottom: 10,
-                color: '#002B2B',
+                color: '#062A4F',
                 fontSize: 18,
               }}>
               {this.getDebtByCurrentAccountId()} грн.
@@ -116,7 +116,7 @@ export default class HomeScreen extends React.Component {
         }}>
         <View
           style={{
-            backgroundColor: '#002B2B',
+            backgroundColor: '#062A4F',
             padding: 10,
             marginBottom: 10,
             borderRadius: 12

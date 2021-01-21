@@ -31,8 +31,8 @@ export default class AdsScreen extends React.Component {
     if(this.props.advertisementData == null){
       return(
       <View style={styles.container, {marginTop: '50%'}}>
-        <ActivityIndicator size="large" style={styles.loader} color="#002B2B" />
-        <Text style={{color: '#002B2B', fontSize: 16, marginTop: 20, alignSelf: 'center'}}>
+        <ActivityIndicator size="large" style={styles.loader} color="#062A4F" />
+        <Text style={{color: '#062A4F', fontSize: 16, marginTop: 20, alignSelf: 'center'}}>
           Зачекайте, дані завантажуються
         </Text>
       </View>);
@@ -218,7 +218,7 @@ class Post extends React.Component {
       <View style={{ margin: 5, backgroundColor: 'white', width: '95%', borderRadius: 15 }}>
         <Text
           style={{
-            color: '#002B2B',
+            color: '#062A4F',
             marginHorizontal: 10,
             marginVertical: 5,
             fontSize: 20,
@@ -227,7 +227,7 @@ class Post extends React.Component {
         </Text>
         <View style={{ flexDirection: 'row' }}>
           <View>
-            <Text style={{ color: '#002B2B', marginHorizontal: 10 }}>
+            <Text style={{ color: '#062A4F', marginHorizontal: 10 }}>
               {this.props.author}
             </Text>
             <Text style={{ color: '#CDCDCD', marginHorizontal: 10 }}>
@@ -262,7 +262,7 @@ class Post extends React.Component {
               style={{
                 marginTop: 10,
                 marginBottom: 10,
-                color: '#002B2B',
+                color: '#062A4F',
                 fontSize: 18,
               }}>
               Додати коментар +
@@ -301,7 +301,7 @@ class Post extends React.Component {
           <Text
             style={{
               fontSize: 15,
-              color: '#002B2B',
+              color: '#062A4F',
               width: 50,
               marginHorizontal: 2,
             }}>
@@ -377,10 +377,10 @@ class Post extends React.Component {
   getNoCommentsView(){
     if(this.getCommentsListData() != null){
       if(this.getCommentsListData().length == 0){
-        return(<Text style={{color: '#002B2B', fontSize: 16, marginTop: 10, alignSelf: 'center'}}>Даних немає</Text>)
+        return(<Text style={{color: '#062A4F', fontSize: 16, marginTop: 10, alignSelf: 'center'}}>Даних немає</Text>)
       }
     }else{
-      return(<ActivityIndicator size="large" style={styles.loader} color="#002B2B" />)
+      return(<ActivityIndicator size="large" style={styles.loader} color="#062A4F" />)
     }
   }
 
@@ -395,7 +395,7 @@ class Post extends React.Component {
           <View
             style={{width: '100%', backgroundColor: '#F9F9F9', alignItems: 'center', borderRadius: 15}}>
             <Text
-              style={{marginTop: 10, marginBottom: 10, color: '#002B2B', fontSize: 18}}>
+              style={{marginTop: 10, marginBottom: 10, color: '#062A4F', fontSize: 18}}>
                 ↓ Показати коментарі
             </Text>
           </View>
@@ -414,7 +414,7 @@ class Post extends React.Component {
               width: '100%', backgroundColor: '#F9F9F9', alignItems: 'center',
             }}>
             <Text
-              style={{marginTop: 10, marginBottom: 10, color: '#002B2B', fontSize: 18}}>
+              style={{marginTop: 10, marginBottom: 10, color: '#062A4F', fontSize: 18}}>
               ↓ Показати коментарі
             </Text>
           </View>
@@ -476,7 +476,7 @@ class ItemComment extends React.Component {
         <View style={{ flexDirection: 'row' }}>
           {this.getAvatar()}
           <View>
-            <Text style={{ color: '#002B2B', marginLeft: 5, marginTop: 5 }}>
+            <Text style={{ color: '#062A4F', marginLeft: 5, marginTop: 5 }}>
               {this.props.author}
             </Text>
             <Text style={{ color: '#CDCDCD', marginLeft: 5, marginBottom: 5 }}>
@@ -486,7 +486,7 @@ class ItemComment extends React.Component {
         </View>
         <Text
           style={{
-            color: '#002B2B',
+            color: '#062A4F',
             marginHorizontal: 15,
             marginTop: 5,
             marginBottom: 15,

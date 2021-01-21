@@ -33,7 +33,7 @@ export const fetchLiqpayData = (token, accountId, osbbId, workPeriods) => {
   return async dispatch => {
       try{
           const liqpayDataPromise = await fetch(
-            'https://app.sapo365.com/api/tenant/checkLiqPay?accountId=' +
+            'https://app.gsoft.net.ua/api/tenant/checkLiqPay?accountId=' +
               accountId.id +
               '&osbbId=' +
               osbbId +
@@ -60,7 +60,7 @@ export const fetchChargesData = (token, accountId, osbbId, workPeriods) => {
   return async dispatch => {
       try{
           const chargesDataPromise = await fetch(
-            'https://app.sapo365.com/api/tenant/charges/total?accountId=' +
+            'https://app.gsoft.net.ua/api/tenant/charges/total?accountId=' +
               accountId.id +
               '&osbbId=' +
               osbbId +

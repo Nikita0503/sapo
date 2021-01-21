@@ -17,7 +17,7 @@ export const sendComment = (addCommentToAdvertisementText, selectedPost, navigat
       try {
         dispatch(setAddCommentToAdvertisementButtonSend(true))
         var ws = new WebSocket(
-          'wss://app.sapo365.com/socket.io/?auth_token=' +
+          'wss://app.gsoft.net.ua/socket.io/?auth_token=' +
             token +
             '&EIO=3&transport=websocket'
         );

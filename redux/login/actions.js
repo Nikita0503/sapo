@@ -107,7 +107,7 @@ export const setAuthMethod = method => ({
 export const fetchTokenByEmailPassword = (email, password, navigation) => {
     return async dispatch => {
         try{
-            const tokenPromise = await fetch('https://app.sapo365.com/login', {
+            const tokenPromise = await fetch('https://app.gsoft.net.ua/login', {
                 method: 'POST',
                 headers: {
                   Accept: 'application/json',
@@ -140,7 +140,7 @@ export const fetchTokenByAddress = (regionsInfo,
     navigation) => {
     return async dispatch => {
         try{
-            const tokenPromise = await fetch('https://app.sapo365.com/auth', {
+            const tokenPromise = await fetch('https://app.gsoft.net.ua/auth', {
                 method: 'POST',
                 headers: {
                     Accept: 'application/json',
@@ -172,7 +172,7 @@ export const fetchTokenByAddress = (regionsInfo,
 export const fetchCompaniesInfo = () => {
     return async dispatch => {
         try {
-            const companiesInfoPromise = await fetch('https://app.sapo365.com/auth/select/city', {
+            const companiesInfoPromise = await fetch('https://app.gsoft.net.ua/auth/select/city', {
                 method: 'GET',
                 headers: {
                     Accept: 'application/json',
@@ -190,7 +190,7 @@ export const fetchCompaniesInfo = () => {
 export const fetchRegionsInfo = (id) => {
     return async dispatch => {
         try {
-            const regionsInfoPromise = await fetch('https://app.sapo365.com/auth/osbb/' + id, {
+            const regionsInfoPromise = await fetch('https://app.gsoft.net.ua/auth/osbb/' + id, {
                 method: 'GET',
                 headers: {
                     Accept: 'application/json',

@@ -142,8 +142,8 @@ export default class ChatScreen extends React.Component {
     if(this.props.loading){
       return(
         <View style={styles.container, {marginTop: '50%'}}>
-          <ActivityIndicator size="large" style={styles.loader} color="#002B2B" />
-          <Text style={{color: '#002B2B', fontSize: 16, marginTop: 20, alignSelf: 'center'}}>
+          <ActivityIndicator size="large" style={styles.loader} color="#062A4F" />
+          <Text style={{color: '#062A4F', fontSize: 16, marginTop: 20, alignSelf: 'center'}}>
             Зачекайте, дані завантажуються
           </Text>
         </View>);
@@ -474,7 +474,7 @@ const styles = StyleSheet.create({
     marginVertical: 5,
     borderRadius: 10,
     paddingHorizontal: 5,
-    backgroundColor: '#224D4D',
+    backgroundColor: '#062A4F',
   },
   myMessageStyle: {
     maxWidth: '70%',
@@ -483,7 +483,7 @@ const styles = StyleSheet.create({
     marginVertical: 5,
     borderRadius: 10,
     paddingHorizontal: 5,
-    backgroundColor: '#3A6565',
+    backgroundColor: '#094077',
   },
   messageContainer: {
     width: '100%',

@@ -92,7 +92,7 @@ function Menu() {
         labeled={false}
         activeColor="#f0edf6"
         inactiveColor="#3e2465"
-        barStyle={{ backgroundColor: '#002B2B' }} >
+        barStyle={{ backgroundColor: '#062A4F' }} >
       <Tab.Screen 
         name="Головна"
         component={HomeStackScreen} 
@@ -283,8 +283,8 @@ const Menu = createBottomTabNavigator({
 {
   tabBarOptions: {
     showLabel: false,
-    activeBackgroundColor: '#002B2B',
-    inactiveBackgroundColor: '#002B2B',
+    activeBackgroundColor: '#062A4F',
+    inactiveBackgroundColor: '#062A4F',
     activeTintColor: 'white'
   }
 })

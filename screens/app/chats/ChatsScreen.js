@@ -20,8 +20,8 @@ export default class ScreenChats extends React.Component {
   getLoadingView(){
     if(this.props.allChats == null){
       return(<View style={styles.container, {marginTop: '50%'}}>
-        <ActivityIndicator size="large" style={styles.loader} color="#002B2B" />
-        <Text style={{color: '#002B2B', fontSize: 16, marginTop: 20, alignSelf: 'center'}}>
+        <ActivityIndicator size="large" style={styles.loader} color="#062A4F" />
+        <Text style={{color: '#062A4F', fontSize: 16, marginTop: 20, alignSelf: 'center'}}>
           Зачекайте, дані завантажуються
         </Text>
         </View>);
@@ -142,7 +142,7 @@ const styles = StyleSheet.create({
   },
   itemTextStyle: {
     fontSize: 16,
-    color: '#002B2B',
+    color: '#062A4F',
     alignContent: 'flex-start',
     margin: 10,
     marginTop: 12,

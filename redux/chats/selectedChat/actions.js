@@ -44,7 +44,7 @@ export const setLoading = loading => ({
 export const sendPhoto = (accountId, osbbId, workPeriods, formdata, token) => {
   return async dispatch => {
       try {
-          const photoPromise = await fetch('https://app.sapo365.com/api/upload/photo?accountId=' + accountId 
+          const photoPromise = await fetch('https://app.gsoft.net.ua/api/upload/photo?accountId=' + accountId 
           + '&osbbId=' + osbbId 
           + '&type=photo&workPeriod=' + workPeriods[workPeriods.length - 1], {
             method: 'post',
@@ -68,7 +68,7 @@ export const downloadMessages = (selectedChat, workPeriods, token) => {
   return async dispatch => {
       try {
         ws = new WebSocket(
-          'wss://app.sapo365.com/socket.io/?auth_token=' +
+          'wss://app.gsoft.net.ua/socket.io/?auth_token=' +
             token +
             '&EIO=3&transport=websocket'
         );

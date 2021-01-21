@@ -8,7 +8,7 @@ export const setCurrentPaymentsData = currentPaymentsData => ({
 export const fetchPayment = (token, accountId, osbbId, currentWorkPeriod) => {
     return async dispatch => {
         try{
-            const answerPromise = await fetch('https://app.sapo365.com/api/tenant/payments?accountId=' +
+            const answerPromise = await fetch('https://app.gsoft.net.ua/api/tenant/payments?accountId=' +
                   accountId.id +
                   '&osbbId=' +
                   osbbId +

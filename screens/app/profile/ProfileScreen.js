@@ -108,7 +108,7 @@ export default class ProfileScreen extends React.Component {
           />
           <ScrollView>
             <View style={styles.container}>
-              <Text style={{ marginTop: 15, marginBottom: 10, color: '#002B2B', fontSize: 18 }}>
+              <Text style={{ marginTop: 15, marginBottom: 10, color: '#062A4F', fontSize: 18 }}>
                 Загальне
               </Text>
               <TouchableOpacity onPress={this._pickImage}>
@@ -123,7 +123,7 @@ export default class ProfileScreen extends React.Component {
                       this.props.workPeriods, 
                       this.props.token)
                   }}
-                  style={{backgroundColor: "#002B2B", alignItems: 'center', justifyContent: 'center', height: 35, borderRadius: 12, paddingHorizontal: 10}}
+                  style={{backgroundColor: "#062A4F", alignItems: 'center', justifyContent: 'center', height: 35, borderRadius: 12, paddingHorizontal: 10}}
                 >
                   <Text style={{color: 'white', fontSize: 15}}>ВИДАЛИТИ ФОТО</Text>
                 </TouchableOpacity>
@@ -212,7 +212,7 @@ export default class ProfileScreen extends React.Component {
               </View>
             </View>
             <View style={styles.container}>
-              <Text style={{ marginTop: 15, color: '#002B2B', fontSize: 18 }}>
+              <Text style={{ marginTop: 15, color: '#062A4F', fontSize: 18 }}>
                 Змінити пароль
               </Text>
               <View style={styles.containerSwitch}>
@@ -221,7 +221,7 @@ export default class ProfileScreen extends React.Component {
                   onValueChange={this.toggleSwitch}
                   value={this.props.showPasswords}
                 />
-                <Text style={{ marginTop: 15, color: '#002B2B' }}>
+                <Text style={{ marginTop: 15, color: '#062A4F' }}>
                   Показувати пароль: {this.props.showPasswords ? 'Так' : 'Ні'}
                 </Text>
               </View>
@@ -260,7 +260,7 @@ export default class ProfileScreen extends React.Component {
                   this.props.sendNewPassword(this.props.oldPassword, this.props.newPassword, this.props.newRepeatPassword, this.props.token);
                 }
               }
-                style={{backgroundColor: "#002B2B", alignItems: 'center', justifyContent: 'center', height: 35, borderRadius: 12}}
+                style={{backgroundColor: "#062A4F", alignItems: 'center', justifyContent: 'center', height: 35, borderRadius: 12}}
               >
                 <Text style={{color: 'white', fontSize: 15}}>ЗБЕРЕГТИ</Text>
               </TouchableOpacity>
@@ -276,7 +276,7 @@ export default class ProfileScreen extends React.Component {
                     this.props.setAuthMethod(null)
                     this.props.navigation.navigate('Login')
                   }}
-                  style={{backgroundColor: "#002B2B", alignItems: 'center', justifyContent: 'center', height: 35, borderRadius: 12}}
+                  style={{backgroundColor: "#062A4F", alignItems: 'center', justifyContent: 'center', height: 35, borderRadius: 12}}
                 >
                 <Text style={{color: 'white', fontSize: 15}}>ВИЙТИ З АККАУНТУ</Text>
               </TouchableOpacity>

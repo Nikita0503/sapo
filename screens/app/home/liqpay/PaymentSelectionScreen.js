@@ -97,7 +97,7 @@ export default class PaymentSelectionScreen extends React.Component {
         />
         <View
           style={{ width: '100%', height: '100%', backgroundColor: '#EEEEEE' }}>
-          <View style={{width: '100%', height: 85, backgroundColor: '#002B2B', flexDirection: 'row', justifyContent: 'space-between'}}>
+          <View style={{width: '100%', height: 85, backgroundColor: '#062A4F', flexDirection: 'row', justifyContent: 'space-between'}}>
           <TouchableOpacity style={{marginTop: 45}} onPress={()=>{
             this.props.navigation.goBack(null)
           }}>
@@ -115,7 +115,7 @@ export default class PaymentSelectionScreen extends React.Component {
                 style={{
                   marginTop: 10,
                   marginBottom: 10,
-                  color: '#002B2B',
+                  color: '#062A4F',
                   fontSize: 14,
                   textAlign: 'center'
                 }}>
@@ -184,7 +184,7 @@ const styles = StyleSheet.create({
     width: '60%',
     fontSize: 14,
     fontWeight: 'bold',
-    color: '#002B2B',
+    color: '#062A4F',
     alignContent: 'center',
     textAlign: 'center',
   },
@@ -192,7 +192,7 @@ const styles = StyleSheet.create({
     width: '40%',
     fontSize: 14,
     fontWeight: 'bold',
-    color: '#002B2B',
+    color: '#062A4F',
     alignContent: 'center',
     textAlign: 'center',
   },
@@ -200,20 +200,20 @@ const styles = StyleSheet.create({
     width: '60%',
     paddingStart: 20,
     fontSize: 16,
-    color: '#002B2B',
+    color: '#062A4F',
     alignContent: 'flex-end',
   },
   itemSumStyleBold: {
     width: '40%',
     fontWeight: 'bold',
     fontSize: 16,
-    color: '#002B2B',
+    color: '#062A4F',
   },
   itemStyleBold: {
     width: '40%',
     fontWeight: 'bold',
     fontSize: 16,
-    color: '#002B2B',
+    color: '#062A4F',
     alignContent: 'center',
     textAlign: 'center',
   },

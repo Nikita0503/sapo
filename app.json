@@ -1,14 +1,14 @@
 {
   "expo": {
-    "name": "САПО 365",
-    "slug": "sapo",
-    "version": "6.0.0",
+    "name": "ЖИТЛОСОФТ",
+    "slug": "gsoft",
+    "version": "7.0.0",
     "orientation": "portrait",
-    "icon": "./content/images/ic_sapo.png",
+    "icon": "./content/images/ic_gsoft.png",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#002B2B"
+      "backgroundColor": "#062A4F"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -17,13 +17,13 @@
       "**/*"
     ],
     "ios": {
-      "bundleIdentifier": "com.sapo365.sapo365",
-      "buildNumber": "6.0.0",
+      "bundleIdentifier": "com.gsoft.gsoft",
+      "buildNumber": "7.0.0",
       "supportsTablet": true
     },
     "android": {
-      "package": "com.sapo365.sapo365",
-      "versionCode": 6
+      "package": "com.gsoft.gsoft",
+      "versionCode": 7
     },
     "web": {
       "favicon": "./assets/favicon.png"

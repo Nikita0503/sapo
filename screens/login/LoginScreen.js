@@ -59,8 +59,8 @@ export default class LoginScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <View style={{height: '40%', width: '100%', backgroundColor: '#002B2B', alignItems: 'center', justifyContent: 'center'}}>
-          <Image resizeMode='contain' style={{width: '50%', height: '50%'}} source={require('../../content/images/sapoAppLogo.png')}/>
+        <View style={{height: '40%', width: '100%', backgroundColor: '#062A4F', alignItems: 'center', justifyContent: 'center'}}>
+          <Image resizeMode='contain' style={{width: '50%', height: '50%'}} source={require('../../content/images/gsoftAppLogo.png')}/>
         </View>
         {this.getPageView()}
         {this.getRegionDialog()}
@@ -86,10 +86,10 @@ export default class LoginScreen extends React.Component {
               this.viewPager.setPage(TAB_EMAIL_PASSWORD_ID)
             }}
             style={this.props.currentTab == TAB_EMAIL_PASSWORD_ID ? 
-            {width: '50%', height: '100%', borderBottomWidth: 2, paddingTop: 2, borderBottomColor: '#002B2B', alignItems: 'center', justifyContent: 'center'}
+            {width: '50%', height: '100%', borderBottomWidth: 2, paddingTop: 2, borderBottomColor: '#062A4F', alignItems: 'center', justifyContent: 'center'}
             :
             {width: '50%', height: '100%', alignItems: 'center', justifyContent: 'center'}}>
-              <Text style={{color: '#002B2B'}}>ЗА EMAIL</Text>
+              <Text style={{color: '#062A4F'}}>ЗА EMAIL</Text>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => {
@@ -97,10 +97,10 @@ export default class LoginScreen extends React.Component {
               this.viewPager.setPage(TAB_ADDRESS_ID)
             }}
             style={this.props.currentTab == TAB_ADDRESS_ID ? 
-            {width: '50%', height: '100%', borderBottomWidth: 2,  paddingTop: 2, borderBottomColor: '#002B2B', alignItems: 'center', justifyContent: 'center'}
+            {width: '50%', height: '100%', borderBottomWidth: 2,  paddingTop: 2, borderBottomColor: '#062A4F', alignItems: 'center', justifyContent: 'center'}
             :
             {width: '50%', height: '100%', alignItems: 'center', justifyContent: 'center'}}>
-              <Text style={{color: '#002B2B'}}>ЗА АДРЕСОЮ</Text>
+              <Text style={{color: '#062A4F'}}>ЗА АДРЕСОЮ</Text>
           </TouchableOpacity>
         </View>
         <ViewPager 
@@ -132,7 +132,7 @@ export default class LoginScreen extends React.Component {
             value={this.props.email}
             keyboardType={Platform.OS === 'android' ? 'email-address' : 'ascii-capable'} 
             onChangeText={(text) => {this.props.setEmail(text)}}
-            style={{borderColor: '#002B2B', textAlign: 'center', borderBottomWidth: 1, fontSize: 16, marginBottom: 7, paddingBottom: 2}}  placeholder="Email" />
+            style={{borderColor: '#062A4F', textAlign: 'center', borderBottomWidth: 1, fontSize: 16, marginBottom: 7, paddingBottom: 2}}  placeholder="Email" />
         </View>
         <View style={{width: '70%', backgroundColor: '#EFEFEF', marginTop: 10, marginBottom: 5, borderRadius: 12, paddingTop: 6, paddingBottom: 0, paddingHorizontal: 15, marginHorizontal: 5, }}>
           <TextInput
@@ -140,7 +140,7 @@ export default class LoginScreen extends React.Component {
             onChangeText={(text) => {this.props.setPassword(text)}}
             secureTextEntry={true}
             autoCapitalize = 'none' 
-            style={{borderColor: '#002B2B', textAlign: 'center', borderBottomWidth: 1, fontSize: 16, marginBottom: 7, paddingBottom: 2}} placeholder="Пароль" /> 
+            style={{borderColor: '#062A4F', textAlign: 'center', borderBottomWidth: 1, fontSize: 16, marginBottom: 7, paddingBottom: 2}} placeholder="Пароль" /> 
         </View>
         <View style={{margin: 5, width: '70%', marginTop: 10}}>
           <TouchableOpacity
@@ -151,7 +151,7 @@ export default class LoginScreen extends React.Component {
                 }
               this.props.fetchTokenByEmailPassword(this.props.email, this.props.password, this.props.navigation)
             }}
-            style={{backgroundColor: "#002B2B", alignItems: 'center', justifyContent: 'center', height: 35, borderRadius: 12}}>
+            style={{backgroundColor: "#062A4F", alignItems: 'center', justifyContent: 'center', height: 35, borderRadius: 12}}>
               <Text style={{color: 'white', fontSize: 15}}>Увійти</Text>
           </TouchableOpacity>
         </View>
@@ -172,7 +172,7 @@ export default class LoginScreen extends React.Component {
               this.props.setSelectedCityCompany(null)
             }}
             style={{width: '80%', backgroundColor: '#EFEFEF', borderRadius: 12, paddingTop: 6, paddingBottom: 0, paddingHorizontal: 15, marginHorizontal: 5, }}>
-            <View style={{borderColor: '#002B2B',  borderBottomWidth: 1, marginBottom: 6, paddingBottom: 2, paddingHorizontal: 2}}>
+            <View style={{borderColor: '#062A4F',  borderBottomWidth: 1, marginBottom: 6, paddingBottom: 2, paddingHorizontal: 2}}>
               <Text style={this.props.selectedCityCompany == null ? {fontSize: 15, color: 'gray'} : {fontSize: 15}}>
                 {this.props.selectedCityCompany == null ? 'Оберіть місто' : this.props.selectedCityCompany}
               </Text>
@@ -185,7 +185,7 @@ export default class LoginScreen extends React.Component {
                 this.props.setSelectedCompany(null)
               }}
               style={{width: '80%', backgroundColor: '#EFEFEF', marginTop: 10, borderRadius: 12, paddingTop: 6, paddingBottom: 0, paddingHorizontal: 15, marginHorizontal: 5, }}>
-              <View style={{borderColor: '#002B2B',  borderBottomWidth: 1, marginBottom: 6, paddingBottom: 2, paddingHorizontal: 2}}>
+              <View style={{borderColor: '#062A4F',  borderBottomWidth: 1, marginBottom: 6, paddingBottom: 2, paddingHorizontal: 2}}>
                 <Text style={this.props.selectedCompany == null ? {fontSize: 15, color: 'gray'} : {fontSize: 15}}>
                   {this.props.selectedCompany == null ? 'Оберіть компанію' : this.props.selectedCompany.name}
                 </Text>
@@ -203,7 +203,7 @@ export default class LoginScreen extends React.Component {
                   this.props.fetchRegionsInfo(this.props.selectedCompany.id)
                 
               }}
-              style={{backgroundColor: "#002B2B", alignItems: 'center', justifyContent: 'center', height: 35, borderRadius: 12}}>
+              style={{backgroundColor: "#062A4F", alignItems: 'center', justifyContent: 'center', height: 35, borderRadius: 12}}>
                 <Text style={{color: 'white', fontSize: 15}}>Далі</Text>
             </TouchableOpacity>
           </View>
@@ -217,7 +217,7 @@ export default class LoginScreen extends React.Component {
     return(
       <ScrollView>
         <TouchableOpacity
-          style={{backgroundColor: "#002B2B", alignItems: 'center', justifyContent: 'center', alignSelf: 'flex-end', height: 25, borderRadius: 8, width: 70, marginRight: 10, marginTop: 5}}
+          style={{backgroundColor: "#062A4F", alignItems: 'center', justifyContent: 'center', alignSelf: 'flex-end', height: 25, borderRadius: 8, width: 70, marginRight: 10, marginTop: 5}}
           onPress={() => {
             this.props.setSelectedAccountNumber(null)
             this.props.setSelectedFlat(null)
@@ -242,7 +242,7 @@ export default class LoginScreen extends React.Component {
               this.props.setSelectedRegion(null)
             }}
             style={{width: '80%', backgroundColor: '#EFEFEF', borderRadius: 12, paddingTop: 6, paddingBottom: 0, paddingHorizontal: 15, marginHorizontal: 5, }}>
-            <View style={{borderColor: '#002B2B',  borderBottomWidth: 1, marginBottom: 6, paddingBottom: 2, paddingHorizontal: 2}}>
+            <View style={{borderColor: '#062A4F',  borderBottomWidth: 1, marginBottom: 6, paddingBottom: 2, paddingHorizontal: 2}}>
               <Text style={this.props.regionsInfo == null ? {fontSize: 15, color: 'gray'} : {fontSize: 15}}>
                 {this.props.regionsInfo == null ? 'Оберіть область' : this.props.regionsInfo.region.name}
               </Text>
@@ -256,7 +256,7 @@ export default class LoginScreen extends React.Component {
               this.props.setSelectedCity(null)
             }}
             style={{width: '80%', backgroundColor: '#EFEFEF', marginTop: 10, borderRadius: 12, paddingTop: 6, paddingBottom: 0, paddingHorizontal: 15, marginHorizontal: 5, }}>
-            <View style={{borderColor: '#002B2B',  borderBottomWidth: 1, marginBottom: 6, paddingBottom: 2, paddingHorizontal: 2}}>
+            <View style={{borderColor: '#062A4F',  borderBottomWidth: 1, marginBottom: 6, paddingBottom: 2, paddingHorizontal: 2}}>
               <Text style={this.props.regionsInfo == null ? {fontSize: 15, color: 'gray'} : {fontSize: 15}}>
                 {this.props.regionsInfo == null ? 'Оберіть місто' : this.props.regionsInfo.city.name}
               </Text>
@@ -271,7 +271,7 @@ export default class LoginScreen extends React.Component {
               this.props.setSelectedStreet(null)
             }}
             style={{width: '80%', backgroundColor: '#EFEFEF', marginTop: 10, borderRadius: 12, paddingTop: 6, paddingBottom: 0, paddingHorizontal: 15, marginHorizontal: 5, }}>
-            <View style={{borderColor: '#002B2B',  borderBottomWidth: 1, marginBottom: 6, paddingBottom: 2, paddingHorizontal: 2}}>
+            <View style={{borderColor: '#062A4F',  borderBottomWidth: 1, marginBottom: 6, paddingBottom: 2, paddingHorizontal: 2}}>
               <Text style={this.props.selectedStreet == null ? {fontSize: 15, color: 'gray'} : {fontSize: 15}}>
                 {this.props.selectedStreet == null ? 'Оберіть вулицю' : this.props.selectedStreet.name}
               </Text>
@@ -285,7 +285,7 @@ export default class LoginScreen extends React.Component {
               this.props.setSelectedHouse(null)
             }}
             style={{width: '80%', backgroundColor: '#EFEFEF', marginTop: 10, borderRadius: 12, paddingTop: 6, paddingBottom: 0, paddingHorizontal: 15, marginHorizontal: 5, }}>
-            <View style={{borderColor: '#002B2B',  borderBottomWidth: 1, marginBottom: 6, paddingBottom: 2, paddingHorizontal: 2}}>
+            <View style={{borderColor: '#062A4F',  borderBottomWidth: 1, marginBottom: 6, paddingBottom: 2, paddingHorizontal: 2}}>
               <Text style={this.props.selectedHouse == null ? {fontSize: 15, color: 'gray'} : {fontSize: 15}}>
                 {this.props.selectedHouse == null ? 'Оберіть будинок' : this.props.selectedHouse}
               </Text>
@@ -298,7 +298,7 @@ export default class LoginScreen extends React.Component {
               this.props.setSelectedFlat(null)
             }}
             style={{width: '80%', backgroundColor: '#EFEFEF', marginTop: 10, borderRadius: 12, paddingTop: 6, paddingBottom: 0, paddingHorizontal: 15, marginHorizontal: 5, }}>
-            <View style={{borderColor: '#002B2B',  borderBottomWidth: 1, marginBottom: 6, paddingBottom: 2, paddingHorizontal: 2}}>
+            <View style={{borderColor: '#062A4F',  borderBottomWidth: 1, marginBottom: 6, paddingBottom: 2, paddingHorizontal: 2}}>
               <Text style={this.props.selectedFlat == null ? {fontSize: 15, color: 'gray'} : {fontSize: 15}}>
                 {this.props.selectedFlat == null ? 'Оберіть квартиру' : this.props.selectedFlat}
               </Text>
@@ -311,7 +311,7 @@ export default class LoginScreen extends React.Component {
               this.props.setSelectedAccountNumber(null)
             }}
             style={{width: '80%', backgroundColor: '#EFEFEF', marginTop: 10, borderRadius: 12, paddingTop: 6, paddingBottom: 0, paddingHorizontal: 15, marginHorizontal: 5, }}>
-            <View style={{borderColor: '#002B2B',  borderBottomWidth: 1, marginBottom: 6, paddingBottom: 2, paddingHorizontal: 2}}>
+            <View style={{borderColor: '#062A4F',  borderBottomWidth: 1, marginBottom: 6, paddingBottom: 2, paddingHorizontal: 2}}>
               <Text style={this.props.selectedAccountNumber == null ? {fontSize: 15, color: 'gray'} : {fontSize: 15}}>
               {this.props.selectedAccountNumber == null ? 'Номер рахунку' : this.props.selectedAccountNumber}
               </Text>
@@ -335,7 +335,7 @@ export default class LoginScreen extends React.Component {
                   this.props.selectedAccountNumber,
                   this.props.navigation)
               }}
-              style={{backgroundColor: "#002B2B", alignItems: 'center', justifyContent: 'center', height: 35, borderRadius: 12}}>
+              style={{backgroundColor: "#062A4F", alignItems: 'center', justifyContent: 'center', height: 35, borderRadius: 12}}>
                 <Text style={{color: 'white', fontSize: 15}}>Увійти</Text>
             </TouchableOpacity>
           </View>
@@ -373,7 +373,7 @@ export default class LoginScreen extends React.Component {
                   maxWidth: '90%',
                   width: '90%', 
                   borderBottomWidth: 1, 
-                  borderColor: '#002B2B',
+                  borderColor: '#062A4F',
                   alignSelf: 'center', 
                   fontSize: 16,
                   paddingTop: 0,
@@ -426,7 +426,7 @@ export default class LoginScreen extends React.Component {
                 maxWidth: '90%',
                 width: '90%', 
                 borderBottomWidth: 1, 
-                borderColor: '#002B2B',
+                borderColor: '#062A4F',
                 alignSelf: 'center', 
                 fontSize: 16,
                 paddingTop: 0,
@@ -476,7 +476,7 @@ export default class LoginScreen extends React.Component {
                   maxWidth: '90%',
                   width: '90%', 
                   borderBottomWidth: 1, 
-                  borderColor: '#002B2B',
+                  borderColor: '#062A4F',
                   alignSelf: 'center', 
                   fontSize: 16,
                   paddingTop: 0,
@@ -540,7 +540,7 @@ export default class LoginScreen extends React.Component {
                   maxWidth: '90%',
                   width: '90%', 
                   borderBottomWidth: 1, 
-                  borderColor: '#002B2B',
+                  borderColor: '#062A4F',
                   alignSelf: 'center', 
                   fontSize: 16,
                   paddingTop: 0,
@@ -605,7 +605,7 @@ export default class LoginScreen extends React.Component {
                   maxWidth: '90%',
                   width: '90%', 
                   borderBottomWidth: 1, 
-                  borderColor: '#002B2B',
+                  borderColor: '#062A4F',
                   alignSelf: 'center', 
                   fontSize: 16,
                   paddingTop: 0,
@@ -640,7 +640,7 @@ export default class LoginScreen extends React.Component {
         <View style={{width: '90%', maxWidth: '90%', alignSelf: 'center', alignItems: 'center', marginVertical: 5, marginBottom: 5, paddingTop: 6, paddingBottom: 0, paddingHorizontal: 15, marginHorizontal: 5, }}>
           <TextInput
             onChangeText={(text) => {this.props.setSelectedAccountNumber(text)}}
-            style={{width: '90%', maxWidth: '90%', borderColor: '#002B2B',  borderBottomWidth: 1, fontSize: 15, marginBottom: 7, paddingBottom: 2, paddingHorizontal: 2}} placeholder="Номер рахунку" /> 
+            style={{width: '90%', maxWidth: '90%', borderColor: '#062A4F',  borderBottomWidth: 1, fontSize: 15, marginBottom: 7, paddingBottom: 2, paddingHorizontal: 2}} placeholder="Номер рахунку" /> 
         </View>
         <Dialog.Button
           label="Підтвердити"
@@ -678,7 +678,7 @@ export default class LoginScreen extends React.Component {
                   maxWidth: '90%',
                   width: '90%', 
                   borderBottomWidth: 1, 
-                  borderColor: '#002B2B',
+                  borderColor: '#062A4F',
                   alignSelf: 'center', 
                   fontSize: 16,
                   paddingTop: 0,
@@ -729,7 +729,7 @@ export default class LoginScreen extends React.Component {
                   maxWidth: '90%',
                   width: '90%', 
                   borderBottomWidth: 1, 
-                  borderColor: '#002B2B',
+                  borderColor: '#062A4F',
                   alignSelf: 'center', 
                   fontSize: 16,
                   paddingTop: 0,

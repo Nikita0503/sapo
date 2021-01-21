@@ -73,7 +73,7 @@ export default class RequestsScreen extends React.Component {
       />);
     }else{
       if(!this.props.loading){
-        return(<Text style={{color: '#002B2B', fontSize: 16, marginVertical: 10, alignSelf: 'center'}}>Даних немає</Text>)
+        return(<Text style={{color: '#062A4F', fontSize: 16, marginVertical: 10, alignSelf: 'center'}}>Даних немає</Text>)
       }
     }
   }
@@ -120,7 +120,7 @@ export default class RequestsScreen extends React.Component {
       />);
     }else{
       if(!this.props.loading){
-        return(<Text style={{color: '#002B2B', fontSize: 16, marginVertical: 10, alignSelf: 'center'}}>Даних немає</Text>)
+        return(<Text style={{color: '#062A4F', fontSize: 16, marginVertical: 10, alignSelf: 'center'}}>Даних немає</Text>)
       }
     }
   }
@@ -165,14 +165,14 @@ export default class RequestsScreen extends React.Component {
                 style={{
                   marginTop: 10,
                   marginBottom: 10,
-                  color: '#002B2B',
+                  color: '#062A4F',
                   fontSize: 18,
                 }}>
                 Заявки та пропозиції
               </Text>
             </View>
             <View style={styles.containerSwitch}>
-                <Text style={{ marginTop: 16, marginRight: 10, color: '#002B2B' }}>
+                <Text style={{ marginTop: 16, marginRight: 10, color: '#062A4F' }}>
                   Тільки мої
                 </Text>
                 <Switch
@@ -182,7 +182,7 @@ export default class RequestsScreen extends React.Component {
                 />
               </View>
               <View style={styles.containerSwitch}>
-                <Text style={{ marginTop: 16, marginRight: 10, color: '#002B2B' }}>
+                <Text style={{ marginTop: 16, marginRight: 10, color: '#062A4F' }}>
                   Спочатку відкриті
                 </Text>
                 <Switch
@@ -192,7 +192,7 @@ export default class RequestsScreen extends React.Component {
                 />
               </View>
               <View style={styles.containerSwitch}>
-                <Text style={{ marginTop: 16, marginRight: 10, color: '#002B2B' }}>
+                <Text style={{ marginTop: 16, marginRight: 10, color: '#062A4F' }}>
                   Відображати архів
                 </Text>
                 <Switch
@@ -213,7 +213,7 @@ export default class RequestsScreen extends React.Component {
                 style={{
                   marginTop: 10,
                   marginBottom: 10,
-                  color: '#002B2B',
+                  color: '#062A4F',
                   fontSize: 18,
                 }}>
                 Активні
@@ -234,7 +234,7 @@ export default class RequestsScreen extends React.Component {
             size={40}
             offsetX={20}
             offsetY={57}
-            buttonColor="#002B2B"
+            buttonColor="#062A4F"
             onPress={() => {
               this.props.navigation.navigate('AddRequest');
             }}
@@ -263,7 +263,7 @@ export default class RequestsScreen extends React.Component {
                 style={{
                   marginTop: 10,
                   marginBottom: 10,
-                  color: '#002B2B',
+                  color: '#062A4F',
                   fontSize: 18,
                 }}>
                 Архіви
@@ -361,7 +361,7 @@ const styles = StyleSheet.create({
     width: '25%',
     fontSize: 13,
     fontWeight: 'bold',
-    color: '#002B2B',
+    color: '#062A4F',
     alignContent: 'center',
     textAlign: 'center',
   },
@@ -369,7 +369,7 @@ const styles = StyleSheet.create({
     width: '25%',
     fontSize: 13,
     padding: 5,
-    color: '#002B2B',
+    color: '#062A4F',
     alignContent: 'center',
     textAlign: 'center',
     borderTopColor: '#E0E0E0',

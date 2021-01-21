@@ -131,7 +131,7 @@ export default class AddRequestScreen extends React.Component {
                 style={{
                   marginTop: 10,
                   marginBottom: 10,
-                  color: '#002B2B',
+                  color: '#062A4F',
                   fontSize: 18,
                 }}>
                 Додати пропозицію

@@ -23,13 +23,13 @@ const styles = StyleSheet.create({
 dataNameComponentStyle: {
     width: '60%', 
     fontSize: 17,
-    color: '#002B2B',
+    color: '#062A4F',
     fontWeight: 'bold',
   },
   dataNumberComponentStyle: {
     width: '40%', 
     fontSize: 17,
-    color: '#002B2B',
+    color: '#062A4F',
     fontWeight: 'bold',
     textAlign: 'right',
   }});

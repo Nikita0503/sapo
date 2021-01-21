@@ -54,7 +54,7 @@ export default class ExpensesScreen extends React.Component {
             style={{
               marginTop: 10,
               marginBottom: 10,
-              color: '#002B2B',
+              color: '#062A4F',
               fontSize: 18,
               textAlign: 'center',
             }}>
@@ -77,7 +77,7 @@ export default class ExpensesScreen extends React.Component {
     if(this.props.expensesFilesData == null) {
       return(
         <View style={styles.container}>
-          <Text style={{color: '#002B2B', fontSize: 16, marginTop: 10, alignSelf: 'center'}}>
+          <Text style={{color: '#062A4F', fontSize: 16, marginTop: 10, alignSelf: 'center'}}>
             Дані відсутні
           </Text>
         </View>
@@ -102,7 +102,7 @@ export default class ExpensesScreen extends React.Component {
     if(this.props.expensesData == null)
     return(
     <View style={styles.container}>
-      <Text style={{color: '#002B2B', fontSize: 16, marginTop: 10, alignSelf: 'center'}}>
+      <Text style={{color: '#062A4F', fontSize: 16, marginTop: 10, alignSelf: 'center'}}>
         Дані відсутні
       </Text>
     </View>)
@@ -187,7 +187,7 @@ export default class ExpensesScreen extends React.Component {
                 style={{
                   marginTop: 10,
                   marginBottom: 10,
-                  color: '#002B2B',
+                  color: '#062A4F',
                   fontSize: 18,
                   textAlign: 'center',
                 }}>
@@ -239,7 +239,7 @@ export default class ExpensesScreen extends React.Component {
                 style={{
                   marginTop: 10,
                   marginBottom: 10,
-                  color: '#002B2B',
+                  color: '#062A4F',
                   fontSize: 18,
                   textAlign: 'center',
                 }}>
@@ -395,13 +395,13 @@ const styles = StyleSheet.create({
     width: '20%',
     fontSize: 10,
     fontWeight: 'bold',
-    color: '#002B2B',
+    color: '#062A4F',
     alignContent: 'flex-end',
   },
   itemHouseCostsStyle: {
     width: '20%',
     fontSize: 10,
-    color: '#002B2B',
+    color: '#062A4F',
     alignContent: 'flex-end',
   },
 });

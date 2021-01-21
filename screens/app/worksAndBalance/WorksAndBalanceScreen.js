@@ -27,8 +27,8 @@ export default class WorksAndBalanceScreen extends React.Component {
     if (this.props.allHouseData == null) {
       return (
         <View style={styles.container}>
-          <ActivityIndicator size="large" style={styles.loader} color="#002B2B" />
-          <Text style={{color: '#002B2B', fontSize: 16, marginTop: 100, alignSelf: 'center'}}>
+          <ActivityIndicator size="large" style={styles.loader} color="#062A4F" />
+          <Text style={{color: '#062A4F', fontSize: 16, marginTop: 100, alignSelf: 'center'}}>
             Зачекайте, дані завантажуються
           </Text>
         </View>
@@ -64,9 +64,9 @@ export default class WorksAndBalanceScreen extends React.Component {
   }
 
   getHouseCostsDataByCurrentPeriod() {
-    return(<Text style={{color: '#002B2B', fontSize: 16, marginVertical: 10, alignSelf: 'center'}}>Даних немає</Text>)
+    return(<Text style={{color: '#062A4F', fontSize: 16, marginVertical: 10, alignSelf: 'center'}}>Даних немає</Text>)
     if (this.props.allHouseCostsData.length != this.props.workPeriods.length) {
-      return(<ActivityIndicator size="large" style={styles.loader, {marginTop: 10, marginBottom: 5}} color="#002B2B" />);
+      return(<ActivityIndicator size="large" style={styles.loader, {marginTop: 10, marginBottom: 5}} color="#062A4F" />);
     }
     var currentHouseCostsData;
     for (var i = 0; i < this.props.allHouseCostsData.length; i++) {
@@ -77,7 +77,7 @@ export default class WorksAndBalanceScreen extends React.Component {
         break;
       }
     }
-    if(currentHouseCostsData.length == 0) return (<Text style={{color: '#002B2B', fontSize: 16, marginVertical: 10, alignSelf: 'center'}}>Даних немає</Text>);
+    if(currentHouseCostsData.length == 0) return (<Text style={{color: '#062A4F', fontSize: 16, marginVertical: 10, alignSelf: 'center'}}>Даних немає</Text>);
     return currentHouseCostsData.map((item, i) => {
       return (
         <TouchableOpacity
@@ -121,7 +121,7 @@ export default class WorksAndBalanceScreen extends React.Component {
                 style={{
                   marginTop: 10,
                   marginBottom: 10,
-                  color: '#002B2B',
+                  color: '#062A4F',
                   fontSize: 18,
                 }}>
                 Витрати за місяць

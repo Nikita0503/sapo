@@ -50,7 +50,7 @@ export const fetchAllRequests = (workPeriods, token) => {
       dispatch(setApplicationsAndOffersLoading(true));
       dispatch(setApplicationsAndOffersDataClear());
       var ws = new WebSocket(
-        'wss://app.sapo365.com/socket.io/?auth_token=' +
+        'wss://app.gsoft.net.ua/socket.io/?auth_token=' +
           token +
           '&EIO=3&transport=websocket'
       );
@@ -134,7 +134,7 @@ export const withdrawRequest = (fullData, workPeriods, token) => {
   return async dispatch => {
     try {
       var ws = new WebSocket(
-        'wss://app.sapo365.com/socket.io/?auth_token=' +
+        'wss://app.gsoft.net.ua/socket.io/?auth_token=' +
           token +
           '&EIO=3&transport=websocket'
       );

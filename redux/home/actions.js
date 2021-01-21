@@ -82,7 +82,7 @@ export const setLiqpayData = liqpayData => ({
 export const fetchUserData = (token) => {
   return async dispatch => {
       try{
-          const userDataPromise = await fetch('https://app.sapo365.com/api/user/me', {
+          const userDataPromise = await fetch('https://app.gsoft.net.ua/api/user/me', {
             headers: {
               Accept: 'application/json',
               'Content-Type': 'application/json',
@@ -101,7 +101,7 @@ export const fetchApartmentData = (token, navigation) => {
   return async dispatch => {
     try{
       var ws = new WebSocket(
-        'wss://app.sapo365.com/socket.io/?auth_token=' +
+        'wss://app.gsoft.net.ua/socket.io/?auth_token=' +
           token +
           '&EIO=3&transport=websocket'
       );
@@ -173,7 +173,7 @@ function getUniqueAccountIds(data) {
 const fetchLiqpayData = async (accountId, osbbId, workPeriod, token, dispatch) => {
       try{
           const liqpayDataPromise = await fetch(
-            'https://app.sapo365.com/api/tenant/checkLiqPay?accountId=' +
+            'https://app.gsoft.net.ua/api/tenant/checkLiqPay?accountId=' +
               accountId +
               '&osbbId=' +
               osbbId +
@@ -197,7 +197,7 @@ const fetchLiqpayData = async (accountId, osbbId, workPeriod, token, dispatch) =
 const fetchDebt = async (token, accountIds, index, osbbId, lastWorkPeriod, dispatch) => {
       try{
           const debtPromise = await fetch(
-            'https://app.sapo365.com/api/tenant/charges/total?accountId=' +
+            'https://app.gsoft.net.ua/api/tenant/charges/total?accountId=' +
               accountIds[index].id +
               '&osbbId=' +
               osbbId +
@@ -240,7 +240,7 @@ function getSumDebt(data) {
 const fetchCostsData = async (token, currentPeriod, workPeriods, accountId, osbbId, dispatch) => {
       try{
           const costsDataPromise = await fetch(
-            'https://app.sapo365.com/api/tenant/costs?accountId=' +
+            'https://app.gsoft.net.ua/api/tenant/costs?accountId=' +
               accountId +
               '&osbbId=' +
               osbbId +
@@ -301,7 +301,7 @@ function getMonthByUTC(utc) {
 
 const fetchGeneralDataApartment = async (token, osbbId, accountId, workPeriods, userAccounts, dispatch) => {
       try{
-          const generalDataPromise = await fetch('https://app.sapo365.com/api/tenant/charges/total?' +
+          const generalDataPromise = await fetch('https://app.gsoft.net.ua/api/tenant/charges/total?' +
               'accountId=' +
               accountId.id +
               '&osbbId=' +

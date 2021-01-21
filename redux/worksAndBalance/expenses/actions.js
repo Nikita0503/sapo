@@ -27,7 +27,7 @@ export const fetchExpenses = (expensesGeneralData, accountId, osbbId, token) => 
   return async dispatch => {
       try{
         const expensesPromise = await fetch(
-          'https://app.sapo365.com/api/tenant/costs/' +
+          'https://app.gsoft.net.ua/api/tenant/costs/' +
             expensesGeneralData.id +
             '/transcript?accountId=' +
             accountId.id +

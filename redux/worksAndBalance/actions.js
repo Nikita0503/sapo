@@ -15,7 +15,7 @@ export const fetchHouseData = (accountId, osbbId, workPeriods, token) => {
   return async dispatch => {
     try {
       var ws = new WebSocket(
-        'wss://app.sapo365.com/socket.io/?auth_token=' +
+        'wss://app.gsoft.net.ua/socket.io/?auth_token=' +
           token +
           '&EIO=3&transport=websocket'
       );
@@ -45,7 +45,7 @@ export const fetchHouseData = (accountId, osbbId, workPeriods, token) => {
 
 const fetchHouseCosts = async (workPeriodIndex, accountId, osbbId, workPeriods, token, dispatch) => {
     fetch(
-      'https://app.sapo365.com/api/tenant/costs?accountId=' +
+      'https://app.gsoft.net.ua/api/tenant/costs?accountId=' +
         accountId.id +
         '&osbbId=' +
         osbbId +

@@ -23,11 +23,11 @@ export default class DataComponent extends React.Component {
 const styles = StyleSheet.create({
 dataNameComponentStyle: {
     fontSize: 17,
-    color: '#002B2B',
+    color: '#062A4F',
     width: '50%'
   },
   dataNumberComponentStyle: {
     fontSize: 17,
-    color: '#002B2B',
+    color: '#062A4F',
     fontWeight: 'bold',
   }});

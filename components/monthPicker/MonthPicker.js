@@ -44,7 +44,7 @@ export default class MonthPicker extends React.Component {
       <Button
           style={{width: '15%'}}
           title="<"
-          color={Platform.OS == 'android' ? "#002B2B" : "white"}
+          color={Platform.OS == 'android' ? "#062A4F" : "white"}
           onPress={() => {
             var index;
             for(var i = 0; i < this.props.workPeriods.length; i++){
@@ -77,7 +77,7 @@ export default class MonthPicker extends React.Component {
       <Button
           style={{width: '15%'}}
           title=">"
-          color={Platform.OS == 'android' ? "#002B2B" : "white"}
+          color={Platform.OS == 'android' ? "#062A4F" : "white"}
           onPress={() => {
             var index;
           for(var i = 0; i < this.props.workPeriods.length; i++){
@@ -110,7 +110,7 @@ export default class MonthPicker extends React.Component {
     <Button
       style={{width: '15%'}}
       title="<"
-      color={Platform.OS == 'android' ? "#002B2B" : "white"}
+      color={Platform.OS == 'android' ? "#062A4F" : "white"}
       onPress={() => {
         var index;
         for(var i = 0; i < this.props.accountIds.length; i++){
@@ -134,7 +134,7 @@ export default class MonthPicker extends React.Component {
     <Button
       style={{width: '15%'}}
       title=">"
-      color={Platform.OS == 'android' ? "#002B2B" : "white"}
+      color={Platform.OS == 'android' ? "#062A4F" : "white"}
       onPress={() => {
         var index;
         for(var i = 0; i < this.props.accountIds.length; i++){
@@ -228,7 +228,7 @@ function getCorrectName(workPeriod) {
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    backgroundColor: '#0E3939',
+    backgroundColor: '#052647',
     alignItems: 'center',
     justifyContent: 'space-between'
   },

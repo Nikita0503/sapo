@@ -74,7 +74,7 @@ export default class ActOfReconciliationScreen extends React.Component {
               <Button
                 disabled={isDisabled(this.props)}
                 title="Відобразити"
-                color="#002B2B"
+                color="#062A4F"
                 onPress={() => {
                   this.props.setShowLoading(true);
                   this.props.fetchData(this.props.accountId,
@@ -175,19 +175,19 @@ export default class ActOfReconciliationScreen extends React.Component {
             <Text style={{marginTop: 20, marginLeft: 10, width: '10%' }}>
               з
             </Text>
-            <View style={{width: '40%', marginTop: 15, marginLeft: 15, borderWidth: 1, padding: 5, borderColor: '#002B2B',  backgroundColor: '#F9F9F9', borderRadius: 3}}>
+            <View style={{width: '40%', marginTop: 15, marginLeft: 15, borderWidth: 1, padding: 5, borderColor: '#062A4F',  backgroundColor: '#F9F9F9', borderRadius: 3}}>
               <TouchableOpacity onPress={() => {this.props.setFromYearShow()}}>
                 <Text
-                  style={{ color: '#002B2B'}}>
+                  style={{ color: '#062A4F'}}>
                   {this.props.fromYear}
                 </Text>
               </TouchableOpacity>
             </View>
   
-            <View style={{width: '40%', marginTop: 15, marginLeft: 15, borderWidth: 1, padding: 5, borderColor: '#002B2B',  backgroundColor: '#F9F9F9', borderRadius: 3}}>
+            <View style={{width: '40%', marginTop: 15, marginLeft: 15, borderWidth: 1, padding: 5, borderColor: '#062A4F',  backgroundColor: '#F9F9F9', borderRadius: 3}}>
               <TouchableOpacity onPress={() => {this.props.setFromMonthShow()}}>
               <Text
-                style={{ color: '#002B2B'}}>
+                style={{ color: '#062A4F'}}>
                 {getMonthByPeriod(this.props.fromMonth)}
               </Text>
               </TouchableOpacity>
@@ -197,18 +197,18 @@ export default class ActOfReconciliationScreen extends React.Component {
             <Text style={{marginTop: 20, marginLeft: 10, width: '10%' }}>
               по
             </Text>
-            <View style={{width: '40%', marginTop: 15, marginLeft: 15, borderWidth: 1, padding: 5, borderColor: '#002B2B',  backgroundColor: '#F9F9F9', borderRadius: 3}}>
+            <View style={{width: '40%', marginTop: 15, marginLeft: 15, borderWidth: 1, padding: 5, borderColor: '#062A4F',  backgroundColor: '#F9F9F9', borderRadius: 3}}>
               <TouchableOpacity onPress={() => {this.props.setToYearShow()}}>
               <Text
-                style={{ color: '#002B2B'}}>
+                style={{ color: '#062A4F'}}>
                 {this.props.toYear}
               </Text>
               </TouchableOpacity>
             </View>
-            <View style={{width: '40%', marginTop: 15, marginLeft: 15, borderWidth: 1, padding: 5, borderColor: '#002B2B',  backgroundColor: '#F9F9F9', borderRadius: 3}}>
+            <View style={{width: '40%', marginTop: 15, marginLeft: 15, borderWidth: 1, padding: 5, borderColor: '#062A4F',  backgroundColor: '#F9F9F9', borderRadius: 3}}>
               <TouchableOpacity onPress={() => {this.props.setToMonthShow()}}>
               <Text
-                style={{ color: '#002B2B'}}>
+                style={{ color: '#062A4F'}}>
                 {getMonthByPeriod(this.props.toMonth)}
               </Text>
               </TouchableOpacity>
@@ -337,8 +337,8 @@ export default class ActOfReconciliationScreen extends React.Component {
     if(this.props.showLoading){
       return(
       <View style={styles.container}>
-        <ActivityIndicator size="large" style={styles.loader} color="#002B2B" />
-        <Text style={{color: '#002B2B', fontSize: 16, marginTop: 20, alignSelf: 'center'}}>
+        <ActivityIndicator size="large" style={styles.loader} color="#062A4F" />
+        <Text style={{color: '#062A4F', fontSize: 16, marginTop: 20, alignSelf: 'center'}}>
           Зачекайте, дані завантажуються
         </Text>
       </View>)
@@ -544,7 +544,7 @@ const styles = StyleSheet.create({
     fontSize: 11,
     padding: 3,
     fontWeight: 'bold',
-    color: '#002B2B',
+    color: '#062A4F',
     alignContent: 'center',
     textAlign: 'center',
     borderTopColor: '#E0E0E0',
@@ -555,7 +555,7 @@ const styles = StyleSheet.create({
     fontSize: 10,
     paddingTop: 4,
     fontWeight: 'bold',
-    color: '#002B2B',
+    color: '#062A4F',
     alignContent: 'center',
     textAlign: 'center',
     borderTopColor: '#E0E0E0',

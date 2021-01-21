@@ -152,7 +152,7 @@ export default class SelectedRequestScreen extends React.Component {
                 style={{
                   marginTop: 10,
                   marginBottom: 10,
-                  color: '#002B2B',
+                  color: '#062A4F',
                   fontSize: 18,
                 }}>
                 ↑ Сховати коментарі
@@ -176,7 +176,7 @@ export default class SelectedRequestScreen extends React.Component {
               style={{
                 marginTop: 10,
                 marginBottom: 10,
-                color: '#002B2B',
+                color: '#062A4F',
                 fontSize: 18,
               }}>
               ↓ Показати коментарі
@@ -189,7 +189,7 @@ export default class SelectedRequestScreen extends React.Component {
 
   getCommentsList() {
     if(this.props.selectedOfferComments == null || this.props.selectedOfferComments.length == 0){
-      return(<Text style={{color: '#002B2B', fontSize: 16, marginVertical: 10, alignSelf: 'center'}}>Даних немає</Text>)
+      return(<Text style={{color: '#062A4F', fontSize: 16, marginVertical: 10, alignSelf: 'center'}}>Даних немає</Text>)
     }
     return (
       <FlatList
@@ -281,7 +281,7 @@ export default class SelectedRequestScreen extends React.Component {
                   style={{
                     marginTop: 10,
                     marginBottom: 10,
-                    color: '#002B2B',
+                    color: '#062A4F',
                     fontSize: 18,
                   }}>
                   Додати коментар +
@@ -375,7 +375,7 @@ class ItemComment extends React.Component {
             <Text style={{ color: '#CDCDCD' }}>{getDateForComments(this.props.time)}</Text>
           </View>
         </View>
-        <Text style={{ color: '#002B2B', marginLeft: 20 }}>
+        <Text style={{ color: '#062A4F', marginLeft: 20 }}>
           {this.props.text}
         </Text>
         <FlatList

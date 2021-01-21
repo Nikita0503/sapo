@@ -43,7 +43,7 @@ export const fetchAllAds = (token) => {
         dispatch(setSelectedPost(null));
         dispatch(setAllComments(null));
         var ws = new WebSocket(
-          'wss://app.sapo365.com/socket.io/?auth_token=' +
+          'wss://app.gsoft.net.ua/socket.io/?auth_token=' +
             token +
             '&EIO=3&transport=websocket'
         );
@@ -76,7 +76,7 @@ export const fetchAllAds = (token) => {
 const fetchAdsById = (advertisementData, index, token) => {
   return async dispatch => {
     var ws = new WebSocket(
-      'wss://app.sapo365.com/socket.io/?auth_token=' +
+      'wss://app.gsoft.net.ua/socket.io/?auth_token=' +
         token +
         '&EIO=3&transport=websocket'
     );
@@ -111,7 +111,7 @@ export const fetchOsbbName = (accountId, osbbId, workPeriods, token) => {
   return async dispatch => {
       try {
           const promiseOsbbName = await fetch(
-            'https://app.sapo365.com/api/tenant/osbb?accountId=' +
+            'https://app.gsoft.net.ua/api/tenant/osbb?accountId=' +
               accountId +
               '&osbbId=' +
               osbbId +
@@ -136,7 +136,7 @@ export const fetchOsbbName = (accountId, osbbId, workPeriods, token) => {
 export const toVote = (advertisementData, variant, token) => {
   return async dispatch => {
     var ws = new WebSocket(
-      'wss://app.sapo365.com/socket.io/?auth_token=' +
+      'wss://app.gsoft.net.ua/socket.io/?auth_token=' +
         token +
         '&EIO=3&transport=websocket'
     );
@@ -194,7 +194,7 @@ export const fetchSelectedPostComments = (selectedPostComments, token) => {
   return async dispatch => {
     dispatch(setAllComments(null))
     var ws = new WebSocket(
-      'wss://app.sapo365.com/socket.io/?auth_token=' +
+      'wss://app.gsoft.net.ua/socket.io/?auth_token=' +
         token +
         '&EIO=3&transport=websocket'
     );

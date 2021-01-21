@@ -39,7 +39,7 @@ export const setPhoneNumber = phoneNumber => ({
 export const sendNewPhoto = (formdata, accountId, osbbId, workPeriods, token) => {
   return async dispatch => {
       try {
-          const newPhotoPromise = await fetch('https://app.sapo365.com/api/upload/photo?accountId=' 
+          const newPhotoPromise = await fetch('https://app.gsoft.net.ua/api/upload/photo?accountId=' 
             + accountId + '&osbbId=' 
             + osbbId +'&type=photo&workPeriod=' 
             + workPeriods[workPeriods.length - 1], {
@@ -70,7 +70,7 @@ export const sendNewPhoto = (formdata, accountId, osbbId, workPeriods, token) =>
             formBody.push(encodedKey + "=" + encodedValue);
           }
           formBody = formBody.join("&");
-          const changePhotoPromise = await fetch('https://app.sapo365.com/api/user/me', {
+          const changePhotoPromise = await fetch('https://app.gsoft.net.ua/api/user/me', {
             method: 'put',
             headers: {
               Authorization: 'Bearer ' + token,
@@ -89,7 +89,7 @@ export const deletePhoto = (accountIds, osbbId, workPeriods, token) => {
   return async dispatch => {
     try {
       const photoPromise = await fetch(
-        'https://app.sapo365.com/api/user/me/photo?accountId=' +
+        'https://app.gsoft.net.ua/api/user/me/photo?accountId=' +
           accountIds[0].id +
           '&osbbId=' +
           osbbId +
@@ -115,7 +115,7 @@ export const deletePhoto = (accountIds, osbbId, workPeriods, token) => {
 export const sendNewPassword = (oldPassword, newPassword, newRepeatPassword, token) => {
   return async dispatch => {
       try {
-          const newPasswordPromise = await fetch('https://app.sapo365.com/api/user/me/password', {
+          const newPasswordPromise = await fetch('https://app.gsoft.net.ua/api/user/me/password', {
             method: 'PUT',
             headers: {
               Accept: 'application/json',

@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
     width: '25%',
     fontSize: 13,
     fontWeight: 'bold',
-    color: '#002B2B',
+    color: '#062A4F',
     alignContent: 'center',
     textAlign: 'center'
   },
@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
     width: '25%',
     fontSize: 13,
     padding: 5,
-    color: '#002B2B',
+    color: '#062A4F',
     alignContent: 'center',
     textAlign: 'center'
   },

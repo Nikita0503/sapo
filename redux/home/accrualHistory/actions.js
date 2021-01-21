@@ -15,7 +15,7 @@ export const setSelectedAccrualsData = selectedAccrualsData => ({
 export const fetchAccrualHistory = (token, accountId, osbbId, currentWorkPeriod) => {
     return async dispatch => {
         try{
-            const answerPromise = await fetch('https://app.sapo365.com/api/tenant/charges/total?accountId=' +
+            const answerPromise = await fetch('https://app.gsoft.net.ua/api/tenant/charges/total?accountId=' +
                   accountId.id +
                   '&osbbId=' +
                   osbbId +

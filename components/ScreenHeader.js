@@ -51,7 +51,7 @@ const ScreenHeader = props => {
         }
         statusBarProps={{ barStyle: "light-content" }}
         containerStyle={{
-          backgroundColor: '#002B2B',
+          backgroundColor: '#062A4F',
           justifyContent: 'space-around',
           
         }}
