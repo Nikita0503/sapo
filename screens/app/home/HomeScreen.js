@@ -105,7 +105,7 @@ export default class HomeScreen extends React.Component {
             }else{
               Alert.alert(
                 'Повідомлення',
-                'Немає підключених способів оплати. Зверніться до правління ОСББ',
+                'Немає підключених способів оплати. Зверніться до управителя',
                 [
                   {text: 'OK', onPress: () => console.log('OK Pressed')},
                 ],
@@ -143,7 +143,7 @@ export default class HomeScreen extends React.Component {
     return (
       <View style={styles.containerGeneralData}>
         <DataComponent
-          name="Сальдо на початок"
+          name="Борг на початок"
           number={getStartBalance(currentApartmentData)}
         />
         <TouchableOpacity
@@ -169,7 +169,7 @@ export default class HomeScreen extends React.Component {
           />
         </TouchableOpacity>
         <DataComponent
-          name="Сальдо на кінець"
+          name="Борг на кінець"
           number={getFinishBalance(currentApartmentData)}
         />
       </View>

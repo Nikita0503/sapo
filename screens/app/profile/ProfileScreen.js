@@ -68,7 +68,7 @@ export default class ProfileScreen extends React.Component {
         source={
           {
                 uri:
-                  'https://app.sapo365.com' +
+                  'https://app.gsoft.net.ua' +
                   this.props.imageAvatar,
               }
         }
@@ -86,7 +86,7 @@ export default class ProfileScreen extends React.Component {
           ? require('../../../content/images/add.png')
           : {
               uri:
-                'https://app.sapo365.com' +
+                'https://app.gsoft.net.ua' +
                 this.props.userData.photo,
             }
       }
@@ -199,14 +199,14 @@ export default class ProfileScreen extends React.Component {
                 />
                 <TextInput
                   editable={false}
-                  placeholder="Прізвище"
-                  value={this.props.userData.lastName}
+                  placeholder="По батькові"
+                  value={this.props.userData.patronymic}
                   style={styles.inputStyle}
                 />
                 <TextInput
                   editable={false}
-                  placeholder="По батькові"
-                  value={this.props.userData.patronymic}
+                  placeholder="Прізвище"
+                  value={this.props.userData.lastName}
                   style={styles.inputStyle}
                 />
               </View>

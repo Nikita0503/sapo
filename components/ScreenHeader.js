@@ -16,7 +16,7 @@ const ScreenHeader = props => {
                     props.imageAvatar != null ?
                     {
                       uri:
-                        'https://app.sapo365.com' +
+                        'https://app.gsoft.net.ua' +
                         props.imageAvatar,
                     }
                     :
@@ -30,7 +30,7 @@ const ScreenHeader = props => {
                     : 
                     {
                         uri:
-                          'https://app.sapo365.com' +
+                          'https://app.gsoft.net.ua' +
                           props.userData.photo,
                     }
                 }/>

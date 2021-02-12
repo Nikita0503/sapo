@@ -159,7 +159,7 @@ export default class WebViewPaymentScreen extends React.Component {
           <View style={{width: '90%', height: '80%', justifyContent: 'center', alignSelf: 'center', borderBottomWidth: 1, borderStartWidth: 1, borderRightWidth: 1, borderTopWidth: 1, borderColor: 'green'}}>
             {this.getWebView()}
           </View>
-          <Text style={{backgroundColor: "white", padding: 10, textAlign: 'center', color: "#062A4F"}}>Оплата відобразиться у додатку після її обробки бухгалтером САПО</Text>
+          <Text style={{backgroundColor: "white", padding: 10, textAlign: 'center', color: "#062A4F"}}>Оплата відобразиться у додатку після обробки бухгалтерією управителя</Text>
         </View>
       </View>
     );

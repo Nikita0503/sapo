@@ -193,7 +193,6 @@ function App() {
 
 export default App;
 */
-
 import React, { Component } from 'react';
 import { Image } from 'react-native';
 import {Provider} from 'react-redux';

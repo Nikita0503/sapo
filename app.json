@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "ЖИТЛОСОФТ",
+    "name": "ЖИТЛОСОФТ-Співвласник",
     "slug": "gsoft",
-    "version": "7.0.0",
+    "version": "1.0.2",
     "orientation": "portrait",
     "icon": "./content/images/ic_gsoft.png",
     "splash": {
@@ -18,12 +18,13 @@
     ],
     "ios": {
       "bundleIdentifier": "com.gsoft.gsoft",
-      "buildNumber": "7.0.0",
+      "buildNumber": "1.0.0",
       "supportsTablet": true
     },
     "android": {
       "package": "com.gsoft.gsoft",
-      "versionCode": 7
+      "versionCode": 3,
+      "permissions": []
     },
     "web": {
       "favicon": "./assets/favicon.png"

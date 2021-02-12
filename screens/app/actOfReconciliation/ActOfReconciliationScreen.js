@@ -88,12 +88,12 @@ export default class ActOfReconciliationScreen extends React.Component {
 
             <View style={{ flexDirection: 'row' }}>
               <Text style={styles.dataColumnNameStyle}>Дата</Text>
-              <Text style={styles.dataColumnNameStyle}>Сальдо</Text>
+              <Text style={styles.dataColumnNameStyle}>Поч. борг</Text>
               <Text style={styles.dataColumnNameChargesStyle}>Нарахування</Text>
               <Text style={styles.dataColumnNameStyle}>
                 Оплати
               </Text>
-              <Text style={styles.dataColumnNameStyle}>Борг</Text>
+              <Text style={styles.dataColumnNameStyle}>Кін. борг</Text>
             </View>
             {this.getDataList()}
           </View>

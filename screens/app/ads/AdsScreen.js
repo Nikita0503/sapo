@@ -53,7 +53,7 @@ export default class AdsScreen extends React.Component {
                         imageHeight={300}>
           <Image
             style={{width: 320, height: 300, resizeMode: 'contain'}}
-            source={{uri: 'https://app.sapo365.com' + path}}
+            source={{uri: 'https://app.gsoft.net.ua' + path}}
           /></ImageZoom>)
         case 'png':
           return(
@@ -63,7 +63,7 @@ export default class AdsScreen extends React.Component {
                         imageHeight={300}>
           <Image
             style={{width: 320, height: 300, resizeMode: 'contain'}}
-            source={{uri: 'https://app.sapo365.com' + path}}
+            source={{uri: 'https://app.gsoft.net.ua' + path}}
           /></ImageZoom>)
         case 'svg':
           return(
@@ -73,14 +73,14 @@ export default class AdsScreen extends React.Component {
                         imageHeight={300}>
           <Image
             style={{width: 320, height: 300, resizeMode: 'contain'}}
-            source={{uri: 'https://app.sapo365.com' + path}}
+            source={{uri: 'https://app.gsoft.net.ua' + path}}
           /></ImageZoom>)
         case 'pdf':
           return(
           <PDFReader
             style={{width: 250, maxHeight: 400}}
             source={{
-              uri: 'https://app.sapo365.com' + path,
+              uri: 'https://app.gsoft.net.ua' + path,
             }}
           />
           ) 
@@ -457,7 +457,7 @@ class ItemComment extends React.Component {
     return (
       <Image
         source={{
-          uri: 'https://app.sapo365.com' + this.props.photo,
+          uri: 'https://app.gsoft.net.ua' + this.props.photo,
         }}
         style={{
           width: 50,
