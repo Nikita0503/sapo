@@ -6,8 +6,11 @@ import {
   Image,
   FlatList,
   TouchableOpacity,
+  TouchableHighlight,
   ActivityIndicator,
+  Alert
 } from 'react-native';
+import Dialog from 'react-native-dialog';
 import ScreenHeader from '../../../components/ScreenHeader';
 import { NavigationEvents } from 'react-navigation';
 
@@ -28,6 +31,126 @@ export default class ScreenChats extends React.Component {
     }
   }
 
+  getUserListModal = () => {
+    if(!this.props.showMembers) return null
+    return(
+      <Dialog.Container visible={this.props.showMembers}>
+        <Dialog.Title>
+          Оберіть користувача
+        </Dialog.Title>
+        <FlatList
+          data={this.props.allUsers}
+          style={{height: '80%', backgroundColor: '#f0f0f0', marginHorizontal: 3}} 
+          renderItem={({ item }) => {
+            return(<TouchableOpacity 
+              style={{
+                backgroundColor: 'white', 
+                margin: 5, 
+                borderRadius: 15
+              }}
+              onPress={() => {
+                this.props.addChat(this.props.workPeriods, item)
+              }}>
+              <Text style={{color: '#062A4F', fontSize: 16, marginHorizontal: 15, marginVertical: 10}}>{item.fullName}</Text>
+            </TouchableOpacity>
+            )}}
+          keyExtractor={item => item.id}
+        />
+        <Dialog.Button
+          label="Відмінити"
+          onPress={() => {
+            this.props.setToggleShowMembers()
+          }}
+        />
+      </Dialog.Container>
+    )
+  }
+
+  getUserGroupListModal = () => {
+    if(!this.props.showMembersGroup) return null
+    return(
+      <Dialog.Container visible={this.props.showMembersGroup}>
+        <Dialog.Title>
+          Оберіть користувача
+        </Dialog.Title>
+        <FlatList
+          data={this.props.allUsers}
+          style={{height: '80%', backgroundColor: '#f0f0f0', marginHorizontal: 3}} 
+          renderItem={({ item }) => {
+            return(<TouchableOpacity 
+              style={{
+                backgroundColor: 'white', 
+                margin: 5, 
+                borderRadius: 15
+              }}
+              onPress={() => {
+                //add member
+              }}>
+              <Text style={{color: 'blue', fontSize: 16, marginHorizontal: 15, marginVertical: 10}}>{item.fullName}</Text>
+            </TouchableOpacity>
+            )}}
+          keyExtractor={item => item.id}
+        />
+        <Dialog.Button
+          label="Створити"
+          onPress={() => {
+            //create
+          }}
+        />
+        <Dialog.Button
+          label="Відмінити"
+          onPress={() => {
+            this.props.setToggleShowMembersGroup()
+          }}
+        />
+      </Dialog.Container>
+    )
+  }
+
+  getButtonsPanel = () => {
+    console.log("allUsers", this.props.allUsers)
+    return(
+      <View style={styles.buttonsContainer}>
+        <TouchableOpacity 
+          style={styles.button}
+          onPress={() => {
+            Alert.alert(
+              "Тип чату",
+              "Ви хочете створити:",
+              [
+                {
+                  text: "Діалог",
+                  onPress: () => this.props.setToggleShowMembers(),
+                },
+                {
+                  text: "Группу",
+                  onPress: () => {
+                    this.props.setToggleShowMembersGroup()
+                  },
+                },
+                {
+                  text: "Нічого",
+                  onPress: () => console.log("Відміна"),
+                  style: "cancel"
+                },
+              ],
+              { cancelable: true }
+            );
+            
+          }}>
+            <Text style={styles.buttonText}>+</Text>
+        </TouchableOpacity>
+        <TouchableOpacity 
+          style={styles.button}
+          onPress={() => {
+            
+          }}>
+            <Image resizeMode="center" style={styles.buttonImage} source={require('../../../content/images/ic_profile.png')} />
+        </TouchableOpacity>
+      </View>
+    )
+  }
+
   render() {
     return (
       <View
@@ -43,13 +166,17 @@ export default class ScreenChats extends React.Component {
           userData={this.props.userData}
           imageAvatar={this.props.imageAvatar} />
         <View style={styles.container}>
+          {this.getButtonsPanel()}
           {this.getLoadingView()}
+          {this.getUserListModal()}
+          {this.getUserGroupListModal()}
           <FlatList
             showsVerticalScrollIndicator={false}
             data={this.props.allChats}
             renderItem={({ item }) => (
               <Item
                 data={item}
+                removeChat={this.props.removeChat}
                 navigation={this.props.navigation}
                 allUsers={this.props.allUsers}
                 setAllChatsSelectedChat={this.props.setAllChatsSelectedChat}
@@ -105,6 +232,21 @@ class Item extends React.Component {
   render() {
     return (
       <TouchableOpacity
+        onLongPress={() => {
+          Alert.alert(
+            "Підтвердження",
+            "Ви впевнені у тому що хочете покинути чат?",
+            [
+              {
+                text: "Ні",
+                onPress: () => console.log("Відміна"),
+                style: "cancel"
+              },
+              { text: "Так", onPress: () => this.props.removeChat(this.props.data)}
+            ],
+            { cancelable: true }
+          );
+        }}
         onPress={() =>{
           this.props.setAllChatsSelectedChat(this.props.data);
           this.props.navigation.navigate('Chat', {
@@ -128,7 +270,6 @@ const styles = StyleSheet.create({
     paddingBottom: 5,
     marginLeft: 10,
     marginEnd: 10,
-
     marginBottom: 8,
   },
   itemStyle: {
@@ -136,9 +277,11 @@ const styles = StyleSheet.create({
     width: '100%',
     flexDirection: 'row',
     justifyContent: 'space-between',
+    alignItems: 'center',
     backgroundColor: 'white',
     padding: 5,
     margin: 3,
+    height: 60
   },
   itemTextStyle: {
     fontSize: 16,
@@ -148,4 +291,36 @@ const styles = StyleSheet.create({
     marginTop: 12,
     width: '70%',
   },
+  buttonsContainer: {
+    width: '100%',
+    height: 60,
+    backgroundColor: 'white',
+    borderBottomRightRadius: 20,
+    borderBottomLeftRadius: 20,
+    marginBottom: 3,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-end'
+  },
+  button: {
+    backgroundColor: "#062A4F",
+    width: 45,
+    height: 45,
+    borderRadius: 50,
+    marginHorizontal: 10,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  buttonText: {
+    color: 'white',
+    fontSize: 30,
+    marginBottom: 2,
+    marginLeft: 1
+  },
+  buttonImage: {
+    width: 30, 
+    height: 30,
+    marginBottom: 2,
+    marginLeft: 1,
+  }
 });

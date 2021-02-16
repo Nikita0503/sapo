@@ -2,6 +2,8 @@ export const CHANGE_ALL_CHATS = 'CHANGE_ALL_CHATS';
 export const CHATS_ALL_CHATS_CLEAR = 'CHATS_ALL_CHATS_CLEAR';
 export const CHANGE_ALL_USERS = 'CHANGE_ALL_USERS';
 export const CHANGE_SELECTED_CHAT = 'CHANGE_SELECTED_CHAT';
+export const CHANGE_TOGGLE_SHOW_MEMBERS = 'CHANGE_TOGGLE_SHOW_MEMBERS'; 
+export const CHANGE_TOGGLE_SHOW_MEMBERS_GROUP = 'CHANGE_TOGGLE_SHOW_MEMBERS_GROUP';
 
 export const setChatsAllChats = allChats => ({
   type: CHANGE_ALL_CHATS,
@@ -20,6 +22,14 @@ export const setChatsAllUsers = allUsers => ({
 export const setAllChatsSelectedChat = selectedChat => ({
   type: CHANGE_SELECTED_CHAT,
   payload: selectedChat
+});
+
+export const setToggleShowMembers = () => ({
+  type: CHANGE_TOGGLE_SHOW_MEMBERS,
+});
+
+export const setToggleShowMembersGroup = () => ({
+  type: CHANGE_TOGGLE_SHOW_MEMBERS_GROUP,
 });
 
 var ws;
@@ -50,7 +60,7 @@ export const fetchAllChats = (workPeriods, token) => {
             var myObj = JSON.parse(myObjStr);
             var data = JSON.parse(myObj);
             if (data[0] == 'conversationList') {
-              console.log('convList', data[1]);
+              //console.log('convList', data[1]);
               dispatch(setChatsAllChats(data[1]));
             }
             if (data[0] == 'userList') {
@@ -61,5 +71,26 @@ export const fetchAllChats = (workPeriods, token) => {
       } catch (error) {
           console.log("fetchAllChats", "error");
       }
+    }
   }
-}
+
+export const addChat = (workPeriods, user) => {
+  return async dispatch => {
+      try {
+        ws.send(`427["/chat/conversation/create",{"userIds":[${user.id}],"title":"${user.fullName}","type":"private","workPeriod":"${workPeriods[workPeriods.length - 1]}"}]`) 
+        dispatch(setToggleShowMembers())
+      } catch (error) {
+        console.log("fetchAllChats", "error");
+      }
+    }
+  }
+
+export const removeChat = (chat) => {
+  return async dispatch => {
+      try {
+        ws.send(`427["/chat/conversation/leave",${chat.id}]`) 
+      } catch (error) {
+        console.log("fetchAllChats", "error");
+      }
+    }
+  }

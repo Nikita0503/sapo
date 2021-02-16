@@ -2,13 +2,17 @@ import {
   CHANGE_ALL_CHATS,
   CHATS_ALL_CHATS_CLEAR,
   CHANGE_ALL_USERS,
-  CHANGE_SELECTED_CHAT
+  CHANGE_SELECTED_CHAT,
+  CHANGE_TOGGLE_SHOW_MEMBERS,
+  CHANGE_TOGGLE_SHOW_MEMBERS_GROUP
 } from './actions';
 
 const defaultState = {
   allChats: null,
   allUsers: null,
   selectedChat: null,
+  showMembers: false,
+  showMembersGroup: false
 };
 
 export const allChatsReducer = (state = defaultState, action) => {
@@ -33,6 +37,16 @@ export const allChatsReducer = (state = defaultState, action) => {
       return {
         ...state,
         selectedChat: action.payload
+      }
+    case CHANGE_TOGGLE_SHOW_MEMBERS:
+      return {
+        ...state,
+        showMembers: !state.showMembers
+      }
+    case CHANGE_TOGGLE_SHOW_MEMBERS_GROUP:
+      return {
+        ...state,
+        showMembersGroup: !state.showMembersGroup
       }
   }
 
