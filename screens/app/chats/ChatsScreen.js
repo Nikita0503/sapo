@@ -8,11 +8,12 @@ import {
   TouchableOpacity,
   TouchableHighlight,
   ActivityIndicator,
-  Alert
+  Alert,
 } from 'react-native';
 import Dialog from 'react-native-dialog';
 import ScreenHeader from '../../../components/ScreenHeader';
 import { NavigationEvents } from 'react-navigation';
+import { Checkbox, TextInput } from 'react-native-paper';
 
 export default class ScreenChats extends React.Component {
 
@@ -71,22 +72,33 @@ export default class ScreenChats extends React.Component {
     return(
       <Dialog.Container visible={this.props.showMembersGroup}>
         <Dialog.Title>
-          Оберіть користувача
+          Оберіть користувачів
         </Dialog.Title>
+        <TextInput 
+          value={this.props.newGroupName}
+          onChangeText={(text) => this.props.setNewGroupNmae(text)}
+          underlineColor='#062A4F' 
+          theme={{colors: {text: '#062A4F', primary: '#062A4F'}}} 
+          label="Назва бесіди"/>
         <FlatList
           data={this.props.allUsers}
-          style={{height: '80%', backgroundColor: '#f0f0f0', marginHorizontal: 3}} 
+          style={{height: '70%', backgroundColor: '#f0f0f0', marginHorizontal: 3}} 
           renderItem={({ item }) => {
             return(<TouchableOpacity 
               style={{
                 backgroundColor: 'white', 
                 margin: 5, 
-                borderRadius: 15
+                borderRadius: 15,
+                flexDirection: 'row',
               }}
               onPress={() => {
-                //add member
+                this.props.setSelectedUser(item.id)
               }}>
-              <Text style={{color: 'blue', fontSize: 16, marginHorizontal: 15, marginVertical: 10}}>{item.fullName}</Text>
+              <Checkbox 
+                status={item.isSelected ? 'checked' : 'unchecked'}
+                style={{width: 20, height: 20, marginTop: 10, borderColor: '#062A4F'}}/>
+
+              <Text style={{color: '#062A4F', fontSize: 16, marginHorizontal: 15, marginVertical: 10}}>{item.fullName}</Text>
             </TouchableOpacity>
             )}}
           keyExtractor={item => item.id}
@@ -94,7 +106,7 @@ export default class ScreenChats extends React.Component {
         <Dialog.Button
           label="Створити"
           onPress={() => {
-            //create
+            this.props.addGroupChat(this.props.workPeriods, this.props.allUsers, this.props.newGroupName)
           }}
         />
         <Dialog.Button

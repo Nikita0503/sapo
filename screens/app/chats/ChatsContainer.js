@@ -8,7 +8,10 @@ import {setChatsAllChats,
         setToggleShowMembers,
         setToggleShowMembersGroup,
         addChat,
-        removeChat} from '../../../redux/chats/actions';
+        removeChat,
+        setSelectedUser,
+        addGroupChat,
+        setNewGroupNmae} from '../../../redux/chats/actions';
 import ChatsScreen from './ChatsScreen';
 
 class ChatsContainer extends React.Component {
@@ -25,6 +28,7 @@ class ChatsContainer extends React.Component {
         selectedChat={this.props.selectedChat}
         userData={this.props.userData}
         imageAvatar={this.props.imageAvatar}
+        newGroupName={this.props.newGroupName}
         showMembers={this.props.showMembers}
         showMembersGroup={this.props.showMembersGroup}
         setChatsAllChats={this.props.setChatsAllChats}
@@ -36,6 +40,9 @@ class ChatsContainer extends React.Component {
         setToggleShowMembersGroup={this.props.setToggleShowMembersGroup}
         addChat={this.props.addChat}
         removeChat={this.props.removeChat}
+        setSelectedUser={this.props.setSelectedUser}
+        addGroupChat={this.props.addGroupChat}
+        setNewGroupNmae={this.props.setNewGroupNmae}
       />
     );
   }
@@ -54,6 +61,7 @@ const mapStateToProps = state => {
     imageAvatar: state.profile.imageAvatar,
     showMembers: state.allChats.showMembers,
     showMembersGroup: state.allChats.showMembersGroup,
+    newGroupName: state.allChats.newGroupName
   };
 };
 
@@ -66,7 +74,10 @@ const mapDispatchToProps = {
   setToggleShowMembers,
   setToggleShowMembersGroup,
   addChat,
-  removeChat
+  removeChat,
+  setSelectedUser,
+  addGroupChat,
+  setNewGroupNmae
 };
 
 export default connect(
