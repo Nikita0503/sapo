@@ -76,7 +76,6 @@ export const fetchAllAds = (token) => {
           }
           if (e.data.substring(0, 2) == '42') {
             const jsonData = JSON.parse(e.data.substr(2));
-            console.log("BOMJ => ", jsonData[0])
             if(jsonData[0] != 'renderTenant'){
               dispatch(setExistNewAds(true))
             }
