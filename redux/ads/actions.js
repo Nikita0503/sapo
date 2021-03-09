@@ -5,6 +5,7 @@ export const CHANGE_ADVERTISEMENT_SELECTED_POST = 'CHANGE_ADVERTISEMENT_SELECTED
 export const CHANGE_ADVERTISEMENT_SELECTED_POST_COMMENTS = 'CHANGE_ADVERTISEMENT_SELECTED_POST_COMMENTS';
 export const CHANGE_ADVERTISEMENT_ALL_COMMENTS = 'CHANGE_ADVERTISEMENT_ALL_COMMENTS';
 export const CHANGE_ADVERTISEMENT_SELECTED_FILE = 'CHANGE_ADVERTISEMENT_SELECTED_FILE';
+export const CHANGE_ADVERTISEMENT_CHANGE_EXIST_NEW_ADS = 'CHANGE_ADVERTISEMENT_CHANGE_EXIST_NEW_ADS';
 
 export const setAdvertisementOsbbName = advertisementOsbbName => ({
   type: CHANGE_ADVERTISEMENT_OSBB_NAME,
@@ -37,12 +38,19 @@ export const setAdvertisementSelectedFile = selectedFile => ({
   payload: selectedFile
 });
 
+export const setExistNewAds = isExist => ({
+  type: CHANGE_ADVERTISEMENT_CHANGE_EXIST_NEW_ADS,
+  payload: isExist
+})
+
+var ws
+
 export const fetchAllAds = (token) => {
   return async dispatch => {
       try {
         dispatch(setSelectedPost(null));
         dispatch(setAllComments(null));
-        var ws = new WebSocket(
+        ws = new WebSocket(
           'wss://app.gsoft.net.ua/socket.io/?auth_token=' +
             token +
             '&EIO=3&transport=websocket'
@@ -60,11 +68,19 @@ export const fetchAllAds = (token) => {
                 data[0][i].variants[j].id = data[0][i].id;
               }
             }
+            dispatch(setAdvertisementData(null))
             dispatch(setAdvertisementData(data[0]));
             if (data[0].length > 0) {
               fetchAdsById(data[0], 0, token);
             }
-            ws.close();
+          }
+          if (e.data.substring(0, 2) == '42') {
+            const jsonData = JSON.parse(e.data.substr(2));
+            console.log("BOMJ => ", jsonData[0])
+            if(jsonData[0] != 'renderTenant'){
+              dispatch(setExistNewAds(true))
+            }
+            ws.send('4221["/notice/list",{"page":1,"limit":50}]'); 
           }
         };
       } catch (error) {
@@ -75,19 +91,19 @@ export const fetchAllAds = (token) => {
 
 const fetchAdsById = (advertisementData, index, token) => {
   return async dispatch => {
-    var ws = new WebSocket(
+    var wsLocal = new WebSocket(
       'wss://app.gsoft.net.ua/socket.io/?auth_token=' +
         token +
         '&EIO=3&transport=websocket'
     );
-    ws.onopen = () => {
-      ws.send(
+    wsLocal.onopen = () => {
+      wsLocal.send(
         '4210["/notice/one/comments",{"id":' +
           advertisementData[index].id +
           ',"page":1,"limit":10}]'
       ); 
     }; 
-    ws.onmessage = e => {
+    wsLocal.onmessage = e => {
       if (e.data.substring(0, 4) == '4310') {
         const myObjStr = JSON.stringify(e.data.substring(4, e.data.length));
         var myObj = JSON.parse(myObjStr);
@@ -97,7 +113,7 @@ const fetchAdsById = (advertisementData, index, token) => {
           data: data[0],
         };
         dispatch(setAllComments(obj));
-        ws.close();
+        wsLocal.close();
         index++;
         if (index != advertisementData.length) {
           fetchAdsById(advertisementData, index, token);
@@ -135,18 +151,18 @@ export const fetchOsbbName = (accountId, osbbId, workPeriods, token) => {
 
 export const toVote = (advertisementData, variant, token) => {
   return async dispatch => {
-    var ws = new WebSocket(
+    var wsLocal = new WebSocket(
       'wss://app.gsoft.net.ua/socket.io/?auth_token=' +
         token +
         '&EIO=3&transport=websocket'
     );
-    ws.onopen = () => {
+    wsLocal.onopen = () => {
       Alert.alert(
         'Підтвердження',
         'Ви впевненні у вашому варіанті?',
         [
           {text: 'Так', onPress: () => {
-            ws.send(
+            wsLocal.send(
               '4210["/notice/vote/optionSelected",{"noticeId":' +
                 variant.id +
                 ',"voteVariantId":' +
@@ -159,7 +175,7 @@ export const toVote = (advertisementData, variant, token) => {
         { cancelable: true }
       )
     };
-    ws.onmessage = e => {
+    wsLocal.onmessage = e => {
       if (e.data.substring(0, 4) == '4310') {
         var data = advertisementData;
         Alert.alert(
@@ -184,7 +200,7 @@ export const toVote = (advertisementData, variant, token) => {
         }
         dispatch(setAdvertisementData(null)); //not understandable bug with screen updating. this string is needed for fix that
         dispatch(setAdvertisementData(data));
-        ws.close()
+        wsLocal.close()
       }
     };
   }
@@ -193,25 +209,25 @@ export const toVote = (advertisementData, variant, token) => {
 export const fetchSelectedPostComments = (selectedPostComments, token) => {
   return async dispatch => {
     dispatch(setAllComments(null))
-    var ws = new WebSocket(
+    var wsLocal = new WebSocket(
       'wss://app.gsoft.net.ua/socket.io/?auth_token=' +
         token +
         '&EIO=3&transport=websocket'
     );
-    ws.onopen = () => {
-      ws.send(
+    wsLocal.onopen = () => {
+      wsLocal.send(
         '4210["/notice/one/comments",{"id":' +
           selectedPostComments.id +
           ',"page":1,"limit":10}]'
       ); 
     };
-    ws.onmessage = e => {
+    wsLocal.onmessage = e => {
       if (e.data.substring(0, 4) == '4310') {
         const myObjStr = JSON.stringify(e.data.substring(4, e.data.length));
         var myObj = JSON.parse(myObjStr);
         var data = JSON.parse(myObj);
         dispatch(setAllComments(data[0]));
-        ws.close();
+        wsLocal.close();
       }
     };
   }

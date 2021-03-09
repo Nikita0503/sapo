@@ -4,7 +4,8 @@ import {
   CHANGE_ADVERTISEMENT_SELECTED_POST,
   CHANGE_ADVERTISEMENT_SELECTED_POST_COMMENTS,
   CHANGE_ADVERTISEMENT_ALL_COMMENTS,
-  CHANGE_ADVERTISEMENT_SELECTED_FILE
+  CHANGE_ADVERTISEMENT_SELECTED_FILE,
+  CHANGE_ADVERTISEMENT_CHANGE_EXIST_NEW_ADS
 } from './actions';
 
 const defaultState = {
@@ -13,7 +14,8 @@ const defaultState = {
   selectedPost: null,
   selectedPostComments: null,
   allComments: null,
-  advertisementSelectedFile: null
+  advertisementSelectedFile: null,
+  existNewAds: false
 };
 
 export const advertisementReducer = (state = defaultState, action) => {
@@ -48,6 +50,11 @@ export const advertisementReducer = (state = defaultState, action) => {
       return {
         ...state,
         advertisementSelectedFile: action.payload
+      }
+    case CHANGE_ADVERTISEMENT_CHANGE_EXIST_NEW_ADS:
+      return {
+        ...state,
+        existNewAds: action.payload
       }
   }
 

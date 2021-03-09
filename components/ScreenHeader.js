@@ -1,6 +1,8 @@
 import React from "react";
+import {connect} from 'react-redux';
 import { Header } from "react-native-elements";
 import { View, StyleSheet, Image, TouchableOpacity, Text} from 'react-native';
+import { setExistNewAds } from '../redux/ads/actions'
 
 const ScreenHeader = props => {
     return (
@@ -41,8 +43,12 @@ const ScreenHeader = props => {
         }}
         rightComponent={
           <View style={{flexDirection: 'row'}}>
-            <TouchableOpacity onPress={() => {props.navigation.navigate('Ads');}}>           
+            <TouchableOpacity onPress={() => {
+              props.navigation.navigate('Ads');
+              props.setExistNewAds(false)
+            }}>           
                 <Image style={{width: 32, height: 32, marginTop: 5 }} source={require('../content/images/ic_advertisement.png')} />
+                {props.existNewAds && <Text style={{color: 'red', fontSize: 25, position: 'absolute'}}>*</Text>}
             </TouchableOpacity>
             <TouchableOpacity onPress={() => {props.navigation.navigate('Chats');}}>         
                 <Image style={styles.icon} source={require('../content/images/ic_chat.png')} />
@@ -66,5 +72,12 @@ const ScreenHeader = props => {
     },
   });
   
+  const mapStateToProps = state => ({
+    existNewAds: state.advertisement.existNewAds
+  })
+
+  const mapDispatchToProps = {
+    setExistNewAds: setExistNewAds
+  }
   
-  export default ScreenHeader;
+  export default connect(mapStateToProps, mapDispatchToProps)(ScreenHeader);

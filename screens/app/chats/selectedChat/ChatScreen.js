@@ -49,11 +49,9 @@ export default class ChatScreen extends React.Component {
       aspect: [4, 3],
       quality: 1
     });
-    console.log("123", result)
-
     
     var ws = new WebSocket(
-      'wss://app.sapo365.com/socket.io/?auth_token=' +
+      'wss://app.gsoft.net.ua/socket.io/?auth_token=' +
         this.props.token +
         '&EIO=3&transport=websocket'
     );
@@ -66,12 +64,16 @@ export default class ChatScreen extends React.Component {
       ws.send(
         '451-["socket.io-file::stream::u_0",{"_placeholder":true,"num":0}]'
       );
-
-      ws.send(result.base64)
+      ws.binaryType = 'arraybuffer'
+      //ws.send(decode(result.base64))
     };
 
     ws.onmessage = e => {
-        //console.log("resp", e.data)  
+      if (e.data.substring(0, 2) == '42') {
+        
+        //e.data.substr(2).json()
+        //.then(answer => console.log("resp", answer))
+      }
     };
 
     /*ImgToBase64.getBase64String(result.uri)

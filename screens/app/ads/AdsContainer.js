@@ -10,7 +10,8 @@ import {
   fetchAllAds,
   fetchOsbbName,
   fetchSelectedPostComments,
-  toVote
+  toVote,
+  setExistNewAds
 } from '../../../redux/ads/actions';
 import AdsScreen from './AdsScreen';
 
@@ -41,6 +42,7 @@ class AdsContainer extends React.Component {
         fetchOsbbName={this.props.fetchOsbbName}
         fetchSelectedPostComments={this.props.fetchSelectedPostComments}
         toVote={this.props.toVote}
+        setExistNewAds={this.props.setExistNewAds}
       />
     );
   }
@@ -73,7 +75,8 @@ const mapDispatchToProps = {
   fetchAllAds,
   fetchOsbbName,
   fetchSelectedPostComments,
-  toVote
+  toVote,
+  setExistNewAds
 };
 
 export default connect(

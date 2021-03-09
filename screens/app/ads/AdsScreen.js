@@ -25,6 +25,7 @@ export default class AdsScreen extends React.Component {
       this.props.workPeriods, 
       this.props.token);
     this.props.fetchAllAds(this.props.token);
+    this.props.setExistNewAds(false)
   }
 
   getLoadingView(){
@@ -96,7 +97,8 @@ export default class AdsScreen extends React.Component {
         style={{ width: '100%', height: '100%', backgroundColor: '#EEEEEE'}}>
         <NavigationEvents
           onDidFocus={() => {
-            this.componentDidMount();
+            //this.componentDidMount();
+
           }}
         />
         <ScreenHeader
@@ -132,7 +134,7 @@ export default class AdsScreen extends React.Component {
                 fetchSelectedPostComments={this.props.fetchSelectedPostComments}
               />
             )}
-            keyExtractor={item => item.header}
+            keyExtractor={item => item.id + ""}
           />
         </View>
         <Dialog.Container
