@@ -78,6 +78,31 @@ export const fetchAllRequests = (workPeriods, token) => {
         );
       };
       ws.onmessage = e => {
+        if (e.data.substring(0, 2) == '42') {
+          const jsonData = JSON.parse(e.data.substr(2));
+            if(jsonData[0] != 'uploadClaims'){
+              ws.send(
+                '4210["/claim/list",{"my":false,"archive":true,"workPeriod":"' +
+                  workPeriods[workPeriods.length - 1] +
+                  '"}]'
+              );
+              ws.send(
+                '4211["/claim/list",{"my":false,"archive":false,"workPeriod":"' +
+                  workPeriods[workPeriods.length - 1] +
+                  '"}]'
+              );
+              ws.send(
+                '4212["/claim/list",{"my":true,"archive":true,"workPeriod":"' +
+                  workPeriods[workPeriods.length - 1] +
+                  '"}]'
+              );
+              ws.send(
+                '4213["/claim/list",{"my":true,"archive":false,"workPeriod":"' +
+                  workPeriods[workPeriods.length - 1] +
+                  '"}]'
+              );
+            }
+        }
         if (e.data.substring(0, 4) == '4310') {
           const myObjStr = JSON.stringify(e.data.substring(4, e.data.length));
           var myObj = JSON.parse(myObjStr);

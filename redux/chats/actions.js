@@ -119,7 +119,6 @@ export const addGroupChat = (workPeriods, users, newGroupName) => {
         selectedUsersStr += `${selectedUsers[i]},`
       }
       selectedUsersStr = selectedUsersStr.substring(0, selectedUsersStr.length - 1);
-      console.log("SELECTED USERS => ", selectedUsersStr)
       ws.send(`427["/chat/conversation/create",{"userIds":[${selectedUsersStr}],"title":"${newGroupName}","type":"group","workPeriod":"${workPeriods[workPeriods.length - 1]}"}]`)
       dispatch(setToggleShowMembersGroup())
       dispatch(setNewGroupName(''))
