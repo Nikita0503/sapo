@@ -76,7 +76,7 @@ export default class ScreenChats extends React.Component {
         </Dialog.Title>
         <TextInput 
           value={this.props.newGroupName}
-          onChangeText={(text) => this.props.setNewGroupNmae(text)}
+          onChangeText={(text) => this.props.setNewGroupName(text)}
           underlineColor='#062A4F' 
           theme={{colors: {text: '#062A4F', primary: '#062A4F'}}} 
           label="Назва бесіди"/>
@@ -119,6 +119,38 @@ export default class ScreenChats extends React.Component {
     )
   }
 
+  getAllUsersModal = () => {
+    if(!this.props.showAllUsers) return null
+    return(
+      <Dialog.Container visible={this.props.showAllUsers}>
+        <Dialog.Title>
+          Співвласники
+        </Dialog.Title>
+        <FlatList
+          data={this.props.allUsers}
+          style={{height: '80%', backgroundColor: '#f0f0f0', marginHorizontal: 3}} 
+          renderItem={({ item }) => {
+            return(<View 
+              style={{
+                backgroundColor: 'white', 
+                margin: 5, 
+                borderRadius: 15
+              }}>
+              <Text style={{color: '#062A4F', fontSize: 16, marginHorizontal: 15, marginVertical: 10}}>{item.fullName}</Text>
+            </View>
+            )}}
+          keyExtractor={item => item.id}
+        />
+        <Dialog.Button
+          label="Відмінити"
+          onPress={() => {
+            this.props.setToggleShowAllUsers()
+          }}
+        />
+      </Dialog.Container>
+    )
+  }
+
   getButtonsPanel = () => {
     console.log("allUsers", this.props.allUsers)
     return(
@@ -155,7 +187,7 @@ export default class ScreenChats extends React.Component {
         <TouchableOpacity 
           style={styles.button}
           onPress={() => {
-            
+            this.props.setToggleShowAllUsers()
           }}>
             <Image resizeMode="center" style={styles.buttonImage} source={require('../../../content/images/ic_profile.png')} />
         </TouchableOpacity>
@@ -182,6 +214,7 @@ export default class ScreenChats extends React.Component {
           {this.getLoadingView()}
           {this.getUserListModal()}
           {this.getUserGroupListModal()}
+          {this.getAllUsersModal()}
           <FlatList
             showsVerticalScrollIndicator={false}
             data={this.props.allChats}

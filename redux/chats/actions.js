@@ -6,6 +6,7 @@ export const CHANGE_TOGGLE_SHOW_MEMBERS = 'CHANGE_TOGGLE_SHOW_MEMBERS';
 export const CHANGE_TOGGLE_SHOW_MEMBERS_GROUP = 'CHANGE_TOGGLE_SHOW_MEMBERS_GROUP';
 export const SELECT_USER = 'SELECT_USER';
 export const CHANGE_NEW_GROUP_NAME = 'CHANGE_NEW_GROUP_NAME';
+export const CHANGE_TOGGLE_SHOW_ALL_USERS = 'CHANGE_TOGGLE_SHOW_ALL_USERS';
 
 export const setChatsAllChats = allChats => ({
   type: CHANGE_ALL_CHATS,
@@ -39,9 +40,13 @@ export const setSelectedUser = (id) => ({
   payload: id
 })
 
-export const setNewGroupNmae = (name) => ({
+export const setNewGroupName = (name) => ({
   type: CHANGE_NEW_GROUP_NAME,
   payload: name
+})
+
+export const setToggleShowAllUsers = () => ({
+  type: CHANGE_TOGGLE_SHOW_ALL_USERS
 })
 
 var ws;
@@ -117,7 +122,7 @@ export const addGroupChat = (workPeriods, users, newGroupName) => {
       console.log("SELECTED USERS => ", selectedUsersStr)
       ws.send(`427["/chat/conversation/create",{"userIds":[${selectedUsersStr}],"title":"${newGroupName}","type":"group","workPeriod":"${workPeriods[workPeriods.length - 1]}"}]`)
       dispatch(setToggleShowMembersGroup())
-      dispatch(setNewGroupNmae(''))
+      dispatch(setNewGroupName(''))
     } catch (error) {
       console.log("addGroupChat", "error")
     }

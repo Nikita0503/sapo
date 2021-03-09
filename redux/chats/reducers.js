@@ -6,7 +6,8 @@ import {
   CHANGE_TOGGLE_SHOW_MEMBERS,
   CHANGE_TOGGLE_SHOW_MEMBERS_GROUP,
   SELECT_USER,
-  CHANGE_NEW_GROUP_NAME
+  CHANGE_NEW_GROUP_NAME,
+  CHANGE_TOGGLE_SHOW_ALL_USERS
 } from './actions';
 
 const defaultState = {
@@ -15,6 +16,7 @@ const defaultState = {
   selectedChat: null,
   showMembers: false,
   showMembersGroup: false,
+  showAllUsers: false,
   newGroupName: ''
 };
 
@@ -69,6 +71,11 @@ export const allChatsReducer = (state = defaultState, action) => {
       return {
         ...state,
         newGroupName: action.payload
+      }
+    case CHANGE_TOGGLE_SHOW_ALL_USERS:
+      return {
+        ...state,
+        showAllUsers: !state.showAllUsers
       }
   }
 
